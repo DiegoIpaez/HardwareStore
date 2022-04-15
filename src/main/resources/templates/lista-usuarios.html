@@ -34,7 +34,7 @@
                             <th th:text="${u.rol}" class="pt-3"></th>
                             <th th:text="${u.alta}" class="pt-3"></th>
                             <th>
-                                <a><button class="btn btn-secondary">editar</button></a>
+                                <a th:href="@{/usuario/form(usuarioId=${u.id})}"><button class="btn btn-secondary">editar</button></a>
                             </th>
                             <th th:if="${!u.alta}">
                                 <a th:href="@{/usuario/alta(usuarioId=${u.id})}"><button class="btn btn-primary">alta</button></a>

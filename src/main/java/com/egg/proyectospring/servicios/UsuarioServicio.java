@@ -47,7 +47,7 @@ public class UsuarioServicio implements UserDetailsService {
         u.setAlta(false);
         usuarioRepositorio.save(u);
     }
-    
+
     public void darDeAltaUsuario(String id) throws Exception {
 
         Usuario u = usuarioRepositorio.findById(id).orElse(new Usuario());
@@ -58,47 +58,75 @@ public class UsuarioServicio implements UserDetailsService {
 
     public void registrarUsuario(Usuario u, String password2, MultipartFile file) throws Exception {
 
-        //Valido los campos
-        validarCampos(u.getUsername(), u.getEmail(), u.getPassword(), password2);
+        validarCampos(u.getId(), u.getUsername(), u.getEmail(), u.getPassword(), password2);
 
-        if (file != null) {
-            Foto foto = fotoServicio.guardarFoto(file);
-            u.setFoto(foto);
+        Usuario ux = null;
+
+        if (u.getId() != null && !u.getId().isEmpty()) {
+
+            ux = mostrarUsuarioPorId(u.getId());
+            ux.setUsername(u.getUsername());
+            ux.setEmail(u.getEmail());
+            
+            if (file != null && !file.isEmpty()) {
+                Foto foto = fotoServicio.guardarFoto(file);
+                ux.setFoto(foto);
+            }else{
+                ux.setFoto(mostrarUsuarioPorId(u.getId()).getFoto());
+            }
+            
+        } else {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            u.setPassword(encoder.encode(u.getPassword()));
+            u.setRol(Rol.USUARIO);
+            u.setAlta(true);
+
+            if (file != null) {
+                Foto foto = fotoServicio.guardarFoto(file);
+                u.setFoto(foto);
+            }
         }
 
-        //Encripto el pass
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        u.setPassword(encoder.encode(u.getPassword()));
+        Usuario usuario = ux != null ? ux : u;
 
-        u.setRol(Rol.USUARIO);
-        u.setAlta(true);
-
-        //Guardo la entidad
-        usuarioRepositorio.save(u);
+        usuarioRepositorio.save(usuario);
     }
 
-    public void validarCampos(String username, String email, String password, String password2) throws Exception {
+    public void validarCampos(String id, String username, String email, String password, String password2) throws Exception {
 
         if (username == null || username.isEmpty()) {
-            throw new Exception("El usuario es obligatorio");
+            throw new Exception("El nombre es obligatorio");
         }
 
         if (email == null || email.isEmpty()) {
             throw new Exception("El email es obligatorio");
         }
 
-        Usuario ux = usuarioRepositorio.buscarUsuarioPorEmail(email);
+//        if (id != null) {
+//            List<Usuario> usuarios = usuarioRepositorio.buscarUsuariosPorEmailMenosUno(email);
+//              
+//            for (int i = 0; i < usuarios.size(); i++) {  
+//                Usuario ux = usuarioRepositorio.buscarUsuarioPorEmailSinAlta(usuarios.get(i).getEmail());
+//                System.out.println(ux.toString());
+//                if (ux != null) {
+//                    throw new Exception("Este email ya existe");
+//                }
+//            }
+//        }
 
-        if (ux != null) {
-            throw new Exception("El usuario ya existe");
-        }
+        if (id == null || id.isEmpty()) {
 
-        if (password == null || password.isEmpty()) {
-            throw new Exception("La contraseña es obligatoria");
-        }
+            if (usuarioRepositorio.buscarUsuarioPorEmailSinAlta(email) != null) {
+                throw new Exception("Este email ya existe");
+            }
 
-        if (!password.equals(password2)) {
-            throw new Exception("La contraseñas deben ser iguales");
+            if (password == null || password.isEmpty()) {
+                throw new Exception("La contraseña es obligatoria");
+            }
+
+            if (!password.equals(password2)) {
+                throw new Exception("La contraseñas deben ser iguales");
+            }
         }
 
     }

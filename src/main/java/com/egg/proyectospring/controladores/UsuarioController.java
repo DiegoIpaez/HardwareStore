@@ -28,24 +28,44 @@ public class UsuarioController {
     }
 
     @GetMapping("/form")
-    public String registro(Model model) {
-        model.addAttribute("usuario", new Usuario());
+    public String registro(Model model, @RequestParam(name = "usuarioId", required = false) String id) {
+        
+        Usuario u = new Usuario();
+        String titulo = "";
+        
+        if (id != null) {
+            u = usuarioServicio.mostrarUsuarioPorId(id);
+            if (u.getId() != null ) {
+               titulo = "Editar Usuario";
+               model.addAttribute("titulo", titulo); 
+            }            
+        }else{
+           titulo = "Registrar Usuario";
+        }
+        
+        model.addAttribute("titulo",titulo);
+        model.addAttribute("usuario", u);
         return "usuario-formulario";
     }
 
     @PostMapping("/registro")
     public String usuarioPost(@ModelAttribute("usuario") Usuario u,
-            @RequestParam("password2") String password2,
+            @RequestParam(name = "password2", required = false) String password2,
             @RequestParam(name = "file",required = false) MultipartFile file,
             Model model) {
 
         try {
-            usuarioServicio.registrarUsuario(u, password2, file);
-            model.addAttribute("success", "Se ha registrado correctamente");
-            return "usuario-formulario";
+            usuarioServicio.registrarUsuario(u, password2, file);      
+            model.addAttribute("titulo", u.getId() == null || u.getId().isEmpty() ? "Registrar Usuario" : "Editar Usuario");
+            model.addAttribute("success", u.getId() == null || u.getId().isEmpty() ? "Se ha registrado correctamente" : "Los cambios se han guardado correctamente");
+            
+            String direccion = u.getId() != null && !u.getId().isEmpty() ? "redirect:/usuario/list" : "usuario-formulario";
+            
+            return direccion;
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("error", e.getMessage());
+            model.addAttribute("titulo", u.getId() == null || u.getId().isEmpty() ? "Registrar Usuario" : "Editar Usuario");
             return "usuario-formulario";
         }
 
