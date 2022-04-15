@@ -29,7 +29,8 @@
                         <tr th:each="u : ${usuarios}"> 
                             <th th:text="${u.username}" class="pt-3"></th>
                             <th th:text="${u.email}" class="pt-3"></th>
-                            <th><img th:src="@{/foto/usuario(idUsuario=${u.id})}" width="50" alt="fotos-perfil"/></th>
+                            <th th:if="${u.foto != null}"><img th:src="@{/foto/usuario(idUsuario=${u.id})}" width="50" height="50" alt="fotos-perfil"/></th>
+                            <th th:if="${u.foto == null}"><img src="https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg" width="50" height="50" alt="fotos-perfil"/></th>
                             <th th:text="${u.rol}" class="pt-3"></th>
                             <th th:text="${u.alta}" class="pt-3"></th>
                             <th>

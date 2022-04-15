@@ -36,7 +36,7 @@ public class UsuarioController {
     @PostMapping("/registro")
     public String usuarioPost(@ModelAttribute("usuario") Usuario u,
             @RequestParam("password2") String password2,
-            @RequestParam("file") MultipartFile file,
+            @RequestParam(name = "file",required = false) MultipartFile file,
             Model model) {
 
         try {
@@ -51,6 +51,7 @@ public class UsuarioController {
 
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/baja")
     public String darDeBaja(@RequestParam("usuarioId") String id){
 
@@ -63,6 +64,7 @@ public class UsuarioController {
         } 
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/alta")
     public String darDeAlta(@RequestParam("usuarioId") String id){
 
