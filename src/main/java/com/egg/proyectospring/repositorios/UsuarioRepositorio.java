@@ -18,5 +18,8 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
     
     @Query("select u from Usuario u where u.email != :email")
     public List<Usuario> buscarUsuariosPorEmailMenosUno(@Param("email") String email);
+    
+    @Query("select u from Usuario u where u.alta = true and u.resetPasswordToken = :token")
+    public Usuario mostrarUsuarioPorResetPasswordToken(@Param("token") String token);
 
 }

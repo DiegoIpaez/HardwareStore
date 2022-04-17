@@ -25,6 +25,7 @@ public class Usuario {
     private Foto foto;
     @Enumerated(EnumType.STRING)
     private Rol rol;
+    private String resetPasswordToken;
     private Boolean alta;
     
 }
