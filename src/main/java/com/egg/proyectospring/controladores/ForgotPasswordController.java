@@ -2,14 +2,10 @@ package com.egg.proyectospring.controladores;
 
 import com.egg.proyectospring.entidades.Usuario;
 import com.egg.proyectospring.servicios.ForgotPasswordServicio;
-import java.io.UnsupportedEncodingException;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import com.egg.proyectospring.servicios.MailServicio;
 import javax.servlet.http.HttpServletRequest;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +21,7 @@ public class ForgotPasswordController {
     private ForgotPasswordServicio forgotPasswordServicio;
 
     @Autowired
-    private JavaMailSender mailSender;
+    private MailServicio mailServicio;
 
     @GetMapping("")
     public String forgotPassword(Model model) {
@@ -43,7 +39,7 @@ public class ForgotPasswordController {
 
             String resetPasswordLink = forgotPasswordServicio.getSiteURL(request) + "/forgot_password/reset_password?token=" + token;
 
-            enviarEmail(email, resetPasswordLink);
+            mailServicio.enviarEmail(email, resetPasswordLink);
 
             model.addAttribute("titulo", "Olvide la password");
             model.addAttribute("success", "Hemos enviado un enlace de restablecimiento de contraseña a su correo electrónico. Por favor, verifiquelo.");
@@ -90,26 +86,5 @@ public class ForgotPasswordController {
 
      return "reset-password-form";
    }
-
-    public void enviarEmail(String email, String link) throws MessagingException, UnsupportedEncodingException {
-
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setFrom("laferreteriatucumana@gmail.com", "FerreteriaTuc. Support");
-        helper.setTo(email);
-
-        String asunto = "Aquí está el enlace para restablecer su contraseña";
-        String contenido = "<p>Hola,</p>"
-                + "Ha solicitado restablecer su contraseña"
-                + "Haga clic en el enlace de abajo para cambiar su clave"
-                + "<a href=" + link + " >Cambiar mi contraseña.</a>"
-                + "Ignore este correo electrónico si recuerda su contraseña o no ha realizado la solicitud";
-
-        helper.setSubject(asunto);
-        helper.setText(contenido, true);
-
-        mailSender.send(message);
-    }
 
 }
