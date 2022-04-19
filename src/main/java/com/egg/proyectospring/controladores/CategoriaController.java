@@ -36,8 +36,8 @@ public class CategoriaController {
         
         try {
             categoriaServicio.guardarCategoria(categoria);
-            
-            modelo.addAttribute("success", "Se ingresó una categoría");
+            String success = categoria.getId() != null && !categoria.getId().isEmpty() ? "Se modificó la categoría" : "Se ingresó una nueva categoría";
+            modelo.addAttribute("success", success);
             
             return "formulario-categoria";
         } catch (Exception ex) {
@@ -79,6 +79,14 @@ public class CategoriaController {
             ex.printStackTrace();
             return "redirect:/categoria/list";
         }
+    }
+    
+    @GetMapping("/modificar")
+    public String modificar(@RequestParam("id") String id, Model modelo) {
+        
+        Categoria categoria = categoriaServicio.categoriaPorId(id);
+        modelo.addAttribute("categoria", categoria);
+        return "formulario-categoria";
     }
     
 }
