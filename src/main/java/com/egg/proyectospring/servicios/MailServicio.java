@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,41 @@ public class MailServicio {
         helper.setText(contenido, true);
 
         mailSender.send(message);
+    }
+    
+    public void contacto(String nombre, String email, String asunto, String contenido) throws Exception{
+    
+        //Instancio la clase que va a ser el cuerpo de mi mail
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        
+        validarCampos(nombre, email, asunto, contenido);
+        
+        //Seteo la informacion que necesito
+        simpleMailMessage.setTo("laferreteriatucumana@gmail.com");
+        simpleMailMessage.setSubject(email + " ("+ nombre + ") - " + asunto);
+        simpleMailMessage.setText(contenido);
+        
+        //La envio a traves de la clase..
+        mailSender.send(simpleMailMessage);
+        
+    }
+    
+    public void validarCampos(String nombre, String email, String asunto, String contenido) throws Exception{
+        
+        if (nombre == null || nombre.isEmpty()) {
+            throw new Exception("El nombre es obligatorio");
+        }
+        
+        if (email == null || email.isEmpty()) {
+            throw new Exception("El email es obligatorio");
+        }
+        if (asunto == null || asunto.isEmpty()) {
+            throw new Exception("El asunto es obligatorio");
+        }
+        if (contenido == null || contenido.isEmpty()) {
+            throw new Exception("El contenido es obligatorio");
+        }
+    
     }
     
 }
