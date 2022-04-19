@@ -24,9 +24,9 @@
                         <form th:action="@{/usuario/registro}" method="POST" enctype="multipart/form-data" th:object="${usuario}">
                             <input hidden th:field="*{id}"/>
                             <input type="text" th:field="${usuario.username}" placeholder="user...">
-                            <br>
-                            <br>
-                            <input type="email" th:field="${usuario.email}" placeholder="email...">
+                            <br th:if="${usuario.id == null || usuario.id.isEmpty()}">
+                            <br th:if="${usuario.id == null || usuario.id.isEmpty()}">
+                            <input type="email" th:if="${usuario.id == null || usuario.id.isEmpty()}" th:field="${usuario.email}" placeholder="email...">
                             <br th:if="${usuario.id == null || usuario.id.isEmpty()}">
                             <br th:if="${usuario.id == null || usuario.id.isEmpty()}">
                             <input type="password" th:if="${usuario.id == null || usuario.id.isEmpty()}" th:field="${usuario.password}" placeholder="123456...">

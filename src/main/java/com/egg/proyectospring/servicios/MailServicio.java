@@ -25,10 +25,31 @@ public class MailServicio {
 
         String asunto = "Aquí está el enlace para restablecer su contraseña";
         String contenido = "<p>Hola,</p>"
-                + "Ha solicitado restablecer su contraseña.\n"
-                + "Haga clic en el enlace de abajo para cambiar su clave. \n" 
-                + "<a href=" + link + " >Cambiar mi contraseña.</a> \n"  
+                + "Ha solicitado restablecer su contraseña." + "<br/>"
+                + "Haga clic en el enlace de abajo para cambiar su clave." + "<br/>" + "<br/>"
+                + "<a href=" + link + " >Cambiar mi contraseña.</a>" + "<br/>"+ "<br/>" 
                 + "Ignore este correo electrónico si recuerda su contraseña o no ha realizado la solicitud";
+
+        helper.setSubject(asunto);
+        helper.setText(contenido, true);
+
+        mailSender.send(message);
+    }
+    
+    public void cambiarEmail(String email, String link) throws MessagingException, UnsupportedEncodingException {
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("laferreteriatucumana@gmail.com", "FerreteriaTuc. Support");
+        helper.setTo(email);
+
+        String asunto = "Aquí está el enlace para restablecer su email";
+        String contenido = "<p>Hola,</p>"
+                + "Ha solicitado restablecer su email." + "<br/>"
+                + "Haga clic en el enlace de abajo para cambiar su email." + "<br/>" + "<br/>"
+                + "<a href=" + link + " >Cambiar mi email.</a>" + "<br/>" + "<br/>"
+                + "Ignore este correo electrónico si no quiere cambiar su email o no ha realizado la solicitud";
 
         helper.setSubject(asunto);
         helper.setText(contenido, true);

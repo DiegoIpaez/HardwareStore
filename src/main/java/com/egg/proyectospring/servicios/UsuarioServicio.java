@@ -66,7 +66,6 @@ public class UsuarioServicio implements UserDetailsService {
 
             ux = mostrarUsuarioPorId(u.getId());
             ux.setUsername(u.getUsername());
-            ux.setEmail(u.getEmail());
             
             if (file != null && !file.isEmpty()) {
                 Foto foto = fotoServicio.guardarFoto(file);
@@ -98,23 +97,11 @@ public class UsuarioServicio implements UserDetailsService {
             throw new Exception("El nombre es obligatorio");
         }
 
-        if (email == null || email.isEmpty()) {
-            throw new Exception("El email es obligatorio");
-        }
-
-//        if (id != null) {
-//            List<Usuario> usuarios = usuarioRepositorio.buscarUsuariosPorEmailMenosUno(email);
-//              
-//            for (int i = 0; i < usuarios.size(); i++) {  
-//                Usuario ux = usuarioRepositorio.buscarUsuarioPorEmailSinAlta(usuarios.get(i).getEmail());
-//                System.out.println(ux.toString());
-//                if (ux != null) {
-//                    throw new Exception("Este email ya existe");
-//                }
-//            }
-//        }
-
         if (id == null || id.isEmpty()) {
+            
+            if (email == null || email.isEmpty()) {
+                throw new Exception("El email es obligatorio");
+            }
 
             if (usuarioRepositorio.buscarUsuarioPorEmailSinAlta(email) != null) {
                 throw new Exception("Este email ya existe");
@@ -147,6 +134,12 @@ public class UsuarioServicio implements UserDetailsService {
 
             //Permisos de usuario
             List<GrantedAuthority> autorities = new ArrayList<>();
+            
+            
+            if (u.getRol().equals(Rol.ADMINISTRADOR)) {
+                autorities.add(new SimpleGrantedAuthority("ROLE_USUARIO"));
+            }
+            
             autorities.add(new SimpleGrantedAuthority("ROLE_" + u.getRol()));
 
             //Retorno User que necesita que le pasemos el nombre del usuario, su pass y los permisos

@@ -38,6 +38,12 @@ public class ForgotPasswordServicio {
         usuarioRepositorio.save(u);
     }
     
+    public void actualizarEmail(Usuario u, String newEmail) {
+        u.setEmail(newEmail);
+        u.setResetPasswordToken(null);
+        usuarioRepositorio.save(u);
+    }
+    
     public String getSiteURL(HttpServletRequest request){
        String siteURL = request.getRequestURL().toString();
        return siteURL.replace(request.getServletPath(), "");
