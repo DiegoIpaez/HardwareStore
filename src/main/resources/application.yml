@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/ferreteria?allowPublicKeyRetrieval=true&useSSL=false&useTimezone=true&serverTimezone=GMT&characterEncoding=UTF-8
     username: root
-    password: root
+    password: valeylu
     driver-class-name: com.mysql.cj.jdbc.Driver
 #Configuración Creación de tablas (Hibernate)
   jpa:
