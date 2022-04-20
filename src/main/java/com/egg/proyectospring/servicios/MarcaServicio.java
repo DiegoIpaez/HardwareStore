@@ -48,8 +48,8 @@ public class MarcaServicio {
      * @throws Exception
      */
     public Marca guardarMarca(String id, String nombre) throws Exception {
-
-        if (nombre == null) {
+        
+        if (nombre == null || nombre.isEmpty()) {
             throw new Exception("El nombre no puede ser nulo o estar vacío");
         }
         Marca marca = new Marca();
@@ -57,11 +57,17 @@ public class MarcaServicio {
             marca.setId(id);
             marca.setNombre(nombre);
             marca.setAlta(true);
-
-        } else {
+        }else{
+            Marca marcaDB = marcaRepository.buscarMarcaPorNombre(nombre);
+            if (marcaDB != null) {
+                throw new Exception("La marca ya se encuentra en la base de datos");
+            } else {
             marca.setNombre(nombre);
             marca.setAlta(true);
         }
+        }
+
+        
 
         return marcaRepository.save(marca);
 

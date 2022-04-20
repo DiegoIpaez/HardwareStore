@@ -3,6 +3,7 @@ package com.egg.proyectospring.controladores;
 
 import com.egg.proyectospring.entidades.Marca;
 import com.egg.proyectospring.servicios.MarcaServicio;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,18 @@ public class MarcaController {
 
     @Autowired
     MarcaServicio marcaServicio;
+
+    /**
+     * @param model
+     * @return
+     */
+    @GetMapping("")
+    public String listaDeMarcas(Model model) {
+        List<Marca> marcas = marcaServicio.listarMarcas();
+        model.addAttribute("marcas", marcas);
+        return "marca-list";
+
+    }
 
     /**
      * @param model
@@ -47,6 +60,7 @@ public class MarcaController {
             model.addAttribute("marca", marca);
             return "formulario-marca";
         } catch (Exception ex) {
+            ex.printStackTrace();
             model.addAttribute("marca", marca);
             model.addAttribute("error", ex.getMessage());
             return "formulario-marca";
@@ -72,7 +86,7 @@ public class MarcaController {
      * @param id
      * @return
      */
-    @GetMapping("/alta")
+    @GetMapping("/baja")
     public String baja(@RequestParam("id") String id) {
         try {
             marcaServicio.bajaMarca(id);
@@ -82,5 +96,18 @@ public class MarcaController {
             return "redirect:/marca";
         }
     }
+    
+    /**
+     * @param id
+     * @param modelo
+     * @return
+     * @throws Exception 
+     */
+    @GetMapping("/modificar")
+    public String formulario(@RequestParam(name = "marcaId", required = true) String id, Model modelo) throws Exception {
+        Marca marca = marcaServicio.buscarMarcaPorId(id);
+        modelo.addAttribute("marca", marca);
+        return "formulario-marca";
 
+}
 }
