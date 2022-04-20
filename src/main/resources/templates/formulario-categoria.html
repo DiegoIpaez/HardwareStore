@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+         <h3 th:if="${categoria.id != null and !categoria.id.isEmpty()}">Modificar una categoria</h3>
+        <h3 th:if="${categoria.id == null or categoria.id.isEmpty()}">Ingresar una categoria</h3>
+        
+        <p th:if="${error != null}" th:text="${error}" style="color: red;"></p>
+        <p th:if="${success != null}" th:text="${success}" style="color: blueviolet;"></p>
+        <form th:action="@{/categoria/save}" method="POST" th:object="${categoria}">
+            <input hidden th:field="*{id}" />
+            <input type="text" th:field="*{nombre}" />
+            <input type="submit"/>
+            
+        </form>
+    </body>
+</html>
