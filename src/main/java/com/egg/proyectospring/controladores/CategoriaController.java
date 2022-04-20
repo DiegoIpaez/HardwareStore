@@ -27,7 +27,7 @@ public class CategoriaController {
     
     @GetMapping("")
     public String categoria(Model modelo) {
-        List<Categoria> categorias = new ArrayList<>();
+        List<Categoria> categorias = categoriaServicio.categoriasConAlta();
         modelo.addAttribute("listaDeCategorias", categorias);
         return "categoria";
     }
