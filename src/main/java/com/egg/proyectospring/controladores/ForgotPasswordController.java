@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/forgot_password")
@@ -68,7 +69,7 @@ public class ForgotPasswordController {
     }
 
     @PostMapping("/reset-password")
-    public String processResetPassword(HttpServletRequest request, Model model) {
+    public String processResetPassword(HttpServletRequest request, Model model, RedirectAttributes redirect) {
 
         String token = request.getParameter("token");
         String password = request.getParameter("password");
@@ -84,12 +85,17 @@ public class ForgotPasswordController {
                 model.addAttribute("titulo", "Actualizar tu contraseña");
                 model.addAttribute("success", "Has cambiado satisfactoriamente tu contraseña");
             }
+            
+            return "reset-password-form";
+            
         } catch (Exception e) {
-            model.addAttribute("titulo", "Actualizar tu contraseña");
-            model.addAttribute("error", e.getMessage());
+            redirect.addFlashAttribute("titulo", "Actualizar tu contraseña");
+            redirect.addFlashAttribute("error", e.getMessage());
+            
+            return "redirect:/forgot_password/reset_password?token=" + token;
         }
 
-        return "reset-password-form";
+        
     }
 
 }

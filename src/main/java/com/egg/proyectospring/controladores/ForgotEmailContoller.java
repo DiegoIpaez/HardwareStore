@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/cambiar_email")
@@ -68,7 +69,7 @@ public class ForgotEmailContoller {
     }
 
     @PostMapping("/form")
-    public String processResetPassword(HttpServletRequest request, Model model) {
+    public String processResetPassword(HttpServletRequest request, Model model, RedirectAttributes redirect) {
 
         String token = request.getParameter("token");
         String email = request.getParameter("email");
@@ -84,12 +85,15 @@ public class ForgotEmailContoller {
                 model.addAttribute("titulo", "Actualizar tu email");
                 model.addAttribute("success", "Has cambiado satisfactoriamente tu email");
             }
+            return "reset-email-form";
         } catch (Exception e) {
-            model.addAttribute("titulo", "Actualizar tu email");
-            model.addAttribute("error", e.getMessage());
+            redirect.addFlashAttribute("titulo", "Actualizar tu email");
+            redirect.addFlashAttribute("error", e.getMessage());
+                    
+            return "redirect:/cambiar_email/form?token="+token;        
         }
 
-        return "reset-email-form";
+        
     }
 
 }
