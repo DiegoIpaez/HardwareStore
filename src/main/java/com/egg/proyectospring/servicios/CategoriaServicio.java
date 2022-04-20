@@ -17,13 +17,24 @@ public class CategoriaServicio {
     private CategoriaRepositorio categoriaRepositorio;
     
     public Categoria guardarCategoria(Categoria categoria) throws Exception {
-        
+        //modificar para que valide que no se ingrese una categoria que ya exista en la base de datos
         if(categoria.getNombre().isEmpty()) {
             throw new Exception("El campo 'nombre' no puede estar vacío");
         }
-        categoria.setAlta(true);
+        if(categoria.getId() != null && !categoria.getId().isEmpty()) {
+            categoria.setAlta(true);
+            return categoriaRepositorio.save(categoria);
+        } else {
+            Categoria categoriaNueva = categoriaPorNombre(categoria.getNombre());
+            if (categoriaNueva != null) {
+                throw new Exception("Ya existe una categoría con ese nombre en la base de datos");
+            } else {
+                categoria.setAlta(true);
         
-        return categoriaRepositorio.save(categoria);
+                return categoriaRepositorio.save(categoria);
+            }
+        }
+        
     }
     
     
@@ -59,10 +70,19 @@ public class CategoriaServicio {
         return categoriaRepositorio.findAll();
     }
     
-    public Categoria categoriaPorId(String id){
-        return categoriaRepositorio.getById(id);
+    public Categoria categoriaPorId(String id) throws Exception{
+        Optional<Categoria> respuesta = categoriaRepositorio.findById(id);
+        
+        if (respuesta.isPresent()) {
+            return respuesta.get();
+        } else {
+            throw new Exception("No existe la categoría solicitada");
+        }
+        
     }
     
-    
+    public Categoria categoriaPorNombre(String nombre) {
+        return categoriaRepositorio.buscarCategoriaPorNombre(nombre);
+    }
     
 }

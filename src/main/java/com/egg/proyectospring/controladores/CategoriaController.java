@@ -5,6 +5,7 @@ package com.egg.proyectospring.controladores;
 
 import com.egg.proyectospring.entidades.Categoria;
 import com.egg.proyectospring.servicios.CategoriaServicio;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +24,13 @@ public class CategoriaController {
     
     @Autowired
     private CategoriaServicio categoriaServicio;
+    
+    @GetMapping("")
+    public String categoria(Model modelo) {
+        List<Categoria> categorias = new ArrayList<>();
+        modelo.addAttribute("listaDeCategorias", categorias);
+        return "categoria";
+    }
     
     @GetMapping("/form")
     public String formulario(Model modelo) {
@@ -84,9 +92,15 @@ public class CategoriaController {
     @GetMapping("/modificar")
     public String modificar(@RequestParam("id") String id, Model modelo) {
         
-        Categoria categoria = categoriaServicio.categoriaPorId(id);
-        modelo.addAttribute("categoria", categoria);
-        return "formulario-categoria";
+        try {
+            Categoria categoria = categoriaServicio.categoriaPorId(id);
+            modelo.addAttribute("categoria", categoria);
+            return "formulario-categoria";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            modelo.addAttribute("error", ex.getMessage());
+           return "error";
+        }
     }
     
 }
