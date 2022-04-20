@@ -22,7 +22,15 @@ public class CategoriaServicio {
             throw new Exception("El campo 'nombre' no puede estar vacío");
         }
         if(categoria.getId() != null && !categoria.getId().isEmpty()) {
-            categoria.setAlta(true);
+            
+            Categoria c = categoriaRepositorio.getById(categoria.getId());
+            for (Categoria categoriasMenosUno : categoriaRepositorio.categoriasMenosUno(c.getNombre())) {
+               if (categoriasMenosUno.getNombre().equals(categoria.getNombre())) {
+                  throw new Exception("Ya existe una categoría con ese nombre en la base de datos");
+               }
+            }
+            
+            categoria.setAlta(c.getAlta());
             return categoriaRepositorio.save(categoria);
         } else {
             Categoria categoriaNueva = categoriaPorNombre(categoria.getNombre());
@@ -83,6 +91,10 @@ public class CategoriaServicio {
     
     public Categoria categoriaPorNombre(String nombre) {
         return categoriaRepositorio.buscarCategoriaPorNombre(nombre);
+    }
+    
+    public List<Categoria> categoriasMenosUno(String nombre) {
+        return categoriaRepositorio.categoriasMenosUno(nombre);
     }
     
 }

@@ -19,4 +19,8 @@ public interface CategoriaRepositorio extends JpaRepository<Categoria, String>{
     @Query("select c from Categoria c where c.nombre = :nombre")
     public Categoria buscarCategoriaPorNombre(@Param("nombre") String nombre);
     
+    @Query("select c from Categoria c where c.nombre != :nombre")
+    public List<Categoria> categoriasMenosUno(@Param("nombre") String nombre);
+
+    
 }
