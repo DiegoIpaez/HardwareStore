@@ -29,7 +29,10 @@ public class ForgotPasswordServicio {
         return usuarioRepositorio.mostrarUsuarioPorResetPasswordToken(resetPasswordToken);
     }
 
-    public void actualizarPassword(Usuario u, String newPassword) {
+    public void actualizarPassword(Usuario u, String newPassword) throws Exception {
+        
+        validarPassword(newPassword);
+        
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encodePassword = encoder.encode(newPassword);
 
@@ -37,15 +40,46 @@ public class ForgotPasswordServicio {
         u.setResetPasswordToken(null);
         usuarioRepositorio.save(u);
     }
-    
-    public void actualizarEmail(Usuario u, String newEmail) {
+
+    public void actualizarEmail(Usuario u, String newEmail) throws Exception {
+
+        validarEmail(newEmail);
+
         u.setEmail(newEmail);
         u.setResetPasswordToken(null);
         usuarioRepositorio.save(u);
     }
-    
-    public String getSiteURL(HttpServletRequest request){
-       String siteURL = request.getRequestURL().toString();
-       return siteURL.replace(request.getServletPath(), "");
-  }
+
+    public void validarPassword(String password) throws Exception {
+        if (password == null || password.isEmpty()) {
+            throw new Exception("La contraseña es obligatoria");
+        }
+
+        if (password.length() < 8) {
+            throw new Exception("La contraseña debe tener como minimo 8 caracteres");
+        }
+
+        if (password.length() > 30) {
+            throw new Exception("La contraseña no puede tener mas de 30 caracteres");
+        }
+    }
+
+    public void validarEmail(String email) throws Exception {
+        if (email == null || email.isEmpty()) {
+            throw new Exception("El email es obligatorio");
+        }
+
+        if (email.length() > 30) {
+            throw new Exception("La contraseña no puede tener mas de 30 caracteres");
+        }
+
+        if (usuarioRepositorio.buscarUsuarioPorEmailSinAlta(email) != null) {
+            throw new Exception("Este email ya existe");
+        }
+    }
+
+    public String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
+    }
 }

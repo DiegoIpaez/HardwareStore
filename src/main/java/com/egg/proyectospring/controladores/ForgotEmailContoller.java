@@ -73,15 +73,20 @@ public class ForgotEmailContoller {
         String token = request.getParameter("token");
         String email = request.getParameter("email");
 
-        Usuario u = forgotPasswordServicio.usuarioResetPasswordToken(token);
-        if (u == null) {
+        try {
+            Usuario u = forgotPasswordServicio.usuarioResetPasswordToken(token);
+            if (u == null) {
+                model.addAttribute("titulo", "Actualizar tu email");
+                model.addAttribute("error", "Token invalido");
+                return "reset-email-form";
+            } else {
+                forgotPasswordServicio.actualizarEmail(u, email);
+                model.addAttribute("titulo", "Actualizar tu email");
+                model.addAttribute("success", "Has cambiado satisfactoriamente tu email");
+            }
+        } catch (Exception e) {
             model.addAttribute("titulo", "Actualizar tu email");
-            model.addAttribute("error", "Token invalido");
-            return "reset-email-form";
-        } else {
-            forgotPasswordServicio.actualizarEmail(u, email);
-            model.addAttribute("titulo", "Actualizar tu email");
-            model.addAttribute("success", "Has cambiado satisfactoriamente tu email");
+            model.addAttribute("error", e.getMessage());
         }
 
         return "reset-email-form";

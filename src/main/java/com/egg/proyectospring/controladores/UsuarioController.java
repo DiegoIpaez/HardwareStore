@@ -20,6 +20,12 @@ public class UsuarioController {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO')")
+    @GetMapping("")
+    public String usuario(Model model) {
+        return "usuario";
+    }
+
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list")
     public String listUsers(Model model) {
@@ -29,38 +35,45 @@ public class UsuarioController {
 
     @GetMapping("/form")
     public String registro(Model model, @RequestParam(name = "usuarioId", required = false) String id) {
-        
+
         Usuario u = new Usuario();
         String titulo = "";
-        
-        if (id != null) {
-            u = usuarioServicio.mostrarUsuarioPorId(id);
-            if (u.getId() != null ) {
-               titulo = "Editar Usuario";
-               model.addAttribute("titulo", titulo); 
-            }            
-        }else{
-           titulo = "Registrar Usuario";
+
+        try {
+            if (id != null) {
+                u = usuarioServicio.mostrarUsuarioPorId(id);
+                if (u.getId() != null) {
+                    titulo = "Editar Usuario";
+                    model.addAttribute("titulo", titulo);
+                }
+            } else {
+                titulo = "Registrar Usuario";
+            }
+
+            model.addAttribute("titulo", titulo);
+            model.addAttribute("usuario", u);
+            return "usuario-formulario";
+        } catch (Exception e) {
+            model.addAttribute("codigo", "404");
+            model.addAttribute("explicacion", e.getMessage());
+            return "error";
         }
-        
-        model.addAttribute("titulo",titulo);
-        model.addAttribute("usuario", u);
-        return "usuario-formulario";
+
     }
 
     @PostMapping("/registro")
     public String usuarioPost(@ModelAttribute("usuario") Usuario u,
             @RequestParam(name = "password2", required = false) String password2,
-            @RequestParam(name = "file",required = false) MultipartFile file,
+            @RequestParam(name = "file", required = false) MultipartFile file,
             Model model) {
 
         try {
-            usuarioServicio.registrarUsuario(u, password2, file);      
+            usuarioServicio.registrarUsuario(u, password2, file);
             model.addAttribute("titulo", u.getId() == null || u.getId().isEmpty() ? "Registrar Usuario" : "Editar Usuario");
             model.addAttribute("success", u.getId() == null || u.getId().isEmpty() ? "Se ha registrado correctamente" : "Los cambios se han guardado correctamente");
-            
-            String direccion = u.getId() != null && !u.getId().isEmpty() ? "redirect:/usuario/list" : "usuario-formulario";
-            
+
+            String direccion = u.getId() != null && !u.getId().isEmpty() ? "redirect:/usuario" : "usuario-formulario";
+
             return direccion;
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,10 +83,10 @@ public class UsuarioController {
         }
 
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/baja")
-    public String darDeBaja(@RequestParam("usuarioId") String id){
+    public String darDeBaja(@RequestParam("usuarioId") String id) {
 
         try {
             usuarioServicio.darDeBajaUsuario(id);
@@ -81,12 +94,12 @@ public class UsuarioController {
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/usuario/list";
-        } 
+        }
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/alta")
-    public String darDeAlta(@RequestParam("usuarioId") String id){
+    public String darDeAlta(@RequestParam("usuarioId") String id) {
 
         try {
             usuarioServicio.darDeAltaUsuario(id);
@@ -94,9 +107,7 @@ public class UsuarioController {
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/usuario/list";
-        } 
+        }
     }
-    
-    
 
 }

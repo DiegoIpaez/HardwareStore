@@ -6,6 +6,7 @@ import com.egg.proyectospring.enumeraciones.Rol;
 import com.egg.proyectospring.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,8 +37,15 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarioRepositorio.count();
     }
 
-    public Usuario mostrarUsuarioPorId(String id) {
-        return usuarioRepositorio.findById(id).orElse(new Usuario());
+    public Usuario mostrarUsuarioPorId(String id) throws Exception {
+
+        Optional<Usuario> res = usuarioRepositorio.findById(id);
+
+        if (res.isPresent()) {
+            return res.get();
+        } else {
+            throw new Exception("No existe este Usuario");
+        }
     }
 
     public void darDeBajaUsuario(String id) throws Exception {
@@ -66,14 +74,14 @@ public class UsuarioServicio implements UserDetailsService {
 
             ux = mostrarUsuarioPorId(u.getId());
             ux.setUsername(u.getUsername());
-            
+
             if (file != null && !file.isEmpty()) {
                 Foto foto = fotoServicio.guardarFoto(file);
                 ux.setFoto(foto);
-            }else{
+            } else {
                 ux.setFoto(mostrarUsuarioPorId(u.getId()).getFoto());
             }
-            
+
         } else {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             u.setPassword(encoder.encode(u.getPassword()));
@@ -98,9 +106,13 @@ public class UsuarioServicio implements UserDetailsService {
         }
 
         if (id == null || id.isEmpty()) {
-            
+
             if (email == null || email.isEmpty()) {
                 throw new Exception("El email es obligatorio");
+            }
+                       
+            if (email.length() > 30) {
+                throw new Exception("La contraseña no puede tener mas de 30 caracteres");
             }
 
             if (usuarioRepositorio.buscarUsuarioPorEmailSinAlta(email) != null) {
@@ -109,6 +121,14 @@ public class UsuarioServicio implements UserDetailsService {
 
             if (password == null || password.isEmpty()) {
                 throw new Exception("La contraseña es obligatoria");
+            }
+            
+            if (password.length() < 8) {
+                throw new Exception("La contraseña debe tener como minimo 8 caracteres");
+            }
+            
+            if (password.length() > 30) {
+                throw new Exception("La contraseña no puede tener mas de 30 caracteres");
             }
 
             if (!password.equals(password2)) {
@@ -134,12 +154,11 @@ public class UsuarioServicio implements UserDetailsService {
 
             //Permisos de usuario
             List<GrantedAuthority> autorities = new ArrayList<>();
-            
-            
+
             if (u.getRol().equals(Rol.ADMINISTRADOR)) {
                 autorities.add(new SimpleGrantedAuthority("ROLE_USUARIO"));
             }
-            
+
             autorities.add(new SimpleGrantedAuthority("ROLE_" + u.getRol()));
 
             //Retorno User que necesita que le pasemos el nombre del usuario, su pass y los permisos

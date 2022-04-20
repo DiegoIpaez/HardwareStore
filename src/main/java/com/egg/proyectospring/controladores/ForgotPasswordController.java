@@ -51,40 +51,45 @@ public class ForgotPasswordController {
             return "forgot-password-form";
         }
     }
-    
+
     @GetMapping("/reset_password")
-   public String mostrarResetPassword(@RequestParam("token") String token, Model model){
-      
-      Usuario u = forgotPasswordServicio.usuarioResetPasswordToken(token);
-      if(u == null){
-         model.addAttribute("titulo","Actualizar tu contraseña");
-         model.addAttribute("error","Token invalido");
-         return "reset-password-form";
-      }
-      
-      model.addAttribute("titulo","Actualizar tu contraseña");
-      model.addAttribute("token", token);
-      return "reset-password-form";
-   }
+    public String mostrarResetPassword(@RequestParam("token") String token, Model model) {
 
-   @PostMapping("/reset-password")
-   public String processResetPassword(HttpServletRequest request, Model model){
-     
-     String token = request.getParameter("token"); 
-     String password = request.getParameter("password");
+        Usuario u = forgotPasswordServicio.usuarioResetPasswordToken(token);
+        if (u == null) {
+            model.addAttribute("titulo", "Actualizar tu contraseña");
+            model.addAttribute("error", "Token invalido");
+            return "reset-password-form";
+        }
 
-     Usuario u = forgotPasswordServicio.usuarioResetPasswordToken(token);
-     if(u == null){
-         model.addAttribute("titulo","Actualizar tu contraseña");
-         model.addAttribute("error","Token invalido");
-         return "reset-password-form";
-     }else{
-       forgotPasswordServicio.actualizarPassword(u, password);
-       model.addAttribute("titulo","Actualizar tu contraseña");
-       model.addAttribute("success","Has cambiado satisfactoriamente tu contraseña");
-     }
+        model.addAttribute("titulo", "Actualizar tu contraseña");
+        model.addAttribute("token", token);
+        return "reset-password-form";
+    }
 
-     return "reset-password-form";
-   }
+    @PostMapping("/reset-password")
+    public String processResetPassword(HttpServletRequest request, Model model) {
+
+        String token = request.getParameter("token");
+        String password = request.getParameter("password");
+
+        try {
+            Usuario u = forgotPasswordServicio.usuarioResetPasswordToken(token);
+            if (u == null) {
+                model.addAttribute("titulo", "Actualizar tu contraseña");
+                model.addAttribute("error", "Token invalido");
+                return "reset-password-form";
+            } else {
+                forgotPasswordServicio.actualizarPassword(u, password);
+                model.addAttribute("titulo", "Actualizar tu contraseña");
+                model.addAttribute("success", "Has cambiado satisfactoriamente tu contraseña");
+            }
+        } catch (Exception e) {
+            model.addAttribute("titulo", "Actualizar tu contraseña");
+            model.addAttribute("error", e.getMessage());
+        }
+
+        return "reset-password-form";
+    }
 
 }
