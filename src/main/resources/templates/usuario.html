@@ -17,14 +17,14 @@
                     <p sec:authorize="isAuthenticated()"><h1>Bienvenido</h1> <span sec:authentication="name"></span></p>
 
                     <!--Compruebo la informacion guardada en Sesion-->
-                    <p th:if="${session.usuario != null}">Bienvenid@ <span th:text="${session.usuario.username}"></span>. Tu rol es <span th:text="${session.usuario.rol}"></span> Tu id es <span th:text="${session.usuario.id}"></span></p>
+                    <p th:if="${session.usuario != null}">Bienvenid@ <span th:text="${u.username}"></span>. Tu rol es <span th:text="${u.rol}"></span> Tu id es <span th:text="${u.id}"></span></p>
 
                     <div class="col-4 mb-4 mt-2">
-                        <img sec:authorize="isAuthenticated()" th:if="${session.usuario.foto != null}" th:src="@{/foto/usuario(idUsuario=${session.usuario.id})}" alt="foto-perfil" width="300">
-                        <img sec:authorize="isAuthenticated()" th:if="${session.usuario.foto == null}" src="https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg" alt="foto-perfil" height="100" width="100">
+                        <img sec:authorize="isAuthenticated()" th:if="${u.foto != null}" th:src="@{/foto/usuario(idUsuario=${u.id})}" alt="foto-perfil" width="300">
+                        <img sec:authorize="isAuthenticated()" th:if="${u.foto == null}" src="https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg" alt="foto-perfil" height="100" width="100">
                     </div>
 
-                    <a th:href="@{/usuario/form(usuarioId=${session.usuario.id})}"><button class="btn btn-secondary">editar</button></a>
+                    <a th:href="@{/usuario/form(usuarioId=${u.id})}"><button class="btn btn-secondary">editar</button></a>
                     <a th:href="@{/cambiar_email}">editar email</a>
                     <a th:href="@{/forgot_password}">editar password</a>
  

@@ -22,8 +22,16 @@ public class UsuarioController {
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO')")
     @GetMapping("")
-    public String usuario(Model model) {
-        return "usuario";
+    public String usuario(Model model, @RequestParam(name = "uid", required = false) String id) {
+
+        try {
+            model.addAttribute("u", usuarioServicio.mostrarUsuarioPorId(id));
+            return "usuario";
+        } catch (Exception e) {
+            model.addAttribute("codigo", "404");
+            model.addAttribute("explicacion", e.getMessage());
+            return "error";
+        }
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
@@ -72,7 +80,7 @@ public class UsuarioController {
             model.addAttribute("titulo", u.getId() == null || u.getId().isEmpty() ? "Registrar Usuario" : "Editar Usuario");
             model.addAttribute("success", u.getId() == null || u.getId().isEmpty() ? "Se ha registrado correctamente" : "Los cambios se han guardado correctamente");
 
-            String direccion = u.getId() != null && !u.getId().isEmpty() ? "redirect:/usuario" : "usuario-formulario";
+            String direccion = u.getId() != null && !u.getId().isEmpty() ? "redirect:/usuario?uid="+u.getId() : "usuario-formulario";
 
             return direccion;
         } catch (Exception e) {
