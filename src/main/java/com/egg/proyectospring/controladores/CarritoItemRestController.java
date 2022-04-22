@@ -49,10 +49,30 @@ public class CarritoItemRestController {
                 return "Debe iniciar sesión para agregar este producto a su carrito de compras";
             }
             Double subtotal = carritoItemServicio.actualizarCantidad(cantidad, productoId, u);
-            return  String.valueOf(subtotal);
+            return String.valueOf(subtotal);
         } catch (Exception e) {
             return e.getMessage();
         }
+    }
+
+    @PostMapping("/carrito/eliminar/{prod}")
+    public String eliminarProducto(@PathVariable("prod") String prodId,
+            Authentication auth) {
+
+        try {
+            Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
+
+            if (u == null) {
+                return "Debe iniciar sesión para elminar este producto de su carrito de compras";
+            }
+
+            carritoItemServicio.eliminarProducto(prodId, u);
+
+            return "El producto ha sido eliminado de su carrito";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+
     }
 
 }

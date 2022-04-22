@@ -9,9 +9,41 @@ $(document).ready(function() {
        e.preventDefault();
        incrementarCantidad($(this))
     })
+ 
+   $(".link-remove").on("click", function(e){
+      e.preventDefault();
+      eliminarDelCarrito($(this));
+   })
 
     actualizarTotal();    
 });
+
+function eliminarDelCarrito(link){
+    url = link.attr("href");
+
+    $.ajax({
+       type: "POST",
+       url: url,
+       beforeSend: function(xhr){
+          xhr.setRequestHeader(crsfHeaderName, crsfValue);
+       }
+    })
+    .done(function(res){
+        alert(res);
+
+        rowNumber = link.attr("rowNumber");
+        eliminarProducto(rowNumber);
+        actualizarTotal();  
+    }) 
+    .fail(function(){
+        alert("Error al agregar su producto a su carrito");
+    }) 
+}
+
+function eliminarProducto(rowNumber){
+   rowId = "row" + rowNumber;
+   $("#" + rowId).remove();
+}
 
 function reducirCantidad(link){
     productoId = link.attr("pid");

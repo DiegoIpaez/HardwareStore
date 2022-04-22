@@ -33,9 +33,8 @@ public interface CarritoItemRepositorio extends JpaRepository<CarritoItem, Strin
             @Param("prodId") String prodId,
             @Param("uid") String uid);
 
-//    //Elimina
-//    @Query("delete from CarritoItem c where c.producto.id= :prodId and c.usuario.id = :uid")
-//    @Modifying
-//    public void eliminarProducto(@Param("prodId") String prodId,
-//            @Param("uid") String uid);
+    //Elimina
+    @Modifying
+    @Query("delete from CarritoItem c where c.producto.id= :prodId and c.usuario.id = :uid")
+    public void eliminarProducto(@Param("prodId") String prodId,@Param("uid") String uid);
 }

@@ -52,8 +52,12 @@ public class CarritoItemServicio {
 
         carritoItemRepositorio.actualizarCantidad(cantidad, prodId, u.getId());
         carritoItemRepositorio.actualizarSubtotal(subtotal, prodId, u.getId());
-        
+
         return subtotal;
+    }
+
+    public void eliminarProducto(String prodId, Usuario u) {
+        carritoItemRepositorio.eliminarProducto(prodId, u.getId());
     }
 
 }
