@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
+import static org.aspectj.apache.bcel.Repository.instanceOf;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -110,7 +112,7 @@ public class UsuarioServicio implements UserDetailsService {
             if (email == null || email.isEmpty()) {
                 throw new Exception("El email es obligatorio");
             }
-                       
+
             if (email.length() > 30) {
                 throw new Exception("La contraseña no puede tener mas de 30 caracteres");
             }
@@ -122,11 +124,11 @@ public class UsuarioServicio implements UserDetailsService {
             if (password == null || password.isEmpty()) {
                 throw new Exception("La contraseña es obligatoria");
             }
-            
+
             if (password.length() < 8) {
                 throw new Exception("La contraseña debe tener como minimo 8 caracteres");
             }
-            
+
             if (password.length() > 30) {
                 throw new Exception("La contraseña no puede tener mas de 30 caracteres");
             }
@@ -136,6 +138,15 @@ public class UsuarioServicio implements UserDetailsService {
             }
         }
 
+    }
+
+    public Usuario mostrarUsuarioLogeado(Authentication auth) {
+
+        if (auth == null) {
+            return null;
+        }
+        
+        return usuarioRepositorio.buscarUsuarioPorEmail(auth.getName());
     }
 
     public void agregarUsuarioALaSesion(Usuario usuario) {
