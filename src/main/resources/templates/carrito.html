@@ -41,7 +41,7 @@
                                     <div>
                                         <span>X</span>
                                         <span th:text="${c.producto.precio} + ' = '"></span>
-                                        <span th:text="${c.subtotal}"></span>
+                                        <span th:id="'subtotal'+${c.producto.id}  " class="subtotalProd" th:text="${c.subtotal}"></span>
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                             <span class="h3">Total</span>
                         </div>
                         <div class="mt-2">
-                            <span class="h2">total</span>
+                            <span class="h2" id="cantidadTotal"></span>
                         </div>
                         <div class="mt-2">
                             <button class="btn btn-success p-3 mt-2">pagar</button>
@@ -63,7 +63,11 @@
             </div>
         </main>
         <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-        <script src="/javascript/control-de-cantidad.js"></script>
+        <script type="text/javascript">
+            var crsfHeaderName = "[[${_csrf.headerName}]]";
+            var crsfValue = "[[${_csrf.token}]]";
+        </script>
+        <script src="/javascript/carrito.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
 </html>
