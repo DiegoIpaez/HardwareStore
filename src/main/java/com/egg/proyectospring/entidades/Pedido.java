@@ -13,6 +13,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -30,9 +32,11 @@ public class Pedido {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     
-    @OneToOne
+    @ManyToOne
     private Usuario usuario;
     
+    @ManyToMany
+    private List<CarritoItem> carrito;
     
     private Double total;
     

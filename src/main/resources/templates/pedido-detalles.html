@@ -11,23 +11,31 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        <div>Aqui va toda la info del pedido</div>
         
         <table border="1">
             
             <thead>
                 <tr>
-                    <th>N</th>
+                    <th>N°</th>
+                    
                     <th>Producto</th>
-                    <th>Fecha</th>
-                    <th>Total a pagar</th>
-                    <th>Estado</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
                 </tr>
             </thead>
             
             <tbody>
-                <tr th:each="producto, contador : ${carrito}">
+                <tr th:each="carrito, contador : ${listaDeItems}">
                     <td th:text="${contador.count}"></td>
-                  
+                    
+                    <td th:text="${carrito.producto.nombre}"></td>
+                    <td th:text="${carrito.cantidad}"></td>
+                    <td th:text="${carrito.subtotal}"></td>
+                </tr>
+                <tr>
+                    <td>TOTAL A PAGAR</td>
+                    <td th:text="${pedido.total}"></td>
                 </tr>
             </tbody>
             

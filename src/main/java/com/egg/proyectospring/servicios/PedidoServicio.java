@@ -5,6 +5,7 @@
  */
 package com.egg.proyectospring.servicios;
 
+import com.egg.proyectospring.entidades.CarritoItem;
 import com.egg.proyectospring.entidades.Pedido;
 import com.egg.proyectospring.repositorios.PedidoRepositorio;
 import java.util.List;
@@ -21,8 +22,26 @@ public class PedidoServicio {
         return pedidoRepositorio.save(pedido);
     }
     
+    public Double calcularTotal(List<CarritoItem> carrito) {
+        
+        Double total = 0.0;
+        Double aux = 0.0;
+        for (CarritoItem carrito1 : carrito) {
+            aux = carrito1.getSubtotal();
+            total = aux + total;
+        }
+        
+        return total;
+        
+    }
+    
     public List<Pedido> pedidos() {
         return pedidoRepositorio.findAll();
     }
+    
+    public Pedido mostrarPedidoUsuario(String id) {
+        return pedidoRepositorio.pedidoPorUsuario(id);
+    }
+    
     
 }
