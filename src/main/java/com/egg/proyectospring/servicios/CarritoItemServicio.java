@@ -59,5 +59,14 @@ public class CarritoItemServicio {
     public void eliminarProducto(String prodId, Usuario u) {
         carritoItemRepositorio.eliminarProducto(prodId, u.getId());
     }
+    
+    public void eliminarProductos(List<CarritoItem> c){
+    
+        for (CarritoItem carrito : c) {
+            carritoItemRepositorio.eliminarProducto(carrito.getProducto().getId(), carrito.getUsuario().getId());
+        }
+        
+    }
+
 
 }
