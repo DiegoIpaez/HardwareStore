@@ -7,8 +7,10 @@ package com.egg.proyectospring.servicios;
 
 import com.egg.proyectospring.entidades.CarritoItem;
 import com.egg.proyectospring.entidades.Pedido;
+import com.egg.proyectospring.enumeraciones.EstadoPedido;
 import com.egg.proyectospring.repositorios.PedidoRepositorio;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +45,23 @@ public class PedidoServicio {
         return pedidoRepositorio.pedidoPorUsuario(id);
     }
     
+    public Pedido mostrarPedidoPorId(String id) {
+        return pedidoRepositorio.getById(id);
+    }
+    
+    public List<Pedido> mostrarPedidosDeUnUsuario(String id){
+        return pedidoRepositorio.pedidosPorUsuario(id);
+    }
+    
+    public void modificarEstadoPedido(String id, EstadoPedido estado) throws Exception {
+        Optional<Pedido> res = pedidoRepositorio.findById(id);
+        if (res != null) {
+            Pedido pedido = res.get();
+            
+            pedido.setEstado(estado);
+        } else {
+            throw new Exception("No se encontró el pedido");
+        }
+    }
     
 }

@@ -14,6 +14,8 @@ import com.egg.proyectospring.servicios.PedidoServicio;
 import com.egg.proyectospring.servicios.UsuarioServicio;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -65,26 +67,37 @@ public class PedidoController {
     @GetMapping("/usuario")
     public String pedidoUsuario(Model modelo, Authentication auth) {
         Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
-        Pedido pedido = pedidoServicio.mostrarPedidoUsuario(u.getId());
-        modelo.addAttribute("pedido", pedido);
+        List<Pedido> pedidos = pedidoServicio.mostrarPedidosDeUnUsuario(u.getId());
+        modelo.addAttribute("pedidos", pedidos);
         return "pedido-usuario";
     }
     
     @GetMapping("/usuario/pedido-detalles")
-    public String detallesDelPedido(Model modelo, Authentication auth, @RequestParam("items") List<CarritoItem> items) {
-        Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
+    public String detallesDelPedido(Model modelo, @RequestParam("id") String id) {
         
-        Pedido pedido = pedidoServicio.mostrarPedidoUsuario(u.getId());
-        modelo.addAttribute("listaDeItems", items);
+        Pedido pedido = pedidoServicio.mostrarPedidoPorId(id);
+        
         modelo.addAttribute("pedido", pedido);
         return "pedido-detalles";
+    }
+    
+    @GetMapping("/modificar")
+    public String modificar(Model modelo, @RequestParam("id") String id, @RequestParam("estado") EstadoPedido estado) {
+        try {
+            pedidoServicio.modificarEstadoPedido(id, estado);
+            
+            return "redirect:/pedido/list";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "redirect:/pedido/list";
+        }
     }
     
     @GetMapping("/list")
     public String listaDePedidos(Model modelo) {
         List<Pedido> pedidos = pedidoServicio.pedidos();
         modelo.addAttribute("pedidos", pedidos);
-        return "pedidos-list";
+        return "lista-pedidos";
     }
     
 }

@@ -21,5 +21,7 @@ public interface PedidoRepositorio extends JpaRepository<Pedido, String> {
     @Query("select p from Pedido p where p.usuario.id = :uid")
     public Pedido pedidoPorUsuario(@Param("uid") String uid);
     
+    @Query("select p from Pedido p where p.usuario.id = :uid")
+    public List<Pedido> pedidosPorUsuario(@Param("uid") String uid);
     
 }
