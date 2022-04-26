@@ -14,7 +14,7 @@ public class FotoServicio {
 
     public Foto guardarFoto(MultipartFile file) throws Exception {
 
-        if (file != null) {
+        if (file != null && !file.isEmpty()) {
             try {
                 Foto f = new Foto();
                 f.setName(file.getName());

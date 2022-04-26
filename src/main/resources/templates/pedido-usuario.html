@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <p>Mis pedidos:</p>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>N° de pedido</th>
+                    <th>Fecha del pedido</th>
+                    <th>Precio final</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr th:each="pedido : ${pedidos}">
+                    <td th:text="${pedido.id}"></td>
+                    <td th:text="${pedido.fecha}"></td>
+                    <td th:text="${pedido.total}"></td>
+                    <td th:text="${pedido.estado}"></td>
+                    <td><a th:href="@{/pedido/detalle(detalle=${pedido.detalle},total=${pedido.total})}" th:text="Detalles"></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
