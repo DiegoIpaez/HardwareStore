@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>TODO supply a title</title>
@@ -17,21 +12,25 @@ and open the template in the editor.
             
             <thead>
                 <tr>
-                    <th>N°</th>
-                    
+                    <th>N°</th>          
                     <th>Producto</th>
+                    <th>Precio</th>
                     <th>Cantidad</th>
                     <th>Subtotal</th>
                 </tr>
             </thead>
             
             <tbody>
-               <tr th:each="item, contador : ${pedido.carrito}">
+               <tr th:each="item, contador : ${detalle}">
                     <td th:text="${contador.count}"></td>
                     <td th:text="${item.producto.nombre}"></td>
+                    
+                    <td th:text="${item.producto.precio}"></td>
+                    <td th:text="${item.cantidad}"></td>
+                    <td th:text="${item.subtotal}"></td>
                 <tr>
                     <td>TOTAL A PAGAR</td>
-                    <td th:text="${pedido.total}"></td>
+                    <td th:text="${total}"></td>
                 </tr>
             </tbody>
             
