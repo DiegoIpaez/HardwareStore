@@ -9,7 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,11 +61,29 @@ public class CategoriaController {
         }
     }
     
+//    @GetMapping("/list")
+//    public String lista(Model modelo) {
+//        
+//        List<Categoria> categorias = categoriaServicio.listAll();
+//        modelo.addAttribute("listaDeCategorias", categorias);
+//        return "lista-categoria";
+//    }
+    
     @GetMapping("/list")
-    public String lista(Model modelo) {
+    public String lista(Model modelo, @PageableDefault(page = 0, size = 3) Pageable pageable) {
         
-        List<Categoria> categorias = categoriaServicio.listAll();
+        Integer page = pageable.getPageNumber();
+        Page<Categoria> categorias = categoriaServicio.getAll(pageable);
+        Integer totalDePaginas = categorias.getTotalPages();
+        if (totalDePaginas > 0) {
+            List<Integer> paginas = IntStream.rangeClosed(1, totalDePaginas).boxed().collect(Collectors.toList());
+            modelo.addAttribute("paginas", paginas);
+        }
         modelo.addAttribute("listaDeCategorias", categorias);
+        modelo.addAttribute("actual", page);
+        modelo.addAttribute("siguiente", page+1);
+        modelo.addAttribute("anterior", page-1);
+        modelo.addAttribute("ultima", totalDePaginas-1);
         return "lista-categoria";
     }
     
