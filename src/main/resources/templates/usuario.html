@@ -14,10 +14,11 @@
             <div class="container">
                 <div class="row">
                     <!--Si me autentico/login muesta el nombre del usuario-->
-                    <p sec:authorize="isAuthenticated()"><h1>Bienvenido</h1> <span sec:authentication="name"></span></p>
-
-                    <!--Compruebo la informacion guardada en Sesion-->
-                    <p th:if="${session.usuario != null}">Bienvenid@ <span th:text="${u.username}"></span>. Tu rol es <span th:text="${u.rol}"></span> Tu id es <span th:text="${u.id}"></span></p>
+                    <p sec:authorize="isAuthenticated()">
+                     <h1 th:text="'Bienvenido '+ ${u.username} +'!'"></h1> 
+                    </p>
+                    <span>Tu email es: <span sec:authentication="name"></span></span>
+                    <p>Tu rol es <span th:text="${u.rol}"></span></p>
 
                     <div class="col-4 mb-4 mt-2">
                         <img sec:authorize="isAuthenticated()" th:if="${u.foto != null}" th:src="@{/foto/usuario(idUsuario=${u.id})}" alt="foto-perfil" width="300">
@@ -27,8 +28,10 @@
                     <a th:href="@{/usuario/form(usuarioId=${u.id})}"><button class="btn btn-secondary">editar</button></a>
                     <a th:href="@{/cambiar_email}">editar email</a>
                     <a th:href="@{/forgot_password}">editar password</a>
- 
-                    
+                    <br>
+                    <a th:href="@{/pedido/usuario}">Mis pedidos</a>
+
+
                     <!--Me desconecto de mi cuenta logeada-->
                     <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
                         <input type="submit" value="Log out">
