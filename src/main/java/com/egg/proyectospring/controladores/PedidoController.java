@@ -1,10 +1,10 @@
 package com.egg.proyectospring.controladores;
 
-import com.egg.proyectospring.entidades.CarritoItem;
+import com.egg.proyectospring.entidades.Detalle;
 import com.egg.proyectospring.entidades.Pedido;
 import com.egg.proyectospring.entidades.Usuario;
 import com.egg.proyectospring.enumeraciones.EstadoPedido;
-import com.egg.proyectospring.servicios.CarritoItemServicio;
+import com.egg.proyectospring.servicios.DetalleServicio;
 import com.egg.proyectospring.servicios.PedidoServicio;
 import com.egg.proyectospring.servicios.UsuarioServicio;
 import java.util.List;
@@ -24,7 +24,7 @@ public class PedidoController {
     @Autowired
     private PedidoServicio pedidoServicio;  
     @Autowired
-    private CarritoItemServicio carritoServicio;    
+    private DetalleServicio carritoServicio;    
     @Autowired
     private UsuarioServicio usuarioServicio;
 
@@ -32,7 +32,7 @@ public class PedidoController {
     @PostMapping("/save")
     public String realizarPedido(Authentication auth){
         Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
-        List<CarritoItem> carrito = carritoServicio.carrito(u);
+        List<Detalle> carrito = carritoServicio.carrito(u);
         
         pedidoServicio.realizarPedido(u, carrito);
         carritoServicio.eliminarProductos(carrito);
