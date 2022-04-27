@@ -48,26 +48,28 @@ public class MarcaServicio {
      * @throws Exception
      */
     public Marca guardarMarca(String id, String nombre) throws Exception {
-        
+
         if (nombre == null || nombre.isEmpty()) {
             throw new Exception("El nombre no puede ser nulo o estar vacío");
         }
         Marca marca = new Marca();
         if (id != null && !id.isEmpty()) {
             marca.setId(id);
+            Marca marcaDB = marcaRepository.buscarMarcaPorNombre(nombre);
+            if (marcaDB != null) {
+                throw new Exception("La marca ya se encuentra en la base de datos");
+            }
             marca.setNombre(nombre);
             marca.setAlta(true);
-        }else{
+        } else {
             Marca marcaDB = marcaRepository.buscarMarcaPorNombre(nombre);
             if (marcaDB != null) {
                 throw new Exception("La marca ya se encuentra en la base de datos");
             } else {
-            marca.setNombre(nombre);
-            marca.setAlta(true);
+                marca.setNombre(nombre);
+                marca.setAlta(true);
+            }
         }
-        }
-
-        
 
         return marcaRepository.save(marca);
 
@@ -104,20 +106,24 @@ public class MarcaServicio {
             throw new Exception("No se encontró esa marca");
         }
     }
-    
+
     //metodo para eliminar una marca
     /**
      * @param id
-     * @throws Exception 
+     * @throws Exception
      */
-    public void eliminarMarca(String id) throws Exception{
+    public void eliminarMarca(String id) throws Exception {
         Optional<Marca> respuesta = marcaRepository.findById(id);
         if (respuesta.isPresent()) {
             Marca marca = respuesta.get();
             marcaRepository.delete(marca);
-        }else{
+        } else {
             throw new Exception("no se encontro esa marca");
         }
-        
+
+    }
+
+    public Marca buscarMarcaPorNombre(String nombre) {
+        return marcaRepository.buscarMarcaPorNombre(nombre);
     }
 }
