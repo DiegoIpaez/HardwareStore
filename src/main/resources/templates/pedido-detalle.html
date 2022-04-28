@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Aqui va toda la info del pedido</div>
+        
+        <table border="1">
+            
+            <thead>
+                <tr>
+                    <th>N°</th>          
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+               <tr th:each="item, contador : ${detalle}">
+                    <td th:text="${contador.count}"></td>
+                    <td th:text="${item.producto.nombre}"></td>
+                    
+                    <td th:text="${item.producto.precio}"></td>
+                    <td th:text="${item.cantidad}"></td>
+                    <td th:text="${item.subtotal}"></td>
+                <tr>
+                    <td>TOTAL A PAGAR</td>
+                    <td th:text="${total}"></td>
+                </tr>
+            </tbody>
+            
+        </table>
+        
+    </body>
+</html>
