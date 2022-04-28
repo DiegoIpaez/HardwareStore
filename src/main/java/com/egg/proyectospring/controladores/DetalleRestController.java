@@ -1,7 +1,7 @@
 package com.egg.proyectospring.controladores;
 
 import com.egg.proyectospring.entidades.Usuario;
-import com.egg.proyectospring.servicios.CarritoItemServicio;
+import com.egg.proyectospring.servicios.DetalleServicio;
 import com.egg.proyectospring.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CarritoItemRestController {
+public class DetalleRestController {
 
     @Autowired
-    private CarritoItemServicio carritoItemServicio;
+    private DetalleServicio detalleServicio;
     @Autowired
     private UsuarioServicio usuarioServicio;
 
@@ -28,7 +28,7 @@ public class CarritoItemRestController {
             if (u == null) {
                 return "Debe iniciar sesión para agregar este producto a su carrito de compras";
             }
-            Integer cantidadAñadida = carritoItemServicio.añadirProducto(productoId, cantidad, u);
+            Integer cantidadAñadida = detalleServicio.añadirProducto(productoId, cantidad, u);
 
             return cantidadAñadida + " artículo(s) de este producto se agregaron a su carrito de compras.";
         } catch (Exception e) {
@@ -48,7 +48,7 @@ public class CarritoItemRestController {
             if (u == null) {
                 return "Debe iniciar sesión para agregar este producto a su carrito de compras";
             }
-            Double subtotal = carritoItemServicio.actualizarCantidad(cantidad, productoId, u);
+            Double subtotal = detalleServicio.actualizarCantidad(cantidad, productoId, u);
             return String.valueOf(subtotal);
         } catch (Exception e) {
             return e.getMessage();
@@ -66,7 +66,7 @@ public class CarritoItemRestController {
                 return "Debe iniciar sesión para elminar este producto de su carrito de compras";
             }
 
-            carritoItemServicio.eliminarProducto(prodId, u);
+            detalleServicio.eliminarProducto(prodId, u);
 
             return "El producto ha sido eliminado de su carrito";
         } catch (Exception e) {

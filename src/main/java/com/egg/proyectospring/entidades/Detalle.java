@@ -9,7 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Data
-public class CarritoItem {
+public class Detalle {
 
     @Id
     @GeneratedValue(generator = "uuid")

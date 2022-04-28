@@ -8,6 +8,8 @@ import com.egg.proyectospring.repositorios.CategoriaRepositorio;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -95,6 +97,10 @@ public class CategoriaServicio {
     
     public List<Categoria> categoriasMenosUno(String nombre) {
         return categoriaRepositorio.categoriasMenosUno(nombre);
+    }
+    
+    public Page<Categoria> getAll(Pageable pageable){
+        return categoriaRepositorio.getAll(pageable);
     }
     
 }

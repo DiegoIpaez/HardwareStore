@@ -1,6 +1,6 @@
 package com.egg.proyectospring.servicios;
 
-import com.egg.proyectospring.entidades.CarritoItem;
+import com.egg.proyectospring.entidades.Detalle;
 import com.egg.proyectospring.entidades.Pedido;
 import com.egg.proyectospring.entidades.Producto;
 import com.egg.proyectospring.entidades.Usuario;
@@ -22,7 +22,7 @@ public class PedidoServicio {
     @Autowired
     private ProductoServicio productoServicio;
 
-    public Pedido realizarPedido(Usuario u, List<CarritoItem> carrito) {
+    public Pedido realizarPedido(Usuario u, List<Detalle> carrito) {
         Pedido pedido = new Pedido();
 
         pedido.setEstado(EstadoPedido.PROCESANDO);
@@ -50,19 +50,19 @@ public class PedidoServicio {
         Optional<Pedido> res = pedidoRepositorio.findById(id);
         if (res != null) {
             Pedido pedido = res.get();
-
             pedido.setEstado(estado);
+            pedidoRepositorio.save(pedido);
         } else {
             throw new Exception("No se encontró el pedido");
         }
     }
 
-    public String detalleDePedido(List<CarritoItem> carrito) {
+    public String detalleDePedido(List<Detalle> carrito) {
 
         String productos = "";
         List<String> lista = new ArrayList<>();
 
-        for (CarritoItem carrito1 : carrito) {
+        for (Detalle carrito1 : carrito) {
             String item = carrito1.getProducto().getId() + ", " + carrito1.getCantidad() + ", " + carrito1.getSubtotal();
             lista.add(item);
         }
@@ -73,16 +73,16 @@ public class PedidoServicio {
         return productos;
     }
     
-    public List<CarritoItem> mostrarDetalle(String detalle) throws Exception{
+    public List<Detalle> mostrarDetalle(String detalle) throws Exception{
     
         String[] aux = detalle.split(",");
         List<String> aux2 = new ArrayList<String>(Arrays.asList(aux));
-        List<CarritoItem> carrito = new ArrayList<>();
+        List<Detalle> carrito = new ArrayList<>();
         
         Integer cantidad = aux2.size()/3;
         
         for (int i = 0; i < cantidad*3 ; i=i+3) {
-            CarritoItem c = new CarritoItem();
+            Detalle c = new Detalle();
             String id = aux2.get(i).replace(" ", "");
             String ctd = aux2.get(i+1).replace(" ", "");
             String sub = aux2.get(i+2).replace(" ", "");
@@ -104,11 +104,11 @@ public class PedidoServicio {
         return oracion;
     }
 
-    public Double calcularTotal(List<CarritoItem> carrito) {
+    public Double calcularTotal(List<Detalle> carrito) {
 
         Double total = 0.0;
         Double aux = 0.0;
-        for (CarritoItem carrito1 : carrito) {
+        for (Detalle carrito1 : carrito) {
             aux = carrito1.getSubtotal();
             total = aux + total;
         }

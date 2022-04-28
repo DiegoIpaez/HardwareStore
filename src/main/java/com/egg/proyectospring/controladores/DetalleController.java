@@ -1,8 +1,8 @@
 package com.egg.proyectospring.controladores;
 
-import com.egg.proyectospring.entidades.CarritoItem;
+import com.egg.proyectospring.entidades.Detalle;
 import com.egg.proyectospring.entidades.Usuario;
-import com.egg.proyectospring.servicios.CarritoItemServicio;
+import com.egg.proyectospring.servicios.DetalleServicio;
 import com.egg.proyectospring.servicios.UsuarioServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/carrito")
-public class CarritoItemController {
+public class DetalleController {
 
     @Autowired
-    private CarritoItemServicio carritoItemServicio;
+    private DetalleServicio detalleServicio;
     @Autowired
     private UsuarioServicio usuarioServicio;
 
@@ -28,7 +28,7 @@ public class CarritoItemController {
 
         Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth); 
         
-        List<CarritoItem> carrito = carritoItemServicio.carrito(u);
+        List<Detalle> carrito = detalleServicio.carrito(u);
 
         model.addAttribute("carrito", carrito);
 

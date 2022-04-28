@@ -4,6 +4,7 @@ import com.egg.proyectospring.entidades.Usuario;
 import com.egg.proyectospring.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +23,10 @@ public class UsuarioController {
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO')")
     @GetMapping("")
-    public String usuario(Model model, @RequestParam(name = "uid", required = false) String id) {
+    public String usuario(Model model, Authentication auth) {
 
         try {
-            model.addAttribute("u", usuarioServicio.mostrarUsuarioPorId(id));
+            model.addAttribute("u", usuarioServicio.mostrarUsuarioLogeado(auth));
             return "usuario";
         } catch (Exception e) {
             model.addAttribute("codigo", "404");
