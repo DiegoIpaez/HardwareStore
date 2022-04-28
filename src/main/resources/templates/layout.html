@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c3a49e1200.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/src/main/resources/static/css/footer.css">
+    <link rel="stylesheet" href="css/footer.css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="Media/austromex.webp" alt="logo" width="100" height="45"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span <i class="bi bi-list"></i></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/tarea/form">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tarea/form">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tarea/list">Sobre Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tarea/list">Donde comprar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main layout:fragment="main">
+        <p>Contenido por defecto</p>
+    </main>
+    <footer class="text-center text-lg-start text-muted">
+        <!-- Section: Social media -->
+        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+            <!-- Left -->
+            <div class="me-5 d-none d-lg-block">
+                <span>Seguinos en:</span>
+            </div>
+            <!-- Left -->
+
+            <!-- Right -->
+            <div class="boxIcon">
+                <a href="https://www.facebook.com/" class="icon">
+                    <i class="bi bi-facebook"></i></a>
+                <a href="https://twitter.com/?cc=ar" class="icon">
+                    <i class="bi bi-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com" class="icon">
+                    <i class="bi bi-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/?gl=US" class="icon">
+                    <i class="bi bi-youtube"></i>
+                </a>
+            </div>
+            <!-- Right -->
+        </section>
+        <!-- Section: Social media -->
+
+        <!-- Section: Links  -->
+        <section class="algo">
+            <div class="container-fluid pt-5 pb-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-1 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <img src="Media/austromex.webp" alt="logo" width="100" height="45">
+                        </h6>   
+                    </div>
+                
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            EMPRESA
+                        </h6>
+                        <p>
+                            <a href="#!" class="text-reset">Home</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Productos</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Sobre Nosotros</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Donde comprar</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Ayuda</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md- col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            MI CUENTA
+                        </h6>
+                        <p>
+                            <a href="#!" class="text-reset">Mi perfil</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Mi carrito</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Mis compras</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            CONTACTO
+                        </h6>
+                        <p><i class="fas fa-home me-3"></i> 25 de Mayo 1365, San Miguel de Tucumán, Argentina</p>
+                        <p>
+                            <i class="fas fa-envelope me-3"></i>
+                            ferreteriaGrupo2@gmail.com
+                        </p>
+                        <p><i class="fas fa-phone me-3"></i> + 54 381 458 7458</p>
+                        <p><i class="fas fa-print me-3"></i> + 54 381 345 4785</p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+            </div>
+        </section>
+        <!-- Section: Links  -->
+
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2021 Copyright:
+            <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
