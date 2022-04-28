@@ -1,0 +1,41 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+nav{
+  background-color: #21201E;
+}
+
+a:link{
+  color: #E98416;
+}
+
+footer{
+  background-color: #21201E;
+}
+
+.icon{
+  text-decoration: none;
+}
+
+.bi::before {
+    font-size: 1.5em;
+    color: #E98416;
+    margin: 0.5em;
+  }
+
+.boxIcon{
+  text-decoration: none;
+}
+
+.seguinos{
+}
+
+.algo{
+  color: #FF7800;
+}
+
+.navbar-toggler-icon{
+  color: #FF7800;
+}
