@@ -50,8 +50,8 @@ public class PedidoServicio {
         Optional<Pedido> res = pedidoRepositorio.findById(id);
         if (res != null) {
             Pedido pedido = res.get();
-
             pedido.setEstado(estado);
+            pedidoRepositorio.save(pedido);
         } else {
             throw new Exception("No se encontró el pedido");
         }

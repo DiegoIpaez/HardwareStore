@@ -56,7 +56,7 @@ public class PedidoController {
         return "pedido-detalle";
     }
     
-    @GetMapping("/modificar")
+    @PostMapping("/actualizar")
     public String modificar(Model model, @RequestParam("id") String id, @RequestParam("estado") EstadoPedido estado) {
         try {
             pedidoServicio.modificarEstadoPedido(id, estado);
@@ -72,6 +72,7 @@ public class PedidoController {
     public String listaDePedidos(Model modelo) {
         List<Pedido> pedidos = pedidoServicio.pedidos();
         modelo.addAttribute("pedidos", pedidos);
+        modelo.addAttribute("estados",EstadoPedido.values());
         return "lista-pedidos";
     }
     
