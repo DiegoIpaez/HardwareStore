@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
     <head>
         <meta charset="utf-8">
@@ -9,16 +8,16 @@
         <title>Hello, world!</title>
     </head>
     <body>
-
-        <main>
-            <h1>Bienvenido!</h1>
-            <!--Si me autentico/login muesta el nombre del usuario-->
-            <p sec:authorize="isAuthenticated()">Logged user: <span sec:authentication="name"></span></p>
-            <!--Compruebo la informacion guardada en Sesion-->
-            <p th:if="${session.usuario != null}">Bienvenid@ <span th:text="${session.usuario.username}"></span>. Tu rol es <span th:text="${session.usuario.rol}"></span> Tu id es <span th:text="${session.usuario.id}"></span></p>
-            <a th:if="${session.usuario != null}" th:href="@{/usuario(uid=${session.usuario.id})}">Mi cuenta<a/>
+        <main layout:fragment="main">
+            <div class="container mt-5 mb-5">
+                <h1>Bienvenido!</h1>
+                <!--Si me autentico/login muesta el nombre del usuario-->
+                <p sec:authorize="isAuthenticated()">Logged user: <span sec:authentication="name"></span></p>
+                <!--Compruebo la informacion guardada en Sesion-->
+                <p th:if="${session.usuario != null}">Bienvenid@ <span th:text="${session.usuario.username}"></span>. Tu rol es <span th:text="${session.usuario.rol}"></span> Tu id es <span th:text="${session.usuario.id}"></span></p>
+                <a th:if="${session.usuario != null}">Mi cuenta<a/>
+            </div>
         </main>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
 </html>
 
