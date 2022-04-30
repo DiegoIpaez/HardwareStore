@@ -1,98 +1,148 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head>
-    <title>TODO supply a title</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/c3a49e1200.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/src/main/resources/static/css/footer.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-</head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+            rel="stylesheet"
+            />
+        <!-- Fonts -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="css/index.css" >
+        <link rel="stylesheet" href="css/navbar.css" >
+        <link rel="stylesheet" href="css/footer.css" >
 
-<body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/"><img src="Media/austromex.webp" alt="logo" width="100" height="45"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span <i class="bi bi-list"></i></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/tarea/form">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/tarea/form">Productos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/tarea/list">Sobre Nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/tarea/list">Donde comprar</a>
-                    </li>
-                </ul>
+
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/"><img src="Media/austromex.webp" alt="logo" width="100" height="45"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span <i class="bi bi-list"></i></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/producto/productos">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/sobre_nosotros">Sobre Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contacto">Donde comprar</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/carrito"><i class="fa fa-shopping-cart"></i></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle ms-2" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-user"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark text-center" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="dropdown-item" th:if="${session.usuario == null}" href="/login">Iniciar session</a></li>
+                                <li><a class="dropdown-item" th:if="${session.usuario != null}" href="/usuario">Mi cuenta</a></li>
+                                <li><a class="dropdown-item" th:if="${session.usuario != null}">
+                                        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
+                                            <button  type="submit" class="btn text-danger">Salir <i class="fa fa-arrow-right"></i></button>
+                                        </form></a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle me-5" id="navbarDarkDropdownMenuLink" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-toolbox"></i>
+                            </a>
+                            <ul sec:authorize="hasRole('ADMINISTRADOR')" class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">                            
+                                <li><a class="dropdown-item" href="/usuario/list">Usuarios</a></li>
+                                <li><a class="dropdown-item" href="/pedido/list">Pedidos</a></li>
+                                <li><a class="dropdown-item" href="/producto/list">Productos</a></li>
+                                <li><a class="dropdown-item" href="/categoria/list">Categorias</a></li>
+                                <li><a class="dropdown-item" href="/marca/list">Marcas</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item ms-5"></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    <main layout:fragment="main">
-        <p>Contenido por defecto</p>
-    </main>
-    <footer class="text-center text-lg-start text-muted">
-        <!-- Section: Social media -->
-        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-            <!-- Left -->
-            <div class="me-5 d-none d-lg-block">
-                <span>Seguinos en:</span>
-            </div>
-            <!-- Left -->
+        </nav>
+        <main layout:fragment="main">
+            <p>Contenido por defecto</p>
+        </main>
+        <footer class="text-center text-lg-start text-muted">
+            <!-- Section: Social media -->
+            <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+                <!-- Left -->
+                <div class="me-5 d-none d-lg-block">
+                    <span>Seguinos en:</span>
+                </div>
+                <!-- Left -->
 
-            <!-- Right -->
-            <div class="boxIcon">
-                <a href="https://www.facebook.com/" class="icon">
-                    <i class="bi bi-facebook"></i></a>
-                <a href="https://twitter.com/?cc=ar" class="icon">
-                    <i class="bi bi-twitter"></i>
-                </a>
-                <a href="https://www.instagram.com" class="icon">
-                    <i class="bi bi-instagram"></i>
-                </a>
-                <a href="https://www.youtube.com/?gl=US" class="icon">
-                    <i class="bi bi-youtube"></i>
-                </a>
-            </div>
-            <!-- Right -->
-        </section>
-        <!-- Section: Social media -->
+                <!-- Right -->
+                <div>
+                    <a href="https://www.facebook.com/" class="icon">
+                        <i class="bi bi-facebook"></i></a>
+                    <a href="https://twitter.com/?cc=ar" class="icon">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com" class="icon">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="https://www.youtube.com/?gl=US" class="icon">
+                        <i class="bi bi-youtube"></i>
+                    </a>
+                </div>
+                <!-- Right -->
+            </section>
+            <!-- Section: Social media -->
 
-        <!-- Section: Links  -->
-        <section class="algo">
-            <div class="container-fluid pt-5 pb-5">
+            <!-- Section: Links  -->
+            <div class="container-fluid info-footer pt-5">
                 <!-- Grid row -->
                 <div class="row mt-3">
-                    <!-- Grid column -->
-                    <div class="col-md-3 col-lg-4 col-xl-1 mx-auto mb-4">
-                        <!-- Content -->
-                        <h6 class="text-uppercase fw-bold mb-4">
-                            <img src="Media/austromex.webp" alt="logo" width="100" height="45">
-                        </h6>   
+                    <!-- Col -->
+                    <div class="col-md-0 col-xl-1"></div>
+                    <!-- Col -->
+                    <div class="col-md-12 col-lg-12 col-xl-2 mb-5">
+                        <img src="Media/austromex.webp"  alt="logo"
+                             class="logo-footer mt-4">
                     </div>
-                
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                        <!-- Links -->
+                    <!-- Col -->
+                    <div class="col-md-12 col-xl-2 text-center mb-5">
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            MI CUENTA
+                        </h6>
+                        <p>
+                            <a href="#!" class="text-reset">Mi perfil</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Mi carrito</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Mis compras</a>
+                        </p>
+                    </div>
+                    <!-- Col -->
+                    <div class="col-md-12 col-xl-3 text-center mb-5">
                         <h6 class="text-uppercase fw-bold mb-4">
                             EMPRESA
                         </h6>
@@ -112,29 +162,10 @@ and open the template in the editor.
                             <a href="#!" class="text-reset">Ayuda</a>
                         </p>
                     </div>
-                    <!-- Grid column -->
 
-                    <!-- Grid column -->
-                    <div class="col-md- col-lg-2 col-xl-2 mx-auto mb-4">
-                        <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">
-                            MI CUENTA
-                        </h6>
-                        <p>
-                            <a href="#!" class="text-reset">Mi perfil</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-reset">Mi carrito</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-reset">Mis compras</a>
-                        </p>
-                    </div>
-                    <!-- Grid column -->
 
-                    <!-- Grid column -->
-                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                        <!-- Links -->
+                    <!-- Col -->
+                    <div class="col-md-12 col-xl-4">
                         <h6 class="text-uppercase fw-bold mb-4">
                             CONTACTO
                         </h6>
@@ -146,23 +177,26 @@ and open the template in the editor.
                         <p><i class="fas fa-phone me-3"></i> + 54 381 458 7458</p>
                         <p><i class="fas fa-print me-3"></i> + 54 381 345 4785</p>
                     </div>
-                    <!-- Grid column -->
                 </div>
                 <!-- Grid row -->
             </div>
-        </section>
-        <!-- Section: Links  -->
+            <!-- Section: Links  -->
 
-        <!-- Copyright -->
-        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-            © 2021 Copyright:
-            <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+            <!-- Copyright -->
+            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+                © 2021 Copyright:
+                <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+
+        <div layout:fragment="scripts">
         </div>
-        <!-- Copyright -->
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-</body>
+        <script src="https://kit.fontawesome.com/c3a49e1200.js" crossorigin="anonymous"></script>
+    </body>
 
 </html>

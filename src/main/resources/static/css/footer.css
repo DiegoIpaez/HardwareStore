@@ -1,41 +1,27 @@
-*{
-  margin: 0;
-  padding: 0;
-}
-
-nav{
+footer {
+  margin-top: 10.07rem;
   background-color: #21201E;
 }
 
-a:link{
+.bi::before {
+  font-size: 1.5em;
   color: #E98416;
+  margin: 0.5em;
 }
 
-footer{
-  background-color: #21201E;
+.info-footer {
+  color: #FF7800;
 }
 
 .icon{
   text-decoration: none;
 }
 
-.bi::before {
-    font-size: 1.5em;
-    color: #E98416;
-    margin: 0.5em;
-  }
-
-.boxIcon{
+.text-reset{
   text-decoration: none;
 }
 
-.seguinos{
-}
-
-.algo{
-  color: #FF7800;
-}
-
-.navbar-toggler-icon{
-  color: #FF7800;
+.logo-footer{
+  height: 7rem;
+  width: 17rem;
 }
