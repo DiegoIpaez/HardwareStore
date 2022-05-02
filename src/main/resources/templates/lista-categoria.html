@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>TODO supply a title</title>
@@ -13,33 +8,6 @@ and open the template in the editor.
               integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     </head>
     <body>
-<!--        <div class="container">
-            <h3>Categorias</h3>
-        <table class="table table-striped">
-
-            <thead>
-                <tr>
-                    <th>N°</th>
-                    <th>Nombre</th>
-                    <th>Editar</th>
-                    <th>Dar de baja</th>
-                    <th>Alta</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr th:each="categoria, contador : ${listaDeCategorias}">
-                    <td th:text="${contador.count}"></td>
-                    <td th:text="${categoria.nombre}"></td>
-                    <td> <a th:href="@{/categoria/modificar(id=${categoria.id})}" th:text="Editar"></a></td>
-                    <td><a th:href="@{/categoria/baja(id=${categoria.id})}" th:text="Eliminar"></a></td>
-                    <td><a th:href="@{/categoria/alta(id=${categoria.id})}" th:text="Alta"></a></td>
-                </tr>
-            </tbody>
-
-        </table>
-        </div>-->
-        
         <div class="container">
             <div th:if="${!listaDeCategorias.isEmpty()}">
                 <h3 align='center'>Categorias</h3>

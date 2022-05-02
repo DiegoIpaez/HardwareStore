@@ -1,22 +1,19 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-        <title>Producto id</title>
     </head>
     <body>
 
-        <main>
+        <main layout:fragment="main">
             <div class="container">
                 <div class="row mt-5">             
                     <h5 th:text="${producto.nombre}"></h5> 
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <img style="border: 1px solid" th:src="${producto.img}" width="100" height="100"/>
+                        <img style="border: 1px solid" src="http://d3ugyf2ht6aenh.cloudfront.net/stores/001/127/623/products/cd121k_11-aaff0495a0a8b57e1c15941669028233-640-0.jpg" width="100" height="100"/>
                     </div>
                 </div>
                 <div class="row">
@@ -33,15 +30,15 @@
             </div>
 
         </main>
-        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-        <script type="text/javascript">
-            var crsfHeaderName = "[[${_csrf.headerName}]]";
-            var crsfValue = "[[${_csrf.token}]]";
-            var productoId = "[[${producto.id}]]";
-            
-        </script>
-        <script src="/javascript/control-de-cantidad.js"></script>
-        <script src="/javascript/añadir-al-carrito.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <div layout:fragment="scripts">
+            <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+            <script type="text/javascript">
+                var crsfHeaderName = "[[${_csrf.headerName}]]";
+                var crsfValue = "[[${_csrf.token}]]";
+                var productoId = "[[${producto.id}]]";
+            </script>
+            <script src="/javascript/control-de-cantidad.js"></script>
+            <script src="/javascript/añadir-al-carrito.js"></script>
+        </div>
     </body>
 </html>
