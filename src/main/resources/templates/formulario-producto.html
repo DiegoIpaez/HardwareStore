@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Crear Producto</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h3 th:if="${producto.id != null and !producto.id.isEmpty()}">Modificar un producto</h3>
+        <h3 th:if="${producto.id == null or producto.id.isEmpty()}">Ingresar un producto</h3>
+        <p th:text="${error}" th:if="${error != null}"> 
+
+        </p>
+        <form th:action="@{/producto/save}" method="POST"  enctype="multipart/form-data" th:object="${producto}">
+            <label><strong>Nombre</strong></label><br>
+
+            <input hidden th:field="*{id}" />
+
+            <input type="text" th:field="*{nombre}">
+            <br>
+            <label><strong>Descripcion </strong></label><br>
+            <input type="text" th:field="*{descripcion}">
+            <br>
+            <label><strong>Marca</strong></label><br>
+            <select th:field="*{marca.nombre}">
+                <option th:each=" pepe : ${marcas}"
+                        th:text="${pepe.nombre}"
+                        th:value="${pepe.nombre}"
+                        th:selected='${pepe.nombre}'>
+                </option>
+            </select>
+            <br>
+            <label><strong>Categoria </strong></label><br>
+            <select th:field="*{categoria.nombre}">
+                <option th:each=" pepe : ${categorias}"
+                        th:text="${pepe.nombre}"
+                        th:value="${pepe.nombre}"
+                        th:selected='${pepe.nombre}'>
+                </option>
+            </select>
+            <br>
+            <label><strong>Precio</strong></label><br>
+            <input type="text" th:field="*{precio}">
+            <br>
+            <label><strong>Foto</strong></label><br>
+            <input type="file" name="file" >
+            <br>
+            <br>
+            <input type="submit"/>
+        </form>
+        <br>
+        <a th:href="@{/producto}">Ir a la lista de productos</a>
+
+    </body>
+</html>

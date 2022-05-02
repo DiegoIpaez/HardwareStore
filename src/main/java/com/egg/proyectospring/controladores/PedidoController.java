@@ -1,27 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.egg.proyectospring.controladores;
 
-import com.egg.proyectospring.entidades.CarritoItem;
+import com.egg.proyectospring.entidades.Detalle;
 import com.egg.proyectospring.entidades.Pedido;
 import com.egg.proyectospring.entidades.Usuario;
 import com.egg.proyectospring.enumeraciones.EstadoPedido;
-import com.egg.proyectospring.servicios.CarritoItemServicio;
+import com.egg.proyectospring.servicios.DetalleServicio;
 import com.egg.proyectospring.servicios.PedidoServicio;
 import com.egg.proyectospring.servicios.UsuarioServicio;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,58 +22,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PedidoController {
     
     @Autowired
-    private PedidoServicio pedidoServicio;
-    
+    private PedidoServicio pedidoServicio;  
     @Autowired
-    private CarritoItemServicio carritoServicio;
-    
+    private DetalleServicio carritoServicio;    
     @Autowired
     private UsuarioServicio usuarioServicio;
-    
-    @GetMapping("")
-    public String pedido(Model modelo, Authentication auth){
-        Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
-        
-        Pedido pedido = pedidoServicio.mostrarPedidoUsuario(u.getId());
-        modelo.addAttribute("carrito", pedido.getCarrito());
-        modelo.addAttribute("pedido", pedido);
-        return "pedido";
-    }
+
     
     @PostMapping("/save")
-    public String realizarPedido(Authentication auth) {
+    public String realizarPedido(Authentication auth){
         Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
-        List<CarritoItem> lista = carritoServicio.carrito(u);
-        Pedido pedido = new Pedido();
-        pedido.setCarrito(lista);
-        pedido.setEstado(EstadoPedido.PENDIENTE);
-        pedido.setFecha(new Date());
-        pedido.setTotal(pedidoServicio.calcularTotal(lista));
-        pedido.setUsuario(u);
-        pedidoServicio.realizarPedido(pedido);
-//        carritoServicio.eliminarProductos(lista);
+        List<Detalle> carrito = carritoServicio.carrito(u);
+        
+        pedidoServicio.realizarPedido(u, carrito);
+        carritoServicio.eliminarProductos(carrito);
         return "redirect:/carrito";
     }
     
     @GetMapping("/usuario")
-    public String pedidoUsuario(Model modelo, Authentication auth) {
+    public String pedidoUsuario(Model model, Authentication auth) {
         Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
-        List<Pedido> pedidos = pedidoServicio.mostrarPedidosDeUnUsuario(u.getId());
-        modelo.addAttribute("pedidos", pedidos);
+        List<Pedido> pedidos = pedidoServicio.mostrarPedidosPorUsuario(u.getId());
+        model.addAttribute("pedidos", pedidos);
         return "pedido-usuario";
     }
     
-    @GetMapping("/usuario/pedido-detalles")
-    public String detallesDelPedido(Model modelo, @RequestParam("id") String id) {
+    @GetMapping("/detalle")
+    public String detallesDelPedido(Model model, @RequestParam("detalle") String detalle, @RequestParam("total") Double total) throws Exception {
         
-        Pedido pedido = pedidoServicio.mostrarPedidoPorId(id);
+        model.addAttribute("detalle", pedidoServicio.mostrarDetalle(detalle));
+        model.addAttribute("total", total);
         
-        modelo.addAttribute("pedido", pedido);
-        return "pedido-detalles";
+        return "pedido-detalle";
     }
     
-    @GetMapping("/modificar")
-    public String modificar(Model modelo, @RequestParam("id") String id, @RequestParam("estado") EstadoPedido estado) {
+    @PostMapping("/actualizar")
+    public String modificar(Model model, @RequestParam("id") String id, @RequestParam("estado") EstadoPedido estado) {
         try {
             pedidoServicio.modificarEstadoPedido(id, estado);
             
@@ -97,6 +72,7 @@ public class PedidoController {
     public String listaDePedidos(Model modelo) {
         List<Pedido> pedidos = pedidoServicio.pedidos();
         modelo.addAttribute("pedidos", pedidos);
+        modelo.addAttribute("estados",EstadoPedido.values());
         return "lista-pedidos";
     }
     
