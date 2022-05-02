@@ -33,7 +33,7 @@ public class DetalleServicio {
         } else {
             carritoItem = new Detalle();
             carritoItem.setCantidad(cantidad);
-            carritoItem.setProducto(productoServicio.mostrarProductoPorId(prodId));
+            carritoItem.setProducto(productoServicio.buscarProductoPorId(prodId));
             carritoItem.setUsuario(u);
         }
 
@@ -47,7 +47,7 @@ public class DetalleServicio {
 
     public Double actualizarCantidad(Integer cantidad, String prodId, Usuario u) throws Exception {
 
-        Producto p = productoServicio.mostrarProductoPorId(prodId);
+        Producto p = productoServicio.buscarProductoPorId(prodId);
         Double subtotal = p.getPrecio() * cantidad;
 
         detalleRepositorio.actualizarCantidad(cantidad, prodId, u.getId());

@@ -31,12 +31,27 @@ public class ProductoController {
     MarcaServicio marcaServicio;
     @Autowired
     CategoriaServicio categoriaServicio;
+    
+     @GetMapping("")
+    public String productoId(@RequestParam("prodId") String id, Model model) {
+
+        try {
+            Producto p = productoServicio.buscarProductoPorId(id);
+            model.addAttribute("producto", p);
+            return "productoId";
+        } catch (Exception e) {
+            model.addAttribute("codigo", "404");
+            model.addAttribute("explicacion", e.getMessage());
+            return "error";
+        }
+
+    }
 
     /**
      * @param model
      * @return
      */
-    @GetMapping("")
+    @GetMapping("/list")
     public String mostrarProductos(Model model) {
         List<Producto> productos = productoServicio.listarProductos();
         model.addAttribute("productos", productos);

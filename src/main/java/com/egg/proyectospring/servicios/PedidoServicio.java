@@ -86,7 +86,7 @@ public class PedidoServicio {
             String id = aux2.get(i).replace(" ", "");
             String ctd = aux2.get(i+1).replace(" ", "");
             String sub = aux2.get(i+2).replace(" ", "");
-            Producto p = productoServicio.mostrarProductoPorId(id);
+            Producto p = productoServicio.buscarProductoPorId(id);
             c.setProducto(p);
             c.setCantidad(Integer.parseInt(ctd));
             c.setSubtotal(Double.parseDouble(sub));
