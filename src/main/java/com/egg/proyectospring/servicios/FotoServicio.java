@@ -22,9 +22,12 @@ public class FotoServicio {
                 f.setContenido(file.getBytes());
 
                 return fotoRepositorio.save(f);
-                
+
             } catch (Exception e) {
+                e.printStackTrace();
+                e.getMessage();
                 throw new Exception("No se pudo guardar");
+
             }
         } else {
             return null;

@@ -29,7 +29,6 @@ and open the template in the editor.
                                 <th>Precio</th>
                                 <th>Disponible</th>
                                 <th>ALTA/BAJA</th>
-                               
                                 <th>Eliminar</th>
                                 <th>Editar</th>
 
@@ -47,8 +46,6 @@ and open the template in the editor.
                                         <button type="button" class="btn btn-success">Dar Baja</button></a>
                                     <a th:href="@{/producto/disponible(id = ${pepe.id})}" th:if="${!pepe.disponible}">
                                         <button type="button" class="btn btn-danger">Dar Alta</button></a></td>
-                                
-
 
                                 <td>
                                     <a th:href="@{/producto/baja(id = ${pepe.id})}" th:if="${pepe.alta}">
@@ -56,7 +53,7 @@ and open the template in the editor.
                                     <a th:href="@{/producto/alta(id = ${pepe.id})}" th:if="${!pepe.alta}">
                                         <button type="button" class="btn btn-danger">Dar Alta</button></a>
                                 </td>
-                               
+
                                 <td><a th:href="@{/producto/eliminar(id=${pepe.id})}" th:text="'Eliminar'"></a></td>
                                 <td ><a th:href="@{/producto/modificar(id=${pepe.id})}" th:text="'Editar'"></a></td>
 

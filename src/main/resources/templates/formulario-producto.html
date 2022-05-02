@@ -16,7 +16,7 @@ and open the template in the editor.
         <p th:text="${error}" th:if="${error != null}"> 
 
         </p>
-        <form th:action="@{/producto/save}" method="POST" th:object="${producto}">
+        <form th:action="@{/producto/save}" method="POST"  enctype="multipart/form-data" th:object="${producto}">
             <label><strong>Nombre</strong></label><br>
 
             <input hidden th:field="*{id}" />
@@ -48,13 +48,13 @@ and open the template in the editor.
             <input type="text" th:field="*{precio}">
             <br>
             <label><strong>Foto</strong></label><br>
-            <input type="file" th:field="*{foto}">
+            <input type="file" name="file" >
             <br>
             <br>
             <input type="submit"/>
         </form>
         <br>
-        <a th:href="@{/producto/list}">Ir a la lista de productos</a>
+        <a th:href="@{/producto}">Ir a la lista de productos</a>
 
     </body>
 </html>

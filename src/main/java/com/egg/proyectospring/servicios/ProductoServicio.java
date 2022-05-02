@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Juan Manuel
@@ -22,6 +23,8 @@ public class ProductoServicio {
     MarcaServicio marcaServicio;
     @Autowired
     CategoriaServicio categoriaServicio;
+    @Autowired
+    FotoServicio fotoServicio;
 
     //metodo encargado de traer todos las productos
     /**
@@ -51,18 +54,23 @@ public class ProductoServicio {
     //metodo que guarda, edita y crea un producto
     /**
      * @param producto
+     * @param file
      * @return
      * @throws Exception
      */
-    public Producto guardarProducto(Producto producto) throws Exception {
+    public Producto guardarProducto(Producto producto, MultipartFile file) throws Exception {
         validar(producto);
 
         if (producto.getId() != null && !producto.getId().isEmpty()) {
             producto.setId(producto.getId());
-            Producto productodb = productoRepository.buscarProductoPorNombre(producto.getNombre());
-            if (productodb != null) {
-                throw new Exception("El producto se encuentra en la base de datos");
+
+            Producto p = productoRepository.getById(producto.getId());
+            for (Producto productoMenosUno : productoRepository.productoMenosUno(p.getNombre())) {
+                if (productoMenosUno.getNombre().equals(producto.getNombre())) {
+                    throw new Exception(" ya existe un producto con ese nombre");
+                }
             }
+
             producto.setNombre(producto.getNombre());
             producto.setDescripcion(producto.getDescripcion());
             producto.setPrecio(producto.getPrecio());
@@ -78,10 +86,16 @@ public class ProductoServicio {
             } else {
                 throw new Exception("no existe esa categoria");
             }
-            Producto p = productoRepository.getById(producto.getId());
-            producto.setAlta(p.getAlta());
-            producto.setDisponible(p.getDisponible());
-            producto.setFoto(producto.getFoto());
+            Producto p1 = productoRepository.getById(producto.getId());
+            producto.setAlta(p1.getAlta());
+            producto.setDisponible(p1.getDisponible());
+
+            if (file != null && !file.isEmpty()) {
+                producto.setFoto(fotoServicio.guardarFoto(file));
+            } else {
+                producto.setFoto(producto.getFoto());
+            }
+
         } else {
             Producto productodb = productoRepository.buscarProductoPorNombre(producto.getNombre());
             if (productodb != null) {
@@ -102,16 +116,18 @@ public class ProductoServicio {
                 } else {
                     throw new Exception("no existe esa categoria");
                 }
-                //verificar esta parte
+
                 producto.setAlta(true);
                 producto.setDisponible(true);
-                producto.setFoto(producto.getFoto());
+                producto.setFoto(fotoServicio.guardarFoto(file));
+
             }
+
         }
         return productoRepository.save(producto);
     }
-
     //metodo de validacion
+
     /**
      * @param producto
      * @throws Exception
@@ -210,4 +226,14 @@ public class ProductoServicio {
             throw new Exception("No se encontró ese producto");
         }
     }
+
+    //Buscador de Productos
+    /**
+     * @param nombre
+     * @return
+     */
+    public List<Producto> buscarProducto(String nombre) {
+        return productoRepository.buscarProducto(nombre);
+    }
+
 }

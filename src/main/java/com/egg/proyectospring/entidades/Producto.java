@@ -26,11 +26,11 @@ public class Producto {
     private double precio;
     private Boolean disponible;
     private Boolean alta;
-    @ManyToOne //(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne 
     private Marca marca;
-    @ManyToOne //(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne 
     private Categoria categoria;
-    @OneToOne 
+    @OneToOne
     private Foto foto;
     
     
