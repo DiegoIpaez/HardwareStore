@@ -34,11 +34,11 @@
                         <!-- msg error -->
                         <div class="mt-1">
                             <p
+                                hidden
+                                id="success-category"
                                 th:if="${success != null}"                              
-                                class="msg-success pt-2 pb-2"
-                                >
-                                <span class="ms-2" th:text="${success}"></span>
-                            </p>
+                                th:text="${success}"
+                                ></p>
                         </div>
                         <!-- msg- success -->
                         <div class="mt-0">
