@@ -7,6 +7,8 @@ package com.egg.proyectospring.repositorios;
 
 import com.egg.proyectospring.entidades.Producto;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -52,4 +54,6 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
     @Query("select p from Producto p where p.nombre like %:nombre%")
     public List<Producto> buscarProducto(@Param("nombre") String nombre);
 
+    @Query("select p from Producto p")
+    public Page<Producto> getAll(Pageable pageable);
 }

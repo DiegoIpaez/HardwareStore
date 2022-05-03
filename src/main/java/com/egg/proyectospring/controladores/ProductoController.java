@@ -8,7 +8,12 @@ import com.egg.proyectospring.servicios.CategoriaServicio;
 import com.egg.proyectospring.servicios.MarcaServicio;
 import com.egg.proyectospring.servicios.ProductoServicio;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +37,7 @@ public class ProductoController {
     @Autowired
     CategoriaServicio categoriaServicio;
     
-     @GetMapping("")
+    @GetMapping("")
     public String productoId(@RequestParam("prodId") String id, Model model) {
 
         try {
@@ -52,9 +57,19 @@ public class ProductoController {
      * @return
      */
     @GetMapping("/list")
-    public String mostrarProductos(Model model) {
-        List<Producto> productos = productoServicio.listarProductos();
+    public String mostrarProductos(Model model, @PageableDefault(page = 0, size = 2) Pageable pageable) {
+        Integer page = pageable.getPageNumber();
+        Page<Producto> productos = productoServicio.getAll(pageable);
+        Integer totalDePaginas = productos.getTotalPages();
+        if (totalDePaginas > 0) {
+            List<Integer> paginas = IntStream.rangeClosed(1, totalDePaginas).boxed().collect(Collectors.toList());
+            model.addAttribute("paginas", paginas);
+        }
         model.addAttribute("productos", productos);
+        model.addAttribute("actual", page);
+        model.addAttribute("siguiente", page+1);
+        model.addAttribute("anterior", page-1);
+        model.addAttribute("ultima", totalDePaginas-1);
 
         return "producto-list";
     }

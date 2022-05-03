@@ -6,6 +6,8 @@ import com.egg.proyectospring.repositorios.MarcaRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -125,5 +127,9 @@ public class MarcaServicio {
 
     public Marca buscarMarcaPorNombre(String nombre) {
         return marcaRepository.buscarMarcaPorNombre(nombre);
+    }
+    
+    public Page<Marca> getAll(Pageable pageable){
+        return marcaRepository.getAll(pageable);
     }
 }
