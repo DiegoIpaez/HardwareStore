@@ -1,4 +1,3 @@
-//Servicio del Producto
 package com.egg.proyectospring.servicios;
 
 import com.egg.proyectospring.entidades.Categoria;
@@ -13,9 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * @author Juan Manuel
- */
 @Service
 public class ProductoServicio {
 
@@ -28,20 +24,10 @@ public class ProductoServicio {
     @Autowired
     FotoServicio fotoServicio;
 
-    //metodo encargado de traer todos las productos
-    /**
-     * @return
-     */
     public List<Producto> listarProductos() {
         return productoRepository.findAll();
     }
 
-    //metodo se encarga de buscar un producto por id
-    /**
-     * @param id
-     * @return
-     * @throws Exception
-     */
     public Producto buscarProductoPorId(String id) throws Exception {
         Optional<Producto> respuesta = productoRepository.findById(id);
         if (respuesta.isPresent()) {
@@ -52,14 +38,14 @@ public class ProductoServicio {
         }
 
     }
+    
+    public List<Producto> listarProductosPorCategoria(String categoriaId) throws Exception {
+        return productoRepository.obtenerProductosPorCategoria(categoriaServicio.categoriaPorId(categoriaId).getId());
+    }
+    public List<Producto> listarProductosPorMarca(String marcaId) throws Exception {       
+        return productoRepository.obtenerProductosPorMarca(marcaServicio.buscarMarcaPorId(marcaId).getId());
+    }
 
-    //metodo que guarda, edita y crea un producto
-    /**
-     * @param producto
-     * @param file
-     * @return
-     * @throws Exception
-     */
     public Producto guardarProducto(Producto producto, MultipartFile file) throws Exception {
         validar(producto);
 
@@ -128,12 +114,7 @@ public class ProductoServicio {
         }
         return productoRepository.save(producto);
     }
-    //metodo de validacion
 
-    /**
-     * @param producto
-     * @throws Exception
-     */
     public void validar(Producto producto) throws Exception {
         if (producto.getNombre() == null || producto.getNombre().isEmpty()) {
             throw new Exception("el nombre no puede ser nulo o estar vacio");
@@ -149,11 +130,6 @@ public class ProductoServicio {
         }
     }
 
-    //Alta de producto
-    /**
-     * @param id
-     * @throws Exception
-     */
     public void altaProducto(String id) throws Exception {
         Optional<Producto> respuesta = productoRepository.findById(id);
         if (respuesta.isPresent()) {
@@ -165,11 +141,6 @@ public class ProductoServicio {
         }
     }
 
-    //Baja de producto
-    /**
-     * @param id
-     * @throws Exception
-     */
     public void bajaProducto(String id) throws Exception {
         Optional<Producto> respuesta = productoRepository.findById(id);
         if (respuesta.isPresent()) {
@@ -181,11 +152,6 @@ public class ProductoServicio {
         }
     }
 
-    //Eliminar un producto
-    /**
-     * @param id
-     * @throws Exception
-     */
     public void eliminarProducto(String id) throws Exception {
         Optional<Producto> respuesta = productoRepository.findById(id);
         if (respuesta.isPresent()) {
@@ -197,11 +163,6 @@ public class ProductoServicio {
 
     }
 
-    //Setear un Producto como disponible
-    /**
-     * @param id
-     * @throws Exception
-     */
     public void ProductoDisponible(String id) throws Exception {
         Optional<Producto> respuesta = productoRepository.findById(id);
         if (respuesta.isPresent()) {
@@ -213,11 +174,6 @@ public class ProductoServicio {
         }
     }
 
-    //Setear un Producto como No disponible
-    /**
-     * @param id
-     * @throws Exception
-     */
     public void ProductoNoDisponible(String id) throws Exception {
         Optional<Producto> respuesta = productoRepository.findById(id);
         if (respuesta.isPresent()) {
@@ -229,11 +185,6 @@ public class ProductoServicio {
         }
     }
 
-    //Buscador de Productos
-    /**
-     * @param nombre
-     * @return
-     */
     public List<Producto> buscarProducto(String nombre) {
         return productoRepository.buscarProducto(nombre);
     }
