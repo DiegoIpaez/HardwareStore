@@ -195,11 +195,11 @@ public class ProductoController {
      * @param nombre
      * @return
      */
-    @GetMapping("/listaProductos")
+    @PostMapping("/buscar")
     public String listarProductos(Model modelo, @RequestParam("nombre") String nombre) {
         List<Producto> productos = productoServicio.buscarProducto(nombre);
         modelo.addAttribute("productos", productos);
-        return "producto-lista2";
+        return "buscador-productos";
     }
 
 }
