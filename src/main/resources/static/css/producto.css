@@ -1,0 +1,32 @@
+.product-link{
+    text-decoration: none;
+}
+
+.product {
+    transition: all 0.9s ease;
+}
+.product:hover {
+    box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.3)
+}
+
+.product-precio {
+    color: rgb(0, 158, 0);
+}
+
+.product-disponible {
+    margin-bottom: 0.2rem;
+    font-size: 13px;
+    color: #949494;
+}
+
+.text-product {
+    height: 18px;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #333;
+}

@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * @author Juan Manuel
- */
 @Controller
 @RequestMapping("/producto")
 public class ProductoController {
@@ -32,13 +29,43 @@ public class ProductoController {
     @Autowired
     CategoriaServicio categoriaServicio;
     
-     @GetMapping("")
+    @GetMapping("")
     public String productoId(@RequestParam("prodId") String id, Model model) {
 
         try {
             Producto p = productoServicio.buscarProductoPorId(id);
             model.addAttribute("producto", p);
             return "productoId";
+        } catch (Exception e) {
+            model.addAttribute("codigo", "404");
+            model.addAttribute("explicacion", e.getMessage());
+            return "error";
+        }
+
+    }
+    
+    @GetMapping("/categoria")
+    public String productoPorCategoria(@RequestParam("categoriaId") String id, Model model) {
+
+        try {
+            model.addAttribute("productos", productoServicio.listarProductosPorCategoria(id));
+            model.addAttribute("titulo", categoriaServicio.categoriaPorId(id).getNombre());
+            return "producto-por-catalogo";
+        } catch (Exception e) {
+            model.addAttribute("codigo", "404");
+            model.addAttribute("explicacion", e.getMessage());
+            return "error";
+        }
+
+    }
+    
+    @GetMapping("/marca")
+    public String productoPorMarca(@RequestParam("marcaId") String id, Model model) {
+
+        try {
+            model.addAttribute("productos", productoServicio.listarProductosPorMarca(id));
+            model.addAttribute("titulo", marcaServicio.buscarMarcaPorId(id).getNombre());
+            return "producto-por-catalogo";
         } catch (Exception e) {
             model.addAttribute("codigo", "404");
             model.addAttribute("explicacion", e.getMessage());

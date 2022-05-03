@@ -1,14 +1,7 @@
-/*
-
- */
 package com.egg.proyectospring.controladores;
-
 import com.egg.proyectospring.entidades.Categoria;
 import com.egg.proyectospring.servicios.CategoriaServicio;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
