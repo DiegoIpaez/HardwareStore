@@ -8,7 +8,12 @@ import com.egg.proyectospring.servicios.DetalleServicio;
 import com.egg.proyectospring.servicios.PedidoServicio;
 import com.egg.proyectospring.servicios.UsuarioServicio;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,10 +45,20 @@ public class PedidoController {
     }
     
     @GetMapping("/usuario")
-    public String pedidoUsuario(Model model, Authentication auth) {
+    public String pedidoUsuario(Model model, Authentication auth, @PageableDefault(page = 0, size = 2) Pageable pageable) {
         Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
-        List<Pedido> pedidos = pedidoServicio.mostrarPedidosPorUsuario(u.getId());
+        Integer page = pageable.getPageNumber();
+        Page<Pedido> pedidos = pedidoServicio.mostrarPedidosPorUsuario(u.getId(), pageable);
+        Integer totalDePaginas = pedidos.getTotalPages();
+        if (totalDePaginas > 0) {
+            List<Integer> paginas = IntStream.rangeClosed(1, totalDePaginas).boxed().collect(Collectors.toList());
+            model.addAttribute("paginas", paginas);
+        }  
         model.addAttribute("pedidos", pedidos);
+        model.addAttribute("actual", page);
+        model.addAttribute("siguiente", page+1);
+        model.addAttribute("anterior", page-1);
+        model.addAttribute("ultima", totalDePaginas-1);
         return "pedido-usuario";
     }
     
@@ -69,9 +84,19 @@ public class PedidoController {
     }
     
     @GetMapping("/list")
-    public String listaDePedidos(Model modelo) {
-        List<Pedido> pedidos = pedidoServicio.pedidos();
+    public String listaDePedidos(Model modelo, @PageableDefault(page = 0, size = 2) Pageable pageable) {
+        Integer page = pageable.getPageNumber();
+        Page<Pedido> pedidos = pedidoServicio.getAll(pageable);
+        Integer totalDePaginas = pedidos.getTotalPages();
+        if (totalDePaginas > 0) {
+            List<Integer> paginas = IntStream.rangeClosed(1, totalDePaginas).boxed().collect(Collectors.toList());
+            modelo.addAttribute("paginas", paginas);
+        }  
         modelo.addAttribute("pedidos", pedidos);
+        modelo.addAttribute("actual", page);
+        modelo.addAttribute("siguiente", page+1);
+        modelo.addAttribute("anterior", page-1);
+        modelo.addAttribute("ultima", totalDePaginas-1);
         modelo.addAttribute("estados",EstadoPedido.values());
         return "lista-pedidos";
     }

@@ -15,8 +15,9 @@ and open the template in the editor.
     </head>
 
     <body>
-        <h2>Lista de Marcas</h2>
+        
         <div class="container">
+            <h2>Lista de Productos</h2>
             <div class="row justify-content-start">
                 <div class="col-6">
                     <table class="table table-bordered">
@@ -60,6 +61,25 @@ and open the template in the editor.
                             </tr>
                         </tbody>
                     </table>
+                    <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <nav aria-label="Pagination">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" th:classappend="${anterior < 0} ? 'disabled' : ''">
+                                    <a class="page-link" th:href="@{|/producto/list?page=${anterior}|}">Anterior</a>
+                                </li>
+                                <li class="page-item" th:each="pagina : ${paginas}" th:classappend="${actual == pagina-1 ? 'active' : ''}">
+                                    <a class="page-link" th:href="@{|/producto/list?page=${pagina-1}|}" th:text="${pagina}"></a>
+                                </li>
+                                <li class="page-item" th:classappend="${actual == ultima} ? 'disabled' : ''">
+                                    <a class="page-link" th:href="@{|/producto/list?page=${siguiente}|}">Siguiente</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
                 </div>
             </div>
         </div>

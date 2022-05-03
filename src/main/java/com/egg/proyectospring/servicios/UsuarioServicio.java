@@ -10,6 +10,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import static org.aspectj.apache.bcel.Repository.instanceOf;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,6 +39,10 @@ public class UsuarioServicio implements UserDetailsService {
 
     public Long mostrarCantidadDeUsuarios() {
         return usuarioRepositorio.count();
+    }
+    
+    public Page<Usuario> getAll(Pageable pageable) {
+        return usuarioRepositorio.getAll(pageable);
     }
 
     public Usuario mostrarUsuarioPorId(String id) throws Exception {

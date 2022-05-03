@@ -2,7 +2,12 @@ package com.egg.proyectospring.controladores;
 import com.egg.proyectospring.entidades.Marca;
 import com.egg.proyectospring.servicios.MarcaServicio;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,4 +82,23 @@ public class MarcaController {
             return "redirect:/marca/list";
         }
     }
+
+    
+    @GetMapping("/list")
+    public String listaMarcas(Model modelo, @PageableDefault(page = 0, size = 2) Pageable pageable) {
+        Integer page = pageable.getPageNumber();
+        Page<Marca> marcas = marcaServicio.getAll(pageable);
+        Integer totalDePaginas = marcas.getTotalPages();
+        if (totalDePaginas > 0) {
+            List<Integer> paginas = IntStream.rangeClosed(1, totalDePaginas).boxed().collect(Collectors.toList());
+            modelo.addAttribute("paginas", paginas);
+        }
+        modelo.addAttribute("marcas", marcas);
+        modelo.addAttribute("actual", page);
+        modelo.addAttribute("siguiente", page+1);
+        modelo.addAttribute("anterior", page-1);
+        modelo.addAttribute("ultima", totalDePaginas-1);
+        return "marca-list";
+    }
+
 }

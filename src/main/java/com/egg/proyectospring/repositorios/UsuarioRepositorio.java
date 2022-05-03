@@ -2,6 +2,8 @@ package com.egg.proyectospring.repositorios;
 
 import com.egg.proyectospring.entidades.Usuario;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,5 +23,8 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
     
     @Query("select u from Usuario u where u.alta = true and u.resetPasswordToken = :token")
     public Usuario mostrarUsuarioPorResetPasswordToken(@Param("token") String token);
+    
+    @Query("select u from Usuario u")
+    public Page<Usuario> getAll(Pageable pageable);
 
 }
