@@ -7,27 +7,47 @@
     <body>
 
         <main layout:fragment="main">
-            <div class="container">
-                <div class="row mt-5">             
-                    <h5 th:text="${producto.nombre}"></h5> 
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <img style="border: 1px solid" src="http://d3ugyf2ht6aenh.cloudfront.net/stores/001/127/623/products/cd121k_11-aaff0495a0a8b57e1c15941669028233-640-0.jpg" width="100" height="100"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <h5 th:text="${producto.precio} + '$'" style="color: green"></h5>          
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <div th:replace="control-de-cantidad :: control-de-cantidad(1,${producto.id})">
-                            Cantidad
-                        </div>
-                        <button class="btn btn-primary" id="buttonAddToCart">añadir al carrito</button>        
-                    </div>
-                </div>
+             <div class="container mt-3 mb-5">
+        <!-- Barra de navegacion -->
+        <div class="row indice">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a class="indice-item" th:href="@{/}">Inicio</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a class="indice-item" th:href="@{/producto/categoria(categoriaId=${producto.categoria.id})}"
+                th:text="${producto.categoria.nombre}"></a
+              >
+            </li>
+            <li class="breadcrumb-item" th:text="${producto.nombre}"></li>
+          </ol>
+        </div>
+        <!-- ProductDetail -->
+        <div class="row">
+          <div class="col-md-5 mb-4">
+            <img th:if="${producto.foto != null}" th:src="@{/foto/producto(idProd=${producto.id})}" alt="img-prod" class="img-producto-detalle">
+            <img th:if="${producto.foto == null}" src="https://thumbs.dreamstime.com/b/%C3%B0%C2%BF%C3%B0%C2%B5%C3%B1%E2%80%A1%C3%B0%C2%B0%C3%B1%E2%80%9A%C3%B1%C5%93-134036857.jpg" alt="img-prod" class="img-producto-detalle">
+          </div>
+          <div class="col-md-7">
+            <h2 th:text="${producto.nombre}"></h2>
+            <a th:href="@{/producto/marca(marcaId=${producto.marca.id})}">
+                <h5 class="categoria" th:text="${producto.marca.nombre} + '*'"></h5>
+            </a>
+            <h2 class="mt-4 text-success"><b th:text="'$ ' + ${producto.precio}"></b></h2>
+            <span><b th:if="${producto.disponible}" th:text="'Stock: disponible'"></b></span>
+            <span><b th:if="${!producto.disponible}" th:text="'Stock: no disponible'"></b></span>
+            <div class="mt-3 mb-3">
+              <div th:replace="control-de-cantidad :: control-de-cantidad(1,${producto.id})">
+                Cantidad
             </div>
+            <button class="btn btn-secondary" id="buttonAddToCart">añadir al carrito</button>   
+            </div>
+
+            <b>Descripcion:</b>
+            <p th:text="${producto.descripcion}"></p>
+          </div>
+        </div>
+      </div>
 
         </main>
         <div layout:fragment="scripts">
