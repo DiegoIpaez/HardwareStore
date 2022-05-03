@@ -1,6 +1,4 @@
-//controlador de Marca
 package com.egg.proyectospring.controladores;
-
 import com.egg.proyectospring.entidades.Marca;
 import com.egg.proyectospring.servicios.MarcaServicio;
 import java.util.List;
@@ -8,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/**
- * @author Juan Manuel
- */
+
 @Controller
 @RequestMapping("/marca")
 public class MarcaController {
@@ -22,41 +19,33 @@ public class MarcaController {
     @Autowired
     MarcaServicio marcaServicio;
 
-    /**
-     * @param model
-     * @return
-     */
-    @GetMapping("")
+    @GetMapping("/list")
     public String listaDeMarcas(Model model) {
         List<Marca> marcas = marcaServicio.listarMarcas();
         model.addAttribute("marcas", marcas);
         return "marca-list";
-
     }
 
-    /**
-     * @param model
-     * @return
-     */
+    @GetMapping("/modificar")
+    public String formulario(@RequestParam("marcaId") String id, Model modelo) throws Exception {
+        Marca marca = marcaServicio.buscarMarcaPorId(id);
+        modelo.addAttribute("marca", marca);
+        return "formulario-marca";
+    }
+    
     @GetMapping("/form")
     public String registro(Model model) {
         model.addAttribute("marca", new Marca());
         return "formulario-marca";
     }
 
-    /**
-     * @param id
-     * @param nombre
-     * @param model
-     * @return
-     */
     @PostMapping("/save")
-    public String marcaFormulario(@RequestParam("id") String id,
-            @RequestParam("nombre") String nombre,
+    public String marcaFormulario(@ModelAttribute("marca") Marca marca,
             Model model) {
-        Marca marca = new Marca();
         try {
-            marca = marcaServicio.guardarMarca(id, nombre);
+            marcaServicio.guardarMarca(marca);
+            String success = marca.getId() != null && !marca.getId().isEmpty() ? "Se modificó correctamente la marca" : "Se ingresó una nueva marca";
+            model.addAttribute("success", success);
             model.addAttribute("marca", marca);
             return "formulario-marca";
         } catch (Exception ex) {
@@ -67,47 +56,25 @@ public class MarcaController {
         }
     }
 
-    /**
-     * @param id
-     * @return
-     */
     @GetMapping("/alta")
     public String alta(@RequestParam("id") String id) {
         try {
             marcaServicio.altaMarca(id);
-            return "redirect:/marca";
+            return "redirect:/marca/list";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/marca";
+            return "redirect:/marca/list";
         }
     }
 
-    /**
-     * @param id
-     * @return
-     */
     @GetMapping("/baja")
     public String baja(@RequestParam("id") String id) {
         try {
             marcaServicio.bajaMarca(id);
-            return "redirect:/marca";
+            return "redirect:/marca/list";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/marca";
+            return "redirect:/marca/list";
         }
     }
-    
-    /**
-     * @param id
-     * @param modelo
-     * @return
-     * @throws Exception 
-     */
-    @GetMapping("/modificar")
-    public String formulario(@RequestParam(name = "marcaId", required = true) String id, Model modelo) throws Exception {
-        Marca marca = marcaServicio.buscarMarcaPorId(id);
-        modelo.addAttribute("marca", marca);
-        return "formulario-marca";
-
-}
 }

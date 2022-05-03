@@ -1,4 +1,3 @@
-//servicio Marca
 package com.egg.proyectospring.servicios;
 
 import com.egg.proyectospring.entidades.Marca;
@@ -8,27 +7,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author Juan Manuel
- */
 @Service
 public class MarcaServicio {
 
     @Autowired
     MarcaRepository marcaRepository;
 
-    //metodo encargado de traer todas las marcas
     public List<Marca> listarMarcas() {
         return marcaRepository.findAll();
     }
 
-    //metodo se encarga de buscar una marca por id
-    /**
-     * @param id
-     * @return
-     * @throws Exception
-     */
     public Marca buscarMarcaPorId(String id) throws Exception {
         Optional<Marca> respuesta = marcaRepository.findById(id);
         if (respuesta.isPresent()) {
@@ -40,46 +28,30 @@ public class MarcaServicio {
 
     }
 
-    //metodo para crear, editar y guardar la marca en la DB
-    /**
-     * @param id
-     * @param nombre
-     * @return
-     * @throws Exception
-     */
-    public Marca guardarMarca(String id, String nombre) throws Exception {
+    public Marca guardarMarca(Marca marca) throws Exception {
 
-        if (nombre == null || nombre.isEmpty()) {
-            throw new Exception("El nombre no puede ser nulo o estar vacío");
+        if (marca.getNombre() == null || marca.getNombre().isEmpty()) {
+            throw new Exception("El nombre no puede estar vacío");
         }
-        Marca marca = new Marca();
-        if (id != null && !id.isEmpty()) {
-            marca.setId(id);
-            Marca marcaDB = marcaRepository.buscarMarcaPorNombre(nombre);
+
+        if (marca.getId() != null && !marca.getId().isEmpty()) {
+            Marca marcaDB = marcaRepository.buscarMarcaPorNombre(marca.getNombre());
             if (marcaDB != null) {
-                throw new Exception("La marca ya se encuentra en la base de datos");
+                throw new Exception("Ya existe una marca con ese nombre.");
             }
-            marca.setNombre(nombre);
             marca.setAlta(true);
         } else {
-            Marca marcaDB = marcaRepository.buscarMarcaPorNombre(nombre);
+            Marca marcaDB = marcaRepository.buscarMarcaPorNombre(marca.getNombre());
             if (marcaDB != null) {
-                throw new Exception("La marca ya se encuentra en la base de datos");
+                throw new Exception("Ya existe una marca con ese nombre.");
             } else {
-                marca.setNombre(nombre);
                 marca.setAlta(true);
             }
         }
 
         return marcaRepository.save(marca);
-
     }
 
-    //Metodo para dar de Alta una marca
-    /**
-     * @param id
-     * @throws Exception
-     */
     public void altaMarca(String id) throws Exception {
         Optional<Marca> respuesta = marcaRepository.findById(id);
         if (respuesta.isPresent()) {
@@ -91,11 +63,6 @@ public class MarcaServicio {
         }
     }
 
-    //metodo para dar de baja una marca
-    /**
-     * @param id
-     * @throws Exception
-     */
     public void bajaMarca(String id) throws Exception {
         Optional<Marca> respuesta = marcaRepository.findById(id);
         if (respuesta.isPresent()) {
@@ -107,11 +74,6 @@ public class MarcaServicio {
         }
     }
 
-    //metodo para eliminar una marca
-    /**
-     * @param id
-     * @throws Exception
-     */
     public void eliminarMarca(String id) throws Exception {
         Optional<Marca> respuesta = marcaRepository.findById(id);
         if (respuesta.isPresent()) {

@@ -35,3 +35,23 @@ if (succesCategory != null) {
 
   sweetAlet();
 }
+
+const succesMarca = document.querySelector("#success-marca");
+if (succesMarca != null) {
+  const text = document.getElementById("success-marca").textContent;
+
+  const sweetAlet = async () => {
+    await Swal.fire({
+      title,
+      text,
+      icon,
+      timer,
+      timerProgressBar,
+      confirmButtonColor,
+      showCloseButton,
+    });
+    window.location.href = "http://localhost:8080/marca/list";
+  };
+
+  sweetAlet();
+}
