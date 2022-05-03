@@ -141,10 +141,10 @@ public class ProductoController {
     public String alta(@RequestParam("id") String id) {
         try {
             productoServicio.altaProducto(id);
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         }
     }
 
@@ -157,10 +157,10 @@ public class ProductoController {
     public String baja(@RequestParam("id") String id) {
         try {
             productoServicio.bajaProducto(id);
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         }
     }
 
@@ -173,10 +173,10 @@ public class ProductoController {
     public String disponible(@RequestParam("id") String id) {
         try {
             productoServicio.ProductoDisponible(id);
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         }
     }
 
@@ -189,10 +189,10 @@ public class ProductoController {
     public String noDisponible(@RequestParam("id") String id) {
         try {
             productoServicio.ProductoNoDisponible(id);
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         }
     }
 
@@ -224,10 +224,10 @@ public class ProductoController {
         try {
             productoServicio.eliminarProducto(id);
 
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         }
     }
 

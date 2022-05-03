@@ -55,3 +55,23 @@ if (succesMarca != null) {
 
   sweetAlet();
 }
+
+const succesProduct = document.querySelector("#success-product");
+if (succesProduct != null) {
+  const text = document.getElementById("success-product").textContent;
+
+  const sweetAlet = async () => {
+    await Swal.fire({
+      title,
+      text,
+      icon,
+      timer,
+      timerProgressBar,
+      confirmButtonColor,
+      showCloseButton,
+    });
+    window.location.href = "http://localhost:8080/producto/list";
+  };
+
+  sweetAlet();
+}
