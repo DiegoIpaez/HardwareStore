@@ -8,6 +8,8 @@ import com.egg.proyectospring.repositorios.CategoriaRepositorio;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,14 +21,14 @@ public class CategoriaServicio {
     public Categoria guardarCategoria(Categoria categoria) throws Exception {
         //modificar para que valide que no se ingrese una categoria que ya exista en la base de datos
         if(categoria.getNombre().isEmpty()) {
-            throw new Exception("El campo 'nombre' no puede estar vacío");
+            throw new Exception("El campo 'nombre' no puede estar vacío.");
         }
         if(categoria.getId() != null && !categoria.getId().isEmpty()) {
             
             Categoria c = categoriaRepositorio.getById(categoria.getId());
             for (Categoria categoriasMenosUno : categoriaRepositorio.categoriasMenosUno(c.getNombre())) {
                if (categoriasMenosUno.getNombre().equals(categoria.getNombre())) {
-                  throw new Exception("Ya existe una categoría con ese nombre en la base de datos");
+                  throw new Exception("Ya existe una categoría con ese nombre.");
                }
             }
             
@@ -35,7 +37,7 @@ public class CategoriaServicio {
         } else {
             Categoria categoriaNueva = categoriaPorNombre(categoria.getNombre());
             if (categoriaNueva != null) {
-                throw new Exception("Ya existe una categoría con ese nombre en la base de datos");
+                throw new Exception("Ya existe una categoría con ese nombre.");
             } else {
                 categoria.setAlta(true);
         
@@ -95,6 +97,10 @@ public class CategoriaServicio {
     
     public List<Categoria> categoriasMenosUno(String nombre) {
         return categoriaRepositorio.categoriasMenosUno(nombre);
+    }
+    
+    public Page<Categoria> getAll(Pageable pageable){
+        return categoriaRepositorio.getAll(pageable);
     }
     
 }

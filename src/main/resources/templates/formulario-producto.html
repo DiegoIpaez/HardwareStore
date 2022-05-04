@@ -1,60 +1,84 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
     <head>
         <title>Crear Producto</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h3 th:if="${producto.id != null and !producto.id.isEmpty()}">Modificar un producto</h3>
-        <h3 th:if="${producto.id == null or producto.id.isEmpty()}">Ingresar un producto</h3>
-        <p th:text="${error}" th:if="${error != null}"> 
-
-        </p>
-        <form th:action="@{/producto/save}" method="POST"  enctype="multipart/form-data" th:object="${producto}">
-            <label><strong>Nombre</strong></label><br>
-
-            <input hidden th:field="*{id}" />
-
-            <input type="text" th:field="*{nombre}">
-            <br>
-            <label><strong>Descripcion </strong></label><br>
-            <input type="text" th:field="*{descripcion}">
-            <br>
-            <label><strong>Marca</strong></label><br>
-            <select th:field="*{marca.nombre}">
-                <option th:each=" pepe : ${marcas}"
-                        th:text="${pepe.nombre}"
-                        th:value="${pepe.nombre}"
-                        th:selected='${pepe.nombre}'>
-                </option>
-            </select>
-            <br>
-            <label><strong>Categoria </strong></label><br>
-            <select th:field="*{categoria.nombre}">
-                <option th:each=" pepe : ${categorias}"
-                        th:text="${pepe.nombre}"
-                        th:value="${pepe.nombre}"
-                        th:selected='${pepe.nombre}'>
-                </option>
-            </select>
-            <br>
-            <label><strong>Precio</strong></label><br>
-            <input type="text" th:field="*{precio}">
-            <br>
-            <label><strong>Foto</strong></label><br>
-            <input type="file" name="file" >
-            <br>
-            <br>
-            <input type="submit"/>
-        </form>
-        <br>
-        <a th:href="@{/producto}">Ir a la lista de productos</a>
+        <main layout:fragment="main">
+            <div class="container formulario mt-5 mb-5">
+                <div class="card form-body pt-4">
+                    <form
+                        class="row g-3"
+                        th:action="@{/producto/save}" method="POST"  enctype="multipart/form-data" th:object="${producto}"
+                        >
+                        <!-- Form -->
+                        <h4 th:if="${producto.id != null and !producto.id.isEmpty()}">Modificar un producto</h4>
+                        <h4 th:if="${producto.id == null or producto.id.isEmpty()}">Ingresar un producto</h4>
+                        <!-- Titulos -->
+                        <div class="mt-1">
+                            <p
+                                th:if="${error != null}"
+                                th:text="${error}"
+                                class="msg-error pt-2 pb-2"
+                                >
+                                <span class="ms-2">error</span>
+                            </p>
+                        </div>
+                        <!-- msg error -->
+                        <div class="mt-1">
+                            <p
+                                hidden
+                                id="success-product"
+                                th:if="${success != null}"
+                                th:text="${success}"  
+                                >Hola mundo success</p>
+                        </div>
+                        <!-- msg- success -->
+                        <div class="mt-0">
+                            <input hidden th:field="*{id}" />
+                            <label for="inputName" class="form-label">Nombre*</label>
+                            <input type="text" maxlength="48" class="form-control" th:field="*{nombre}" />
+                        </div>
+                        <div>
+                            <label for="inputDescription" class="form-label">Descripcion</label>
+                            <input type="text" class="form-control" th:field="*{descripcion}"></div>
+                        <div>
+                            <label for="inputMarca" class="form-label">Marca</label>
+                            <select class="form-select" th:field="*{marca.nombre}">
+                                <option th:each=" pepe : ${marcas}"
+                                        th:text="${pepe.nombre}"
+                                        th:value="${pepe.nombre}"
+                                        th:selected='${pepe.nombre}'>
+                                </option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="inputCategoria" class="form-label">Categoria</label>
+                            <select class="form-select" th:field="*{categoria.nombre}">
+                                <option th:each=" pepe : ${categorias}"
+                                        th:text="${pepe.nombre}"
+                                        th:value="${pepe.nombre}"
+                                        th:selected='${pepe.nombre}'>
+                                </option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="inputPrecio" class="form-label">Precio</label>
+                            <input type="number" class="form-control" th:field="*{precio}">
+                        </div>
+                        <div>
+                            <label for="inputFoto" class="form-label">Foto</label>
+                            <input type="file" class="form-control" name="file" >
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-form w-100">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
 
     </body>
 </html>

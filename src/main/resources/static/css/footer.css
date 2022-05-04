@@ -1,0 +1,27 @@
+footer {
+  margin-top: 10.07rem;
+  background-color: #21201E;
+}
+
+.bi::before {
+  font-size: 1.5em;
+  color: #E98416;
+  margin: 0.5em;
+}
+
+.info-footer {
+  color: #FF7800;
+}
+
+.icon{
+  text-decoration: none;
+}
+
+.text-reset{
+  text-decoration: none;
+}
+
+.logo-footer{
+  height: 7rem;
+  width: 17rem;
+}
