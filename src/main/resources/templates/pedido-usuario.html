@@ -8,6 +8,7 @@
               integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     </head>
     <body>
+        <main></main>
         <div class="container">
         <p>Mis pedidos:</p>
             <div th:if="${!pedidos.isEmpty()}">
@@ -30,25 +31,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8">
-                        <nav aria-label="Pagination">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item" th:classappend="${anterior < 0} ? 'disabled' : ''">
-                                    <a class="page-link" th:href="@{|/pedido/usuario?page=${anterior}|}">Anterior</a>
-                                </li>
-                                <li class="page-item" th:each="pagina : ${paginas}" th:classappend="${actual == pagina-1 ? 'active' : ''}">
-                                    <a class="page-link" th:href="@{|/pedido/usuario?page=${pagina-1}|}" th:text="${pagina}"></a>
-                                </li>
-                                <li class="page-item" th:classappend="${actual == ultima} ? 'disabled' : ''">
-                                    <a class="page-link" th:href="@{|/pedido/usuario?page=${siguiente}|}">Siguiente</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="col-md-2"></div>
-                </div>
+                <div th:replace="paginacion-layout :: paginacion-layout('pedido/usuario',${actual},${siguiente},${anterior},${ultima})"></div>
             </div>
             <br>
             <a th:href="@{/usuario}">volver al perfil</a>
