@@ -75,3 +75,29 @@ if (succesProduct != null) {
 
   sweetAlet();
 }
+
+const succesUser = document.querySelector("#success-user");
+if (succesUser != null) {
+  const text = document.getElementById("success-user").textContent;
+
+  const sweetAlet = async () => {
+    await Swal.fire({
+      title,
+      text,
+      icon,
+      timer,
+      timerProgressBar,
+      confirmButtonColor,
+      showCloseButton,
+    });
+
+    if (text === 'Se ha registrado correctamente') {
+      window.location.href = "http://localhost:8080/login";
+    }else{
+      window.location.href = "http://localhost:8080/usuario"
+    }
+    
+  };
+
+  sweetAlet();
+}
