@@ -7,6 +7,7 @@ import com.egg.proyectospring.entidades.Producto;
 import com.egg.proyectospring.servicios.CategoriaServicio;
 import com.egg.proyectospring.servicios.MarcaServicio;
 import com.egg.proyectospring.servicios.ProductoServicio;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,10 +38,9 @@ public class ProductoController {
      * @return
      */
     @GetMapping("")
-    public String mostrarProductos(Model model) {
+    public String mostrarProductos(Model model, String nombre) {
         List<Producto> productos = productoServicio.listarProductos();
         model.addAttribute("productos", productos);
-
         return "producto-list";
     }
 
@@ -188,6 +188,18 @@ public class ProductoController {
             return "redirect:/producto";
         }
     }
+    /**
+     * 
+     * @param model
+     * @return 
+     */
+    @GetMapping("/buscar")
+    public String buscarProducto(Model model) {
+        Producto producto = new Producto();
+        model.addAttribute("producto", producto);
+
+        return "buscador-productos";
+    }
 
     /**
      *
@@ -195,10 +207,11 @@ public class ProductoController {
      * @param nombre
      * @return
      */
-    @PostMapping("/buscar")
-    public String listarProductos(Model modelo, @RequestParam("nombre") String nombre) {
-        List<Producto> productos = productoServicio.buscarProducto(nombre);
-        modelo.addAttribute("productos", productos);
+    @GetMapping("/buscarProducto")
+    public String listarProductos(Model modelo, @RequestParam("nombrep") String nombre) {
+        List<Producto> productosBuscados = productoServicio.buscarProducto(nombre);
+
+        modelo.addAttribute("productosBuscados", productosBuscados);
         return "buscador-productos";
     }
 

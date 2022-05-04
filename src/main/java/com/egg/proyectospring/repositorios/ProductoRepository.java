@@ -49,7 +49,7 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
      * @param nombre
      * @return
      */
-    @Query("select p from Producto p where p.nombre like %:nombre%")
+    @Query("select p from Producto p where p.nombre like %:nombre% AND p.alta = true")
     public List<Producto> buscarProducto(@Param("nombre") String nombre);
 
 }
