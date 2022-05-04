@@ -1,6 +1,7 @@
 package com.egg.proyectospring.servicios;
 
 import com.egg.proyectospring.entidades.Categoria;
+import com.egg.proyectospring.entidades.Foto;
 import com.egg.proyectospring.entidades.Marca;
 import com.egg.proyectospring.entidades.Producto;
 import com.egg.proyectospring.repositorios.ProductoRepository;
@@ -79,9 +80,11 @@ public class ProductoServicio {
             producto.setDisponible(p1.getDisponible());
 
             if (file != null && !file.isEmpty()) {
-                producto.setFoto(fotoServicio.guardarFoto(file));
+                Foto foto = fotoServicio.guardarFoto(file);
+                producto.setFoto(foto);
             } else {
-                producto.setFoto(producto.getFoto());
+                Producto pdb = productoRepository.getById(producto.getId());
+                producto.setFoto(pdb.getFoto());
             }
 
         } else {

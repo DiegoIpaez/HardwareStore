@@ -7,6 +7,7 @@ import com.egg.proyectospring.entidades.Producto;
 import com.egg.proyectospring.servicios.CategoriaServicio;
 import com.egg.proyectospring.servicios.MarcaServicio;
 import com.egg.proyectospring.servicios.ProductoServicio;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -97,7 +98,6 @@ public class ProductoController {
         model.addAttribute("siguiente", page+1);
         model.addAttribute("anterior", page-1);
         model.addAttribute("ultima", totalDePaginas-1);
-
         return "producto-list";
     }
 
@@ -245,6 +245,18 @@ public class ProductoController {
             return "redirect:/producto/list";
         }
     }
+    /**
+     * 
+     * @param model
+     * @return 
+     */
+    @GetMapping("/buscar")
+    public String buscarProducto(Model model) {
+        Producto producto = new Producto();
+        model.addAttribute("producto", producto);
+
+        return "buscador-productos";
+    }
 
     /**
      *
@@ -252,11 +264,12 @@ public class ProductoController {
      * @param nombre
      * @return
      */
-    @GetMapping("/listaProductos")
-    public String listarProductos(Model modelo, @RequestParam("nombre") String nombre) {
-        List<Producto> productos = productoServicio.buscarProducto(nombre);
-        modelo.addAttribute("productos", productos);
-        return "producto-lista2";
+    @GetMapping("/buscarProducto")
+    public String listarProductos(Model modelo, @RequestParam("nombrep") String nombre) {
+        List<Producto> productosBuscados = productoServicio.buscarProducto(nombre);
+
+        modelo.addAttribute("productosBuscados", productosBuscados);
+        return "buscador-productos";
     }
 
 }
