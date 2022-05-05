@@ -2,7 +2,13 @@ package com.egg.proyectospring.controladores;
 
 import com.egg.proyectospring.entidades.Usuario;
 import com.egg.proyectospring.servicios.UsuarioServicio;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -37,8 +43,19 @@ public class UsuarioController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list")
-    public String listUsers(Model model) {
-        model.addAttribute("usuarios", usuarioServicio.mostrarUsuarios());
+    public String listUsers(Model model, @PageableDefault(page = 0, size = 2) Pageable pageable) {
+        Integer page = pageable.getPageNumber();
+        Page<Usuario> usuarios = usuarioServicio.getAll(pageable);
+        Integer totalDePaginas = usuarios.getTotalPages();
+        if (totalDePaginas > 0) {
+            List<Integer> paginas = IntStream.rangeClosed(1, totalDePaginas).boxed().collect(Collectors.toList());
+            model.addAttribute("paginas", paginas);
+        }
+        model.addAttribute("usuarios", usuarios);
+        model.addAttribute("actual", page);
+        model.addAttribute("siguiente", page+1);
+        model.addAttribute("anterior", page-1);
+        model.addAttribute("ultima", totalDePaginas-1);
         return "lista-usuarios";
     }
 
@@ -81,7 +98,7 @@ public class UsuarioController {
             model.addAttribute("titulo", u.getId() == null || u.getId().isEmpty() ? "Registrar Usuario" : "Editar Usuario");
             model.addAttribute("success", u.getId() == null || u.getId().isEmpty() ? "Se ha registrado correctamente" : "Los cambios se han guardado correctamente");
 
-            String direccion = u.getId() != null && !u.getId().isEmpty() ? "redirect:/usuario?uid="+u.getId() : "usuario-formulario";
+            String direccion = "usuario-formulario";
 
             return direccion;
         } catch (Exception e) {

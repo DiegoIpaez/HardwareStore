@@ -1,14 +1,7 @@
-/*
-
- */
 package com.egg.proyectospring.controladores;
-
 import com.egg.proyectospring.entidades.Categoria;
 import com.egg.proyectospring.servicios.CategoriaServicio;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +31,20 @@ public class CategoriaController {
         return "categoria";
     }
     
+    @GetMapping("/modificar")
+    public String modificar(@RequestParam("id") String id, Model modelo) {
+        
+        try {
+            Categoria categoria = categoriaServicio.categoriaPorId(id);
+            modelo.addAttribute("categoria", categoria);
+            return "formulario-categoria";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            modelo.addAttribute("error", ex.getMessage());
+           return "error";
+        }
+    }
+    
     @GetMapping("/form")
     public String formulario(Model modelo) {
         Categoria categoria = new Categoria();
@@ -60,14 +67,6 @@ public class CategoriaController {
             return "formulario-categoria";
         }
     }
-    
-//    @GetMapping("/list")
-//    public String lista(Model modelo) {
-//        
-//        List<Categoria> categorias = categoriaServicio.listAll();
-//        modelo.addAttribute("listaDeCategorias", categorias);
-//        return "lista-categoria";
-//    }
     
     @GetMapping("/list")
     public String lista(Model modelo, @PageableDefault(page = 0, size = 3) Pageable pageable) {
@@ -113,18 +112,5 @@ public class CategoriaController {
         }
     }
     
-    @GetMapping("/modificar")
-    public String modificar(@RequestParam("id") String id, Model modelo) {
-        
-        try {
-            Categoria categoria = categoriaServicio.categoriaPorId(id);
-            modelo.addAttribute("categoria", categoria);
-            return "formulario-categoria";
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            modelo.addAttribute("error", ex.getMessage());
-           return "error";
-        }
-    }
     
 }

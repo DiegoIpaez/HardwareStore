@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}"> 
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <main layout:fragment="main">
+            <!-- Layout -->
+            <div class="container mt-3 mb-5">
+                <div class="row indice">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a class="indice-item" th:href="@{/}">Inicio</a></li>
+                        <li class="breadcrumb-item" th:text="${titulo}"></li>
+                    </ol>
+                </div>
+                <div th:replace="producto-layout :: producto-layout(${titulo}, ${productos})"></div>
+            </div>
+            <!-- layout -->
+        </main>
+    </body>
+</html>

@@ -1,26 +1,25 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
     <head>
-        <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <main layout:fragment="main">
-            <div class="container formulario mt-5 mb-5">
+         <div class="container formulario mt-5 mb-5">
                 <div class="card form-body pt-4">
                     <form
                         class="row g-3"
-                        th:action="@{/categoria/save}"
-                        method="POST"
-                        th:object="${categoria}"
+                        th:action="@{/marca/save}" 
+                        method="post"
+                        th:object="${marca}"
                         >
                         <!-- Form -->
-                        <h4 th:if="${categoria.id != null and !categoria.id.isEmpty()}">
-                            Modificar una categoria
+                        <h4 th:if="${marca.id != null and !marca.id.isEmpty()}">
+                            Modificar Marca
                         </h4>
-                        <h4 th:if="${categoria.id == null or categoria.id.isEmpty()}">
-                            Ingresar una categoria
+                        <h4 th:if="${marca.id == null or marca.id.isEmpty()}">
+                            Ingresar una Marca
                         </h4>
                         <!-- Titulos -->
                         <div class="mt-1">
@@ -35,7 +34,7 @@
                         <div class="mt-1">
                             <p
                                 hidden
-                                id="success-category"
+                                id="success-marca"
                                 th:if="${success != null}"                              
                                 th:text="${success}"
                                 ></p>
@@ -52,6 +51,6 @@
                     </form>
                 </div>
             </div>
-        </main>       
+        </main>
     </body>
 </html>
