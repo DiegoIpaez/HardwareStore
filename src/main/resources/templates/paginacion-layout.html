@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:fragment="paginacion-layout(pageName,actual,siguiente,anterior,ultima)">
+            <div class="row mt-4">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <nav aria-label="Pagination">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item" th:classappend="${anterior < 0} ? 'disabled' : ''">
+                                <a class="page-link" th:href="@{|/${pageName}?page=${anterior}|}">Anterior</a>
+                            </li>
+                            <li class="page-item" th:each="pagina : ${paginas}" th:classappend="${actual == pagina-1 ? 'active' : ''}">
+                                <a class="page-link" th:href="@{|/${pageName}?page=${pagina-1}|}" th:text="${pagina}"></a>
+                            </li>
+                            <li class="page-item" th:classappend="${actual == ultima} ? 'disabled' : ''">
+                                <a class="page-link" th:href="@{|/${pageName}?page=${siguiente}|}">Siguiente</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+
+    </body>
+</html>
+

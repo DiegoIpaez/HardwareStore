@@ -98,7 +98,7 @@ public class UsuarioController {
             model.addAttribute("titulo", u.getId() == null || u.getId().isEmpty() ? "Registrar Usuario" : "Editar Usuario");
             model.addAttribute("success", u.getId() == null || u.getId().isEmpty() ? "Se ha registrado correctamente" : "Los cambios se han guardado correctamente");
 
-            String direccion = u.getId() != null && !u.getId().isEmpty() ? "redirect:/usuario?uid="+u.getId() : "usuario-formulario";
+            String direccion = "usuario-formulario";
 
             return direccion;
         } catch (Exception e) {

@@ -23,14 +23,7 @@ public class MarcaController {
 
     @Autowired
     MarcaServicio marcaServicio;
-
-//    @GetMapping("/list")
-//    public String listaDeMarcas(Model model) {
-//        List<Marca> marcas = marcaServicio.listarMarcas();
-//        model.addAttribute("marcas", marcas);
-//        return "marca-list";
-//    }
-
+  
     @GetMapping("/modificar")
     public String formulario(@RequestParam("marcaId") String id, Model modelo) throws Exception {
         Marca marca = marcaServicio.buscarMarcaPorId(id);

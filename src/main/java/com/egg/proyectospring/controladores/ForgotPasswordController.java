@@ -26,7 +26,7 @@ public class ForgotPasswordController {
 
     @GetMapping("")
     public String forgotPassword(Model model) {
-        model.addAttribute("titulo", "Olvide la password");
+        model.addAttribute("titulo", "Restablezca su contraseña");
         return "forgot-password-form";
     }
 
@@ -42,12 +42,12 @@ public class ForgotPasswordController {
 
             mailServicio.enviarEmail(email, resetPasswordLink);
 
-            model.addAttribute("titulo", "Olvide la password");
+            model.addAttribute("titulo", "Restablezca su contraseña");
             model.addAttribute("success", "Hemos enviado un enlace de restablecimiento de contraseña a su correo electrónico. Por favor, verifiquelo.");
 
             return "forgot-password-form";
         } catch (Exception ex) {
-            model.addAttribute("titulo", "Olvide la password");
+            model.addAttribute("titulo", "Restablezca su contraseña");
             model.addAttribute("error", ex.getMessage());
             return "forgot-password-form";
         }
