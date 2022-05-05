@@ -1,6 +1,7 @@
 //Entidad producto
 package com.egg.proyectospring.entidades;
 
+import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -32,6 +34,10 @@ public class Producto {
     private Categoria categoria;
     @OneToOne
     private Foto foto;
+    
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private Date fecha;
+
     
     
 }

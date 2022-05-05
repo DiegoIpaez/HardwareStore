@@ -23,7 +23,7 @@ public class MarcaController {
 
     @Autowired
     MarcaServicio marcaServicio;
-
+  
     @GetMapping("/modificar")
     public String formulario(@RequestParam("marcaId") String id, Model modelo) throws Exception {
         Marca marca = marcaServicio.buscarMarcaPorId(id);
