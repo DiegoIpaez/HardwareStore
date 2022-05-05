@@ -21,14 +21,14 @@ public class CategoriaServicio {
     public Categoria guardarCategoria(Categoria categoria) throws Exception {
         //modificar para que valide que no se ingrese una categoria que ya exista en la base de datos
         if(categoria.getNombre().isEmpty()) {
-            throw new Exception("El campo 'nombre' no puede estar vacío");
+            throw new Exception("El campo 'nombre' no puede estar vacío.");
         }
         if(categoria.getId() != null && !categoria.getId().isEmpty()) {
             
             Categoria c = categoriaRepositorio.getById(categoria.getId());
             for (Categoria categoriasMenosUno : categoriaRepositorio.categoriasMenosUno(c.getNombre())) {
                if (categoriasMenosUno.getNombre().equals(categoria.getNombre())) {
-                  throw new Exception("Ya existe una categoría con ese nombre en la base de datos");
+                  throw new Exception("Ya existe una categoría con ese nombre.");
                }
             }
             
@@ -37,7 +37,7 @@ public class CategoriaServicio {
         } else {
             Categoria categoriaNueva = categoriaPorNombre(categoria.getNombre());
             if (categoriaNueva != null) {
-                throw new Exception("Ya existe una categoría con ese nombre en la base de datos");
+                throw new Exception("Ya existe una categoría con ese nombre.");
             } else {
                 categoria.setAlta(true);
         

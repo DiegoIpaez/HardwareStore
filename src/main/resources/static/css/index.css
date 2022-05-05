@@ -3,4 +3,14 @@ body{
     padding: 0;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
+    background-color: #efefef;
+}
+
+
+.box-error{
+    background-color: gray;
+    border-radius: 0.5rem;
+}
+.error-text{
+    font-size: 10rem;
 }

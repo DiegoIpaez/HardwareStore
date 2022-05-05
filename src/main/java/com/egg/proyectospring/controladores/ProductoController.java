@@ -8,7 +8,12 @@ import com.egg.proyectospring.servicios.CategoriaServicio;
 import com.egg.proyectospring.servicios.MarcaServicio;
 import com.egg.proyectospring.servicios.ProductoServicio;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * @author Juan Manuel
- */
 @Controller
 @RequestMapping("/producto")
 public class ProductoController {
@@ -32,7 +34,7 @@ public class ProductoController {
     @Autowired
     CategoriaServicio categoriaServicio;
     
-     @GetMapping("")
+    @GetMapping("")
     public String productoId(@RequestParam("prodId") String id, Model model) {
 
         try {
@@ -46,15 +48,55 @@ public class ProductoController {
         }
 
     }
+    
+    @GetMapping("/categoria")
+    public String productoPorCategoria(@RequestParam("categoriaId") String id, Model model) {
+
+        try {
+            model.addAttribute("productos", productoServicio.listarProductosPorCategoria(id));
+            model.addAttribute("titulo", categoriaServicio.categoriaPorId(id).getNombre());
+            return "producto-por-catalogo";
+        } catch (Exception e) {
+            model.addAttribute("codigo", "404");
+            model.addAttribute("explicacion", e.getMessage());
+            return "error";
+        }
+
+    }
+    
+    @GetMapping("/marca")
+    public String productoPorMarca(@RequestParam("marcaId") String id, Model model) {
+
+        try {
+            model.addAttribute("productos", productoServicio.listarProductosPorMarca(id));
+            model.addAttribute("titulo", marcaServicio.buscarMarcaPorId(id).getNombre());
+            return "producto-por-catalogo";
+        } catch (Exception e) {
+            model.addAttribute("codigo", "404");
+            model.addAttribute("explicacion", e.getMessage());
+            return "error";
+        }
+
+    }
 
     /**
      * @param model
      * @return
      */
     @GetMapping("/list")
-    public String mostrarProductos(Model model) {
-        List<Producto> productos = productoServicio.listarProductos();
+    public String mostrarProductos(Model model, @PageableDefault(page = 0, size = 2) Pageable pageable) {
+        Integer page = pageable.getPageNumber();
+        Page<Producto> productos = productoServicio.getAll(pageable);
+        Integer totalDePaginas = productos.getTotalPages();
+        if (totalDePaginas > 0) {
+            List<Integer> paginas = IntStream.rangeClosed(1, totalDePaginas).boxed().collect(Collectors.toList());
+            model.addAttribute("paginas", paginas);
+        }
         model.addAttribute("productos", productos);
+        model.addAttribute("actual", page);
+        model.addAttribute("siguiente", page+1);
+        model.addAttribute("anterior", page-1);
+        model.addAttribute("ultima", totalDePaginas-1);
 
         return "producto-list";
     }
@@ -114,10 +156,10 @@ public class ProductoController {
     public String alta(@RequestParam("id") String id) {
         try {
             productoServicio.altaProducto(id);
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         }
     }
 
@@ -130,10 +172,10 @@ public class ProductoController {
     public String baja(@RequestParam("id") String id) {
         try {
             productoServicio.bajaProducto(id);
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         }
     }
 
@@ -146,10 +188,10 @@ public class ProductoController {
     public String disponible(@RequestParam("id") String id) {
         try {
             productoServicio.ProductoDisponible(id);
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         }
     }
 
@@ -162,10 +204,10 @@ public class ProductoController {
     public String noDisponible(@RequestParam("id") String id) {
         try {
             productoServicio.ProductoNoDisponible(id);
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         }
     }
 
@@ -197,10 +239,10 @@ public class ProductoController {
         try {
             productoServicio.eliminarProducto(id);
 
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/producto";
+            return "redirect:/producto/list";
         }
     }
 

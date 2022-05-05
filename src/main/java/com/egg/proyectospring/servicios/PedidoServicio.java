@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,9 +44,14 @@ public class PedidoServicio {
         return pedidoRepositorio.getById(id);
     }
 
-    public List<Pedido> mostrarPedidosPorUsuario(String id) {
-        return pedidoRepositorio.pedidosPorUsuario(id);
+    public Page<Pedido> mostrarPedidosPorUsuario(String id, Pageable pageable) {
+        return pedidoRepositorio.pedidosPorUsuario(id, pageable);
     }
+    
+    public Page<Pedido> getAll(Pageable pageable) {
+        return pedidoRepositorio.getAll(pageable);
+    }
+    
 
     public void modificarEstadoPedido(String id, EstadoPedido estado) throws Exception {
         Optional<Pedido> res = pedidoRepositorio.findById(id);
