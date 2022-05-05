@@ -14,7 +14,7 @@
                         <li class="breadcrumb-item" th:text="${titulo}"></li>
                     </ol>
                 </div>
-                <div th:replace="producto-layout :: producto-layout(${titulo}, ${productos}, ${actual}, ${siguiente},${anterior}, ${ultima})"></div>
+                <div th:replace="producto-layout :: producto-layout(${titulo}, ${productos})"></div>
             </div>
             <!-- layout -->
         </main>

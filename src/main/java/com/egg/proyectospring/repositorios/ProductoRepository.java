@@ -36,4 +36,9 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
     @Query("select p from Producto p")
     public Page<Producto> getAll(Pageable pageable);
 
+    @Query("SELECT p FROM Producto p WHERE p.alta = true and p.disponible = true")
+    public Page<Producto> getProductosConAlta(Pageable pageable);
+    
+    @Query("SELECT p FROM Producto p WHERE p.alta = true and p.disponible = true order by fecha desc")
+    public Page<Producto> getProductosPorFecha(Pageable pageable);
 }
