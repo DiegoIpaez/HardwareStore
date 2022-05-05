@@ -14,7 +14,7 @@ public class FotoServicio {
 
     public Foto guardarFoto(MultipartFile file) throws Exception {
 
-        if (file != null) {
+        if (file != null && !file.isEmpty()) {
             try {
                 Foto f = new Foto();
                 f.setName(file.getName());
@@ -22,9 +22,12 @@ public class FotoServicio {
                 f.setContenido(file.getBytes());
 
                 return fotoRepositorio.save(f);
-                
+
             } catch (Exception e) {
+                e.printStackTrace();
+                e.getMessage();
                 throw new Exception("No se pudo guardar");
+
             }
         } else {
             return null;

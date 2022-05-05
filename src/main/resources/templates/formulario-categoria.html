@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <main layout:fragment="main">
+            <div class="container formulario mt-5 mb-5">
+                <div class="card form-body pt-4">
+                    <form
+                        class="row g-3"
+                        th:action="@{/categoria/save}"
+                        method="POST"
+                        th:object="${categoria}"
+                        >
+                        <!-- Form -->
+                        <h4 th:if="${categoria.id != null and !categoria.id.isEmpty()}">
+                            Modificar una categoria
+                        </h4>
+                        <h4 th:if="${categoria.id == null or categoria.id.isEmpty()}">
+                            Ingresar una categoria
+                        </h4>
+                        <!-- Titulos -->
+                        <div class="mt-1">
+                            <p
+                                th:if="${error != null}"                               
+                                class="msg-error pt-2 pb-2"
+                                >
+                                <span class="ms-2" th:text="${error}"></span>
+                            </p>
+                        </div>
+                        <!-- msg error -->
+                        <div class="mt-1">
+                            <p
+                                hidden
+                                id="success-category"
+                                th:if="${success != null}"                              
+                                th:text="${success}"
+                                ></p>
+                        </div>
+                        <!-- msg- success -->
+                        <div class="mt-0">
+                            <input hidden th:field="*{id}" />
+                            <label for="inputName" class="form-label">Nombre*</label>
+                            <input type="text" maxlength="48" class="form-control form-control-list" th:field="*{nombre}" />
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-form w-100">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>       
+    </body>
+</html>
