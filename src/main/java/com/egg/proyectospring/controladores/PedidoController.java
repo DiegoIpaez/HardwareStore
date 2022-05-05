@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,7 @@ public class PedidoController {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-    
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO')")
     @PostMapping("/save")
     public String realizarPedido(Authentication auth){
         Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
@@ -62,6 +63,7 @@ public class PedidoController {
         return "pedido-usuario";
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO')")
     @GetMapping("/detalle")
     public String detallesDelPedido(Model model, @RequestParam("detalle") String detalle, @RequestParam("total") Double total) throws Exception {
         
@@ -71,6 +73,7 @@ public class PedidoController {
         return "pedido-detalle";
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @PostMapping("/actualizar")
     public String modificar(Model model, @RequestParam("id") String id, @RequestParam("estado") EstadoPedido estado) {
         try {
@@ -83,6 +86,7 @@ public class PedidoController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list")
     public String listaDePedidos(Model modelo, @PageableDefault(page = 0, size = 2) Pageable pageable) {
         Integer page = pageable.getPageNumber();

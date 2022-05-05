@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,7 @@ public class CategoriaController {
         return "categoria";
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/modificar")
     public String modificar(@RequestParam("id") String id, Model modelo) {
         
@@ -45,6 +47,7 @@ public class CategoriaController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/form")
     public String formulario(Model modelo) {
         Categoria categoria = new Categoria();
@@ -52,6 +55,7 @@ public class CategoriaController {
         return "formulario-categoria";
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @PostMapping("/save")
     public String form(@ModelAttribute("categoria") Categoria categoria, Model modelo) {
         
@@ -68,6 +72,7 @@ public class CategoriaController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list")
     public String lista(Model modelo, @PageableDefault(page = 0, size = 3) Pageable pageable) {
         
@@ -86,6 +91,7 @@ public class CategoriaController {
         return "lista-categoria";
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/baja") 
     public String darDeBaja(@RequestParam("id") String id) {
         
@@ -99,6 +105,7 @@ public class CategoriaController {
         }
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/alta")
     public String darDeAlta(@RequestParam("id") String id) {
         

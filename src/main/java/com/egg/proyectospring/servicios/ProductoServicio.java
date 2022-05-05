@@ -63,6 +63,7 @@ public class ProductoServicio {
 
             producto.setNombre(producto.getNombre());
             producto.setDescripcion(producto.getDescripcion());
+            producto.setStock(producto.getStock());
             producto.setPrecio(producto.getPrecio());
             Marca marca = marcaServicio.buscarMarcaPorNombre(producto.getMarca().getNombre());
             if (marca != null) {
