@@ -37,7 +37,7 @@
                                     <div>
                                         <b th:text="${c.producto.nombre}"></b>
                                     </div>
-                                    <div th:replace="control-de-cantidad :: control-de-cantidad(${c.cantidad},${c.producto.id})">
+                                    <div th:replace="control-de-cantidad :: control-de-cantidad(${c.cantidad},${c.producto.id},${c.producto.stock})">
                                         Cantidad
                                     </div>
                                     <div>
@@ -45,6 +45,7 @@
                                         <span th:text="${c.producto.precio} + ' = '"></span>
                                         <span th:id="'subtotal'+${c.producto.id}  " class="subtotalProd" th:text="${c.subtotal}"></span>
                                     </div>
+                                    <p hidden id="carritoItem-stock" th:text="${c.producto.stock}"></p>
                                 </div>
                             </div>
                             <div class="row mt-1"></div>
@@ -65,6 +66,9 @@
                     </div>
 
                 </div>
+                
+                <p hidden id="success-pay" th:if="${success != null}" th:text="${success}"></p>
+                <p hidden id="error-pay" th:if="${error != null}" th:text="${error}"></p>
             </div>
         </main>
         <div layout:fragment="scripts">

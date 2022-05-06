@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -79,10 +80,7 @@ public class ProductoController {
 
     }
 
-    /**
-     * @param model
-     * @return
-     */
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list")
     public String mostrarProductos(Model model, @PageableDefault(page = 0, size = 2) Pageable pageable) {
         Integer page = pageable.getPageNumber();
@@ -97,15 +95,10 @@ public class ProductoController {
         model.addAttribute("siguiente", page+1);
         model.addAttribute("anterior", page-1);
         model.addAttribute("ultima", totalDePaginas-1);
-
         return "producto-list";
     }
 
-    /**
-     *
-     * @param model
-     * @return
-     */
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/form")
     public String formularioProducto(Model model) {
         model.addAttribute("producto", new Producto());
@@ -116,13 +109,7 @@ public class ProductoController {
         return "formulario-producto";
     }
 
-    /**
-     *
-     * @param producto
-     * @param file
-     * @param model
-     * @return
-     */
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @PostMapping("/save")
     public String guardarProducto(@ModelAttribute("producto") Producto producto,
             @RequestParam(name = "file", required = false) MultipartFile file,
@@ -147,11 +134,7 @@ public class ProductoController {
         return "formulario-producto";
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/alta")
     public String alta(@RequestParam("id") String id) {
         try {
@@ -163,11 +146,7 @@ public class ProductoController {
         }
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/baja")
     public String baja(@RequestParam("id") String id) {
         try {
@@ -179,11 +158,7 @@ public class ProductoController {
         }
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/disponible")
     public String disponible(@RequestParam("id") String id) {
         try {
@@ -195,11 +170,7 @@ public class ProductoController {
         }
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/noDisponible")
     public String noDisponible(@RequestParam("id") String id) {
         try {
@@ -211,13 +182,7 @@ public class ProductoController {
         }
     }
 
-    /**
-     *
-     * @param id
-     * @param modelo
-     * @return
-     * @throws Exception
-     */
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/modificar")
     public String modificar(@RequestParam(name = "id", required = true) String id, Model modelo) throws Exception {
         Producto producto = productoServicio.buscarProductoPorId(id);
@@ -229,34 +194,20 @@ public class ProductoController {
         return "formulario-producto";
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
-    @GetMapping("/eliminar")
-    public String eliminarProducto(@RequestParam(name = "id", required = true) String id) {
-        try {
-            productoServicio.eliminarProducto(id);
+    @GetMapping("/buscar")
+    public String buscarProducto(Model model) {
+        Producto producto = new Producto();
+        model.addAttribute("producto", producto);
 
-            return "redirect:/producto/list";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/producto/list";
-        }
+        return "buscador-productos";
     }
 
-    /**
-     *
-     * @param modelo
-     * @param nombre
-     * @return
-     */
-    @GetMapping("/listaProductos")
-    public String listarProductos(Model modelo, @RequestParam("nombre") String nombre) {
-        List<Producto> productos = productoServicio.buscarProducto(nombre);
-        modelo.addAttribute("productos", productos);
-        return "producto-lista2";
+    @GetMapping("/buscarProducto")
+    public String listarProductos(Model modelo, @RequestParam("nombrep") String nombre) {
+        List<Producto> productosBuscados = productoServicio.buscarProducto(nombre);
+
+        modelo.addAttribute("productosBuscados", productosBuscados);
+        return "buscador-productos";
     }
     
     @GetMapping("/productos")

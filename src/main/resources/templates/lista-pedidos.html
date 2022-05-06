@@ -1,75 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
     <head>
-        <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
     </head>
     <body>
-        <div class="container">
-           <div th:if="${!pedidos.isEmpty()}">
-            <h3 align="center">Lista de pedidos</h3>
-
-        <table class="table table-dark">
-            <thead>
-                <tr>
-                    <th>N°</th>
-                    <th>ID del pedido</th>
-                    <th>Usuario del pedido</th>
-                    <th>Fecha del pedido</th>
-                    <th>Precio final</th>
-                    <th>Estado</th>
-                    <th>Detalle</th>
-                    <th>Editar estado</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr th:each="pedido, contador : ${pedidos}">
-                    <td th:text="${contador.count}"></td>
-                    <td th:text="${pedido.id}"></td>
-                    <td th:text="${pedido.usuario.email}"></td>
-                    <td th:text="${pedido.fecha}"></td>
-                    <td th:text="${pedido.total}+'$'"></td>
-                    <td th:text="${pedido.estado}" style="color: yellow"></td>
-                    <td><a th:href="@{/pedido/detalle(detalle=${pedido.detalle},total=${pedido.total})}" th:text="Detalles"></a></td>
-                    <td>
-                        <form th:action="@{/pedido/actualizar}" method="POST">
-                            <input hidden name="id" th:value="${pedido.id}"/>
-                            <select  class="form-select" aria-label="Default select example" name="estado" onchange="this.form.submit()">
-                                <option th:each="i : ${estados}"
-                                        th:value="${i}"                                       
-                                        th:text="${i}"
-                                        th:selected="${pedido.estado == i}">
-                                </option>
-                            </select>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-            <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8">
-                        <nav aria-label="Pagination">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item" th:classappend="${anterior < 0} ? 'disabled' : ''">
-                                    <a class="page-link" th:href="@{|/pedido/list?page=${anterior}|}">Anterior</a>
-                                </li>
-                                <li class="page-item" th:each="pagina : ${paginas}" th:classappend="${actual == pagina-1 ? 'active' : ''}">
-                                    <a class="page-link" th:href="@{|/pedido/list?page=${pagina-1}|}" th:text="${pagina}"></a>
-                                </li>
-                                <li class="page-item" th:classappend="${actual == ultima} ? 'disabled' : ''">
-                                    <a class="page-link" th:href="@{|/pedido/list?page=${siguiente}|}">Siguiente</a>
-                                </li>
-                            </ul>
-                        </nav>
+        <main layout:fragment="main">
+            <div class="container-fluid mt-4 mb-5">
+                <div class="p-2">
+                    <h2>Pedidos</h2>
+                    <div class="row table-shadow bg-dark pt-3 pb-3 text-white">
+                        <div class="col-xl-2 col-lg-2">Id</div>
+                        <div class="col-xl-2 col-lg-2">Usuario</div>
+                        <div class="col-xl-2 col-lg-2">Fecha</div>
+                        <div class="col-xl-1 col-lg-2">Precio Final</div>
+                        <div class="col-xl-2 col-lg-1">Estado</div>
+                        <div class="col-xl-1 col-lg-1">Detalle</div>
+                        <div class="col-xl-2 col-lg-2">Editar</div>
                     </div>
-                    <div class="col-md-2"></div>
+                    <div th:if="${!pedidos.isEmpty()}" class="row table-shadow" th:each="pedido, contador : ${pedidos}">
+                        <div class="col-xl-2 col-lg-2 pt-4 pb-1" th:text="${pedido.id}"></div>
+                        <div class="col-xl-2 col-lg-2 pt-4 pb-1" th:text="${pedido.usuario.email}"></div>
+                        <div class="col-xl-2 col-lg-2 pt-4 pb-1" th:text="${pedido.fecha}"></div>
+                        <div class="col-xl-1 col-lg-2 pt-4 pb-1 text-success" th:text="${pedido.total}+'$'"></div>
+                        <div class="col-xl-2 col-lg-1 pt-4 pb-1" th:text="${pedido.estado}"></div>
+                        <div class="col-xl-1 col-lg-1 pt-4 pb-1">
+                            <a th:href="@{/pedido/detalle(detalle=${pedido.detalle},total=${pedido.total})}">
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-info"></i>
+                                </button>
+                            </a>
+                        </div>
+                        <div class="col-xl-2 col-lg-2 pt-3 pb-2">
+                            <form th:action="@{/pedido/actualizar}" method="POST">
+                                <input hidden name="id" th:value="${pedido.id}"/>
+                                <select  class="form-select" aria-label="Default select example" name="estado" onchange="this.form.submit()">
+                                    <option th:each="i : ${estados}"
+                                            th:value="${i}"                                       
+                                            th:text="${i}"
+                                            th:selected="${pedido.estado == i}">
+                                    </option>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row table-bottom pt-3 pb-4"></div>
+                    <!--paginatio-->
+                    <div th:if="${!pedidos.isEmpty()}">
+                    <div th:replace="paginacion-layout :: paginacion-layout('pedido/list',${actual},${siguiente},${anterior},${ultima})"></div></div>
                 </div>
-         </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+            </div>
+        </main>
+
     </body>
 </html>

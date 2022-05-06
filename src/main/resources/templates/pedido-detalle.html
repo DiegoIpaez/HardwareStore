@@ -1,40 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
     <head>
-        <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>Aqui va toda la info del pedido</div>
-        
-        <table border="1">
-            
-            <thead>
-                <tr>
-                    <th>N°</th>          
-                    <th>Producto</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
-            
-            <tbody>
-               <tr th:each="item, contador : ${detalle}">
-                    <td th:text="${contador.count}"></td>
-                    <td th:text="${item.producto.nombre}"></td>
-                    
-                    <td th:text="${item.producto.precio}"></td>
-                    <td th:text="${item.cantidad}"></td>
-                    <td th:text="${item.subtotal}"></td>
-                <tr>
-                    <td>TOTAL A PAGAR</td>
-                    <td th:text="${total}"></td>
-                </tr>
-            </tbody>
-            
-        </table>
-        
+        <main layout:fragment="main">
+            <div class="container mt-4 mb-5">
+                <h2>Detalle del pedido</h2>
+                <div class="row table-shadow bg-dark pt-3 pb-3 text-white">
+                    <div class="col-xl-1 col-lg-1">N°</div>
+                    <div class="col-xl-3 col-lg-4">Producto</div>
+                    <div class="col-xl-1 col-lg-1">Cantidad</div>
+                    <div class="col-xl-3 col-lg-2 text-center">Precio</div>         
+                    <div class="col-xl-3 col-lg-3 text-center">Subtotal</div>
+                </div>
+                <div class="row table-shadow" th:each="item, contador : ${detalle}">
+                    <div class="col-xl-1 col-lg-1 pt-2 pb-1" th:text="${contador.count}">1</div>
+                    <div class="col-xl-3 col-lg-4 pt-2 pb-1" th:text="${item.producto.nombre}"></div>
+                    <div class="col-xl-1 col-lg-2 pt-2 pb-1 text-center" th:text="${item.cantidad}+'x'"></div>
+                    <div class="col-xl-3 col-lg-2 pt-2 pb-1 text-center text-success" th:text="${item.producto.precio}+'$'"></div>          
+                    <div class="col-xl-3 col-lg-3 pt-2 pb-2 text-center text-success" th:text="${item.subtotal}+'$'"></div>
+                </div>
+                <div class="row table-shadow">
+                    <h2 class="pt-3 pb-3 text-center" th:text="'Total: ' + ${total} + '$'"></h2>
+                </div>
+                <div class="row table-bottom pt-3 pb-4"></div>
+            </div>
+        </main>
+
+
     </body>
 </html>

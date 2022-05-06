@@ -1,6 +1,7 @@
 package com.egg.proyectospring.servicios;
 
 import com.egg.proyectospring.entidades.Categoria;
+import com.egg.proyectospring.entidades.Foto;
 import com.egg.proyectospring.entidades.Marca;
 import com.egg.proyectospring.entidades.Producto;
 import com.egg.proyectospring.repositorios.ProductoRepository;
@@ -59,9 +60,11 @@ public class ProductoServicio {
                     throw new Exception(" ya existe un producto con ese nombre");
                 }
             }
-
+            producto.setFecha(p.getFecha());
+            producto.setStockVendido(p.getStockVendido());
             producto.setNombre(producto.getNombre());
             producto.setDescripcion(producto.getDescripcion());
+            producto.setStock(producto.getStock());
             producto.setPrecio(producto.getPrecio());
             Marca marca = marcaServicio.buscarMarcaPorNombre(producto.getMarca().getNombre());
             if (marca != null) {
@@ -80,9 +83,11 @@ public class ProductoServicio {
             producto.setDisponible(p1.getDisponible());
 
             if (file != null && !file.isEmpty()) {
-                producto.setFoto(fotoServicio.guardarFoto(file));
+                Foto foto = fotoServicio.guardarFoto(file);
+                producto.setFoto(foto);
             } else {
-                producto.setFoto(producto.getFoto());
+                Producto pdb = productoRepository.getById(producto.getId());
+                producto.setFoto(pdb.getFoto());
             }
 
         } else {
@@ -110,6 +115,7 @@ public class ProductoServicio {
                 producto.setDisponible(true);
                 producto.setFoto(fotoServicio.guardarFoto(file));
                 producto.setFecha(new Date());
+                producto.setStockVendido(0);
 
             }
 

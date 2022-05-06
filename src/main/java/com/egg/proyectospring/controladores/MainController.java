@@ -29,7 +29,7 @@ public class MainController {
     @Autowired
     private MarcaServicio marcaServicio;
     
-    @GetMapping("")
+     @GetMapping("")
     public String index(Model model){
         List<Categoria> categorias = categoriaServicio.categoriasConAlta();
         List<Marca> marcas = marcaServicio.listarMarcas();
