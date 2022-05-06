@@ -30,24 +30,16 @@ public class MainController {
     private MarcaServicio marcaServicio;
     
     @GetMapping("")
-    public String index(Model model, @PageableDefault(page = 0, size = 6) Pageable pageable){
+    public String index(Model model){
         List<Categoria> categorias = categoriaServicio.categoriasConAlta();
         List<Marca> marcas = marcaServicio.listarMarcas();
-        
-        Integer page = pageable.getPageNumber();
-        Page<Producto> productos = productoServicio.getProductosPorFecha(pageable);
-        Integer totalDePaginas = productos.getTotalPages();
-        if (totalDePaginas > 0) {
-            List<Integer> paginas = IntStream.rangeClosed(1, totalDePaginas).boxed().collect(Collectors.toList());
-            model.addAttribute("paginas", paginas);
-        }
-        model.addAttribute("marcas", marcas);
+        List<Producto> productos = productoServicio.productosLimitados();
+       
         model.addAttribute("categorias", categorias);
+        model.addAttribute("marcas", marcas);
         model.addAttribute("productos", productos);
-        model.addAttribute("actual", page);
-        model.addAttribute("siguiente", page+1);
-        model.addAttribute("anterior", page-1);
-        model.addAttribute("ultima", totalDePaginas-1);
+        
+        
     return "index";
     }
     

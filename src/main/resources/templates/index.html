@@ -14,6 +14,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <!-- boton desplegable de categorías-->
                             <li class="nav-item">
                                 <div class="dropdown">
                                     <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -22,18 +23,22 @@
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li><a class="dropdown-item" th:each="categoria : ${categorias}" th:href="@{/producto/categoria(categoriaId=${categoria.id})}" th:text="${categoria.nombre}"></a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="#">Ver todas</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/producto/productos}">Ver todos los productos</a></li>
                                     </ul>
                                 </div>
                             </li>
-                            <li class="nav-item"> | </li>
+                            
+                            <!-- separador de botones desplegables-->
+                            <div class="nav-item vr">|</div>
+                            
+                            <!-- boton desplegable de marcas-->
                             <li class="nav-item">
                                 <div class="dropdown">
-                                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                                         Marcas
                                     </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="#" th:each="marca : ${marcas}" th:text="${marca.nombre}"></a></li>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                        <li><a class="dropdown-item" th:each="marca : ${marcas}" th:href="@{/producto/marca(marcaId=${marca.id})}" th:text="${marca.nombre}"></a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item" href="#">Ver todas</a></li>
                                     </ul>
@@ -50,28 +55,7 @@
             </nav>
             <div class="container mt-5 mb-5">
 
-                <!--           <div class="dropdown">
-                                <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Categorías
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#" th:each="categoria : ${categorias}" th:text="${categoria.nombre}"></a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#">Ver todas</a></li>
-                                </ul>
-                            </div>
-                                    
-                                    
-                            <div class="dropdown">
-                                <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Marcas
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#" th:each="marca : ${marcas}" th:text="${marca.nombre}"></a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#">Ver todas</a></li>
-                                </ul>
-                            </div>-->
+               
 
                 <h1>Bienvenido!</h1>
                 <!--Si me autentico/login muesta el nombre del usuario-->
@@ -80,32 +64,72 @@
                 <p th:if="${session.usuario != null}">Bienvenid@ <span th:text="${session.usuario.username}"></span>. Tu rol es <span th:text="${session.usuario.rol}"></span> Tu id es <span th:text="${session.usuario.id}"></span></p>
                 <a th:if="${session.usuario != null}">Mi cuenta<a/>
             </div>
+            
+            
+            <!-- prueba carousel-->
+            <!-- primera vista-->
             <div class="container">
+                <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            
+                            <div class="container-fluid">
+                                <div class="row">
+                
+                                    <div class="d-flex flex-column justify-content-center align-items-center">
+                                        <div class="row">
+                                         <div th:replace="producto-layout :: producto-layout('Con descuento', ${productos})"></div>
+                                        </div>
+                                        <br>
+                                    </div>                
+                                </div>
+                                <br>
+                            </div>
+                        </div>
 
+                        <!-- segunda vista-->
+          <div class="carousel-item">
+           
+            <div class="container-fluid">
+              <div class="row">
+                
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                  <div class="row">
+                    <div th:replace="producto-layout :: producto-layout('Últimos ingresos', ${productos})"></div>
+                  </div>
+                  <br>
+                </div>                
+              </div>
+<br>
+            </div>
+        </div>
 
-                <div th:replace="producto-layout :: producto-layout('Últimos ingresos', ${productos})"></div>
-
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8">
-                        <nav aria-label="Pagination">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item" th:classappend="${anterior < 0} ? 'disabled' : ''">
-                                    <a class="page-link" th:href="@{|?page=${anterior}|}">Anterior</a>
-                                </li>
-                                <li class="page-item" th:each="pagina : ${paginas}" th:classappend="${actual == pagina-1 ? 'active' : ''}">
-                                    <a class="page-link" th:href="@{|?page=${pagina-1}|}" th:text="${pagina}"></a>
-                                </li>
-                                <li class="page-item" th:classappend="${actual == ultima} ? 'disabled' : ''">
-                                    <a class="page-link" th:href="@{|?page=${siguiente}|}">Siguiente</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="col-md-2"></div>
-                </div>
-
-
+                        <!-- tercera vista-->
+          <div class="carousel-item">
+           
+            <div class="container-fluid">
+              <div class="row">
+                
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                  <div class="row">
+                    <div th:replace="producto-layout :: producto-layout('Productos más buscados', ${productos})"></div>
+                  </div>
+                  <br>
+                </div>                
+              </div>
+<br>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
             </div>
         </main>
     </body>
