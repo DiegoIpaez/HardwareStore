@@ -28,8 +28,13 @@ public class DetalleServicio {
         Detalle carritoItem = detalleRepositorio.carritoPorUsuarioYproducto(u.getId(), prodId);
 
         if (carritoItem != null) {
-            cantidadAñadida = carritoItem.getCantidad() + cantidad;
-            carritoItem.setCantidad(cantidadAñadida);
+            if (carritoItem.getCantidad() + cantidad - 1 < carritoItem.getProducto().getStock()) {
+              cantidadAñadida = carritoItem.getCantidad() + cantidad;
+            carritoItem.setCantidad(cantidadAñadida);  
+            }else{
+             return 400;
+            }
+            
         } else {
             carritoItem = new Detalle();
             carritoItem.setCantidad(cantidad);

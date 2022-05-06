@@ -26,25 +26,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/pedido")
 public class PedidoController {
-    
+
     @Autowired
-    private PedidoServicio pedidoServicio;  
+    private PedidoServicio pedidoServicio;
     @Autowired
-    private DetalleServicio carritoServicio;    
+    private DetalleServicio carritoServicio;
     @Autowired
     private UsuarioServicio usuarioServicio;
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO')")
     @PostMapping("/save")
-    public String realizarPedido(Authentication auth){
-        Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
-        List<Detalle> carrito = carritoServicio.carrito(u);
-        
-        pedidoServicio.realizarPedido(u, carrito);
-        carritoServicio.eliminarProductos(carrito);
-        return "redirect:/carrito";
+    public String realizarPedido(Authentication auth, Model model){
+        try {
+            Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
+            List<Detalle> carrito = carritoServicio.carrito(u);
+
+            pedidoServicio.realizarPedido(u, carrito);
+            carritoServicio.eliminarProductos(carrito);
+            
+            model.addAttribute("success", "Se ha completado su compra!");
+            return "redirect:/carrito";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", e.getMessage());
+            return "redirect:/carrito";
+        }
     }
-    
+
     @GetMapping("/usuario")
     public String pedidoUsuario(Model model, Authentication auth, @PageableDefault(page = 0, size = 2) Pageable pageable) {
         Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
@@ -54,38 +62,38 @@ public class PedidoController {
         if (totalDePaginas > 0) {
             List<Integer> paginas = IntStream.rangeClosed(1, totalDePaginas).boxed().collect(Collectors.toList());
             model.addAttribute("paginas", paginas);
-        }  
+        }
         model.addAttribute("pedidos", pedidos);
         model.addAttribute("actual", page);
-        model.addAttribute("siguiente", page+1);
-        model.addAttribute("anterior", page-1);
-        model.addAttribute("ultima", totalDePaginas-1);
+        model.addAttribute("siguiente", page + 1);
+        model.addAttribute("anterior", page - 1);
+        model.addAttribute("ultima", totalDePaginas - 1);
         return "pedido-usuario";
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_USUARIO')")
     @GetMapping("/detalle")
     public String detallesDelPedido(Model model, @RequestParam("detalle") String detalle, @RequestParam("total") Double total) throws Exception {
-        
+
         model.addAttribute("detalle", pedidoServicio.mostrarDetalle(detalle));
         model.addAttribute("total", total);
-        
+
         return "pedido-detalle";
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @PostMapping("/actualizar")
     public String modificar(Model model, @RequestParam("id") String id, @RequestParam("estado") EstadoPedido estado) {
         try {
             pedidoServicio.modificarEstadoPedido(id, estado);
-            
+
             return "redirect:/pedido/list";
         } catch (Exception ex) {
             ex.printStackTrace();
             return "redirect:/pedido/list";
         }
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list")
     public String listaDePedidos(Model modelo, @PageableDefault(page = 0, size = 2) Pageable pageable) {
@@ -95,14 +103,14 @@ public class PedidoController {
         if (totalDePaginas > 0) {
             List<Integer> paginas = IntStream.rangeClosed(1, totalDePaginas).boxed().collect(Collectors.toList());
             modelo.addAttribute("paginas", paginas);
-        }  
+        }
         modelo.addAttribute("pedidos", pedidos);
         modelo.addAttribute("actual", page);
-        modelo.addAttribute("siguiente", page+1);
-        modelo.addAttribute("anterior", page-1);
-        modelo.addAttribute("ultima", totalDePaginas-1);
-        modelo.addAttribute("estados",EstadoPedido.values());
+        modelo.addAttribute("siguiente", page + 1);
+        modelo.addAttribute("anterior", page - 1);
+        modelo.addAttribute("ultima", totalDePaginas - 1);
+        modelo.addAttribute("estados", EstadoPedido.values());
         return "lista-pedidos";
     }
-    
+
 }

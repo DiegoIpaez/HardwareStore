@@ -101,3 +101,45 @@ if (succesUser != null) {
 
   sweetAlet();
 }
+
+const succesPay = document.querySelector("#success-pay");
+if (succesUser != null) {
+  const text = document.getElementById("success-pay").textContent;
+
+  const sweetAlet = async () => {
+    await Swal.fire({
+      title,
+      text,
+      icon,
+      timer,
+      timerProgressBar,
+      confirmButtonColor,
+      showCloseButton,
+    });
+
+    window.location.href = "http://localhost:8080/pedido/usuario"
+  };
+
+  sweetAlet();
+}
+
+const errorPay = document.querySelector("#error-pay");
+if (errorPay != null) {
+  const text = document.getElementById("error-pay").textContent;
+
+  const sweetAlet = async () => {
+    await Swal.fire({
+      title,
+      text,
+      icon:"error",
+      timer,
+      timerProgressBar,
+      confirmButtonColor,
+      showCloseButton,
+    });
+
+    window.location.href = "http://localhost:8080/carrito"
+  };
+
+  sweetAlet();
+}

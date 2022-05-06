@@ -33,7 +33,7 @@ public class DetalleRestController {
             return cantidadAñadida + " artículo(s) de este producto se agregaron a su carrito de compras.";
         } catch (Exception e) {
             e.printStackTrace();
-            return "el artículo(s) no existe";
+            return "Este producto(s) no existe!";
         }
     }
 

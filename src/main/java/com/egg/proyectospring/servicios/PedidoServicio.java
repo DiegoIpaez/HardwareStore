@@ -6,6 +6,7 @@ import com.egg.proyectospring.entidades.Producto;
 import com.egg.proyectospring.entidades.Usuario;
 import com.egg.proyectospring.enumeraciones.EstadoPedido;
 import com.egg.proyectospring.repositorios.PedidoRepositorio;
+import com.egg.proyectospring.repositorios.ProductoRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -23,9 +24,21 @@ public class PedidoServicio {
     private PedidoRepositorio pedidoRepositorio;
     @Autowired
     private ProductoServicio productoServicio;
+    @Autowired
+    private ProductoRepository productoRepositorio;
 
-    public Pedido realizarPedido(Usuario u, List<Detalle> carrito) {
+    public Pedido realizarPedido(Usuario u, List<Detalle> carrito) throws Exception {
         Pedido pedido = new Pedido();
+        
+        for (Detalle d : carrito) {            
+            Producto p = productoServicio.buscarProductoPorId(d.getProducto().getId());
+            if (d.getCantidad() < p.getStock()) {
+                p.setStock(p.getStock() - d.getCantidad());
+                productoRepositorio.save(p);
+            }else{
+                throw new Exception("No hay suficiente stock de "+ p.getNombre() + ", intentelo de nuevo.");
+            }
+        }
 
         pedido.setEstado(EstadoPedido.PROCESANDO);
         pedido.setFecha(new Date());

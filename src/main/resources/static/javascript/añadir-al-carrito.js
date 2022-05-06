@@ -16,10 +16,25 @@ $(document).ready(function() {
        }
     })
     .done(function(res){
-        alert(res); 
+
+        Swal.fire({
+         text: res,
+         icon: "success",
+         timer: 1600,
+         confirmButtonColor: "green",
+         showCloseButton: true,
+        });
+ 
     }) 
     .fail(function(){
-        alert("Error al agregar su producto a su carrito");
+
+        Swal.fire({
+         text: "Error al agregar su producto a su carrito",
+         icon: "error",
+         timer: 1600,
+         confirmButtonColor: "red",
+         showCloseButton: true,
+        });
     })  
  
    } 
