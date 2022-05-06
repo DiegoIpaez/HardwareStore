@@ -29,66 +29,107 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
-                <a class="navbar-brand text-white" href="/">HardwareStore</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span <i class="bi bi-list"></i></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/producto/productos">Productos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/sobre_nosotros">Sobre Nosotros</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/contacto">Donde comprar</a>
-                        </li>
-                    </ul>
+        <header>
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <a class="navbar-brand text-white" href="/">HardwareStore</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span <i class="bi bi-list"></i></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/producto/productos">Productos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/sobre_nosotros">Sobre Nosotros</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/contacto">Donde comprar</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/carrito"><i class="fa fa-shopping-cart"></i></a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle ms-2" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-user"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark text-center" aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <li><a class="dropdown-item" th:if="${session.usuario == null}" href="/login">Iniciar session</a></li>
+                                    <li><a class="dropdown-item" th:if="${session.usuario != null}" href="/usuario">Mi cuenta</a></li>
+                                    <li><a class="dropdown-item" th:if="${session.usuario != null}">
+                                            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
+                                                <button  type="submit" class="btn text-danger">Salir <i class="fa fa-arrow-right"></i></button>
+                                            </form></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle me-5" id="navbarDarkDropdownMenuLink" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-toolbox"></i>
+                                </a>
+                                <ul sec:authorize="hasRole('ADMINISTRADOR')" class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">                            
+                                    <li><a class="dropdown-item" href="/usuario/list">Usuarios</a></li>
+                                    <li><a class="dropdown-item" href="/pedido/list">Pedidos</a></li>
+                                    <li><a class="dropdown-item" href="/producto/list">Productos</a></li>
+                                    <li><a class="dropdown-item" href="/categoria/list">Categorias</a></li>
+                                    <li><a class="dropdown-item" href="/marca/list">Marcas</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item ms-5"></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/carrito"><i class="fa fa-shopping-cart"></i></a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle ms-2" href="#" id="navbarDarkDropdownMenuLink" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-user"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark text-center" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" th:if="${session.usuario == null}" href="/login">Iniciar session</a></li>
-                                <li><a class="dropdown-item" th:if="${session.usuario != null}" href="/usuario">Mi cuenta</a></li>
-                                <li><a class="dropdown-item" th:if="${session.usuario != null}">
-                                        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
-                                            <button  type="submit" class="btn text-danger">Salir <i class="fa fa-arrow-right"></i></button>
-                                        </form></a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle me-5" id="navbarDarkDropdownMenuLink" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-toolbox"></i>
-                            </a>
-                            <ul sec:authorize="hasRole('ADMINISTRADOR')" class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">                            
-                                <li><a class="dropdown-item" href="/usuario/list">Usuarios</a></li>
-                                <li><a class="dropdown-item" href="/pedido/list">Pedidos</a></li>
-                                <li><a class="dropdown-item" href="/producto/list">Productos</a></li>
-                                <li><a class="dropdown-item" href="/categoria/list">Categorias</a></li>
-                                <li><a class="dropdown-item" href="/marca/list">Marcas</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item ms-5"></li>
-                    </ul>
+            </nav>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#"></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Categorías
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="categorias">
+                                        
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item"> | </li>
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Marcas
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="marcas">
+                                        
+                                    </ul>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-dark" type="submit">Search</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </header>
+
         <main layout:fragment="main">
             <p>Contenido por defecto</p>
         </main>
@@ -196,13 +237,13 @@
 
         <div layout:fragment="scripts">
         </div>
-
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/c3a49e1200.js" crossorigin="anonymous"></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="/javascript/sweetalert.js"></script>
+        <script src="/javascript/boton-de-catalogo.js"></script>
     </body>
 
 </html>
