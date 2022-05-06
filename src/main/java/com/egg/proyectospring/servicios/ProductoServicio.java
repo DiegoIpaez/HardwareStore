@@ -60,7 +60,8 @@ public class ProductoServicio {
                     throw new Exception(" ya existe un producto con ese nombre");
                 }
             }
-
+            producto.setFecha(p.getFecha());
+            producto.setStockVendido(p.getStockVendido());
             producto.setNombre(producto.getNombre());
             producto.setDescripcion(producto.getDescripcion());
             producto.setStock(producto.getStock());
@@ -114,6 +115,7 @@ public class ProductoServicio {
                 producto.setDisponible(true);
                 producto.setFoto(fotoServicio.guardarFoto(file));
                 producto.setFecha(new Date());
+                producto.setStockVendido(0);
 
             }
 

@@ -22,6 +22,7 @@ public class Producto {
     private String descripcion;
     private double precio;
     private Integer stock;
+    private Integer stockVendido;
     private Boolean disponible;
     private Boolean alta;
     @ManyToOne 
