@@ -1,10 +1,6 @@
 package com.egg.proyectospring.controladores;
 
-import com.egg.proyectospring.entidades.Categoria;
-import com.egg.proyectospring.entidades.Marca;
 import com.egg.proyectospring.entidades.Producto;
-import com.egg.proyectospring.servicios.CategoriaServicio;
-import com.egg.proyectospring.servicios.MarcaServicio;
 import com.egg.proyectospring.servicios.ProductoServicio;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,15 +20,9 @@ public class MainController {
     
     @Autowired
     private ProductoServicio productoServicio;
-    @Autowired
-    private CategoriaServicio categoriaServicio;
-    @Autowired
-    private MarcaServicio marcaServicio;
     
     @GetMapping("")
     public String index(Model model, @PageableDefault(page = 0, size = 6) Pageable pageable){
-        List<Categoria> categorias = categoriaServicio.categoriasConAlta();
-        List<Marca> marcas = marcaServicio.listarMarcas();
         
         Integer page = pageable.getPageNumber();
         Page<Producto> productos = productoServicio.getProductosPorFecha(pageable);
@@ -41,8 +31,7 @@ public class MainController {
             List<Integer> paginas = IntStream.rangeClosed(1, totalDePaginas).boxed().collect(Collectors.toList());
             model.addAttribute("paginas", paginas);
         }
-        model.addAttribute("marcas", marcas);
-        model.addAttribute("categorias", categorias);
+
         model.addAttribute("productos", productos);
         model.addAttribute("actual", page);
         model.addAttribute("siguiente", page+1);

@@ -7,7 +7,7 @@
     </head>
     <body>
         <main layout:fragment="main">
-            <div th:if="${!pedidos.isEmpty()}" class="container-fluid mt-4 mb-5">
+            <div class="container-fluid mt-4 mb-5">
                 <div class="p-2">
                     <h2>Pedidos</h2>
                     <div class="row table-shadow bg-dark pt-3 pb-3 text-white">
@@ -19,7 +19,7 @@
                         <div class="col-xl-1 col-lg-1">Detalle</div>
                         <div class="col-xl-2 col-lg-2">Editar</div>
                     </div>
-                    <div class="row table-shadow" th:each="pedido, contador : ${pedidos}">
+                    <div th:if="${!pedidos.isEmpty()}" class="row table-shadow" th:each="pedido, contador : ${pedidos}">
                         <div class="col-xl-2 col-lg-2 pt-4 pb-1" th:text="${pedido.id}"></div>
                         <div class="col-xl-2 col-lg-2 pt-4 pb-1" th:text="${pedido.usuario.email}"></div>
                         <div class="col-xl-2 col-lg-2 pt-4 pb-1" th:text="${pedido.fecha}"></div>
@@ -47,7 +47,8 @@
                     </div>
                     <div class="row table-bottom pt-3 pb-4"></div>
                     <!--paginatio-->
-                    <div th:replace="paginacion-layout :: paginacion-layout('pedido/list',${actual},${siguiente},${anterior},${ultima})"></div>
+                    <div th:if="${!pedidos.isEmpty()}">
+                    <div th:replace="paginacion-layout :: paginacion-layout('pedido/list',${actual},${siguiente},${anterior},${ultima})"></div></div>
                 </div>
             </div>
         </main>
