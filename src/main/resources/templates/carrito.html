@@ -37,7 +37,7 @@
                                     <div>
                                         <b th:text="${c.producto.nombre}"></b>
                                     </div>
-                                    <div th:replace="control-de-cantidad :: control-de-cantidad(${c.cantidad},${c.producto.id})">
+                                    <div th:replace="control-de-cantidad :: control-de-cantidad(${c.cantidad},${c.producto.id},${c.producto.stock})">
                                         Cantidad
                                     </div>
                                     <div>

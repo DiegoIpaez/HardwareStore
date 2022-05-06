@@ -70,10 +70,10 @@ function reducirCantidad(link){
 
 function incrementarCantidad(link){
     productoId = link.attr("pid");
+    stock = link.attr("stock");
     qtyInput = $("#cantidad"+ productoId);
 
     newQty = parseInt(qtyInput.val()) + 1;
-    stock = document.getElementById("carritoItem-stock").textContent;
     if (newQty > 0){ 
        if(newQty < parseInt(stock)+1){
        qtyInput.val(newQty);

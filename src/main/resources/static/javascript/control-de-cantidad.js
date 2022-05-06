@@ -12,10 +12,10 @@ $(document).ready(function() {
    $(".plusButton").on("click", function(e){
        e.preventDefault();
        productoId = $(this).attr("pid");
+       stock = $(this).attr("stock");
        qtyInput = $("#cantidad"+ productoId);
        
        newQty = parseInt(qtyInput.val()) + 1;
-       stock = document.getElementById("producto-stock").textContent;
        if(newQty > 0){
        if(newQty < parseInt(stock)+1){
        qtyInput.val(newQty);}
