@@ -6,13 +6,43 @@
     </head>
     <body>
         <main layout:fragment="main">
+            
             <div class="container mt-5 mb-5">
+
+
                 <h1>Bienvenido!</h1>
                 <!--Si me autentico/login muesta el nombre del usuario-->
                 <p sec:authorize="isAuthenticated()">Logged user: <span sec:authentication="name"></span></p>
                 <!--Compruebo la informacion guardada en Sesion-->
                 <p th:if="${session.usuario != null}">Bienvenid@ <span th:text="${session.usuario.username}"></span>. Tu rol es <span th:text="${session.usuario.rol}"></span> Tu id es <span th:text="${session.usuario.id}"></span></p>
                 <a th:if="${session.usuario != null}">Mi cuenta<a/>
+            </div>
+            <div class="container">
+
+
+                <div th:replace="producto-layout :: producto-layout('Últimos ingresos', ${productos})"></div>
+
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <nav aria-label="Pagination">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" th:classappend="${anterior < 0} ? 'disabled' : ''">
+                                    <a class="page-link" th:href="@{|?page=${anterior}|}">Anterior</a>
+                                </li>
+                                <li class="page-item" th:each="pagina : ${paginas}" th:classappend="${actual == pagina-1 ? 'active' : ''}">
+                                    <a class="page-link" th:href="@{|?page=${pagina-1}|}" th:text="${pagina}"></a>
+                                </li>
+                                <li class="page-item" th:classappend="${actual == ultima} ? 'disabled' : ''">
+                                    <a class="page-link" th:href="@{|?page=${siguiente}|}">Siguiente</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+
+
             </div>
         </main>
     </body>

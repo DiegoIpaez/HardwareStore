@@ -5,6 +5,7 @@ import com.egg.proyectospring.entidades.Foto;
 import com.egg.proyectospring.entidades.Marca;
 import com.egg.proyectospring.entidades.Producto;
 import com.egg.proyectospring.repositorios.ProductoRepository;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +60,11 @@ public class ProductoServicio {
                     throw new Exception(" ya existe un producto con ese nombre");
                 }
             }
-
+            producto.setFecha(p.getFecha());
+            producto.setStockVendido(p.getStockVendido());
             producto.setNombre(producto.getNombre());
             producto.setDescripcion(producto.getDescripcion());
+            producto.setStock(producto.getStock());
             producto.setPrecio(producto.getPrecio());
             Marca marca = marcaServicio.buscarMarcaPorNombre(producto.getMarca().getNombre());
             if (marca != null) {
@@ -111,6 +114,8 @@ public class ProductoServicio {
                 producto.setAlta(true);
                 producto.setDisponible(true);
                 producto.setFoto(fotoServicio.guardarFoto(file));
+                producto.setFecha(new Date());
+                producto.setStockVendido(0);
 
             }
 
@@ -200,4 +205,13 @@ public class ProductoServicio {
     public Page<Producto> getAll(Pageable pageable) {
         return productoRepository.getAll(pageable);
     }
+    
+    public Page<Producto> getProductosConAlta(Pageable pageable) {
+        return productoRepository.getProductosConAlta(pageable);
+    }
+    
+    public Page<Producto> getProductosPorFecha(Pageable pageable) {
+        return productoRepository.getProductosPorFecha(pageable);
+    }
+    
 }
