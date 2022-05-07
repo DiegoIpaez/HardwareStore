@@ -9,6 +9,8 @@ import com.egg.proyectospring.servicios.MarcaServicio;
 import com.egg.proyectospring.servicios.ProductoServicio;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -254,7 +256,9 @@ public class ProductoController {
     public String buscarProducto(Model model) {
         Producto producto = new Producto();
         model.addAttribute("producto", producto);
-
+         List<Producto> productosBuscados = productoServicio.listarProductos();
+         model.addAttribute("productosBuscados", productosBuscados);
+         
         return "buscador-productos";
     }
 
@@ -266,9 +270,16 @@ public class ProductoController {
      */
     @GetMapping("/buscarProducto")
     public String listarProductos(Model modelo, @RequestParam("nombrep") String nombre) {
-        List<Producto> productosBuscados = productoServicio.buscarProducto(nombre);
+        List<Producto> productos;
+        try {
+            productos = productoServicio.buscarProducto(nombre);
+            modelo.addAttribute("productos", productos);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            modelo.addAttribute("error", ex.getMessage());
+        }
 
-        modelo.addAttribute("productosBuscados", productosBuscados);
+        
         return "buscador-productos";
     }
 
