@@ -8,7 +8,7 @@ const urlApi = "http://localhost:8080/api";
             .then((data) => {
             let datos = "";
             for (let i = 0; i < data.length; i++) {
-            datos += `<li><a class="dropdown-item" th:href="@{/producto/categoria(categoriaId=${data[i].id})}">${data[i].nombre}</a></li>`;
+            datos += `<li><a class="dropdown-item" href="http://localhost:8080/producto/categoria?categoriaId=${data[i].id}">${data[i].nombre}</a></li>`;
             }
 
             liC.innerHTML = datos;
@@ -20,7 +20,7 @@ const urlApi = "http://localhost:8080/api";
             .then((data) => {
             let datos = "";
             for (let i = 0; i < data.length; i++) {
-            datos += `<li><a class="dropdown-item" th:href="@{/producto/marca(marcaId=${data[i].id})}">${data[i].nombre}</a></li>`;
+            datos += `<li><a class="dropdown-item" href="http://localhost:8080/producto/marca?marcaId=${data[i].id}">${data[i].nombre}</a></li>`;
             }
 
             liM.innerHTML = datos;
