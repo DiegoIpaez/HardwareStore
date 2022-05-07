@@ -12,7 +12,28 @@ and open the template in the editor.
     </head>
     <body>
         <main layout:fragment="main">
-            <div class="container">
+            <!--Barra de busqueda-->
+            <div class="container mt-5">
+                <form th:action="@{/producto/buscarProducto}" method="GET">
+                    <div class="row">
+                        <div class="col-11">
+                            <input class="form-control col-md-4 " type="text" name="nombrep"/>                       
+                        </div>
+                        <div class="col-1">
+                            <button type="submit" class="btn btn-dark">                                
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>                        
+                    </div>
+                </form>
+                <div th:if='${!productosBuscados.isEmpty()}' class="mt-4">
+                    <div th:replace="producto-layout :: producto-layout('Resultado', ${productosBuscados})"></div>
+                </div>
+                <div th:if='${error != null}' th:text="${error}"></div>
+            </div>
+             <!--Barra de busqueda-->
+              <!--Productos-->
+            <div th:if='${productosBuscados.isEmpty()}' class="container">
                 <br>
                 <div th:replace="producto-layout :: producto-layout('Todos los productos', ${productos})"></div>
 

@@ -8,8 +8,12 @@
                 <h2 th:text="${titulo}"></h2>
             </div>
             <div class="row">
+                <div th:if="${productos.isEmpty()}">
+                    <h6 class="mb-5 pb-1">No hay productos disponibles</h6>
+                    <p class="mt-5 pb-5"></p>
+                </div>
 
-                <div class="col-xl-2 col-lg-3 col-md-4 col-6 mb-3" th:each="prod : ${productos}">
+                <div th:if="${!productos.isEmpty()}" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-3" th:each="prod : ${productos}">
                     <a th:href="@{/producto(prodId=${prod.id})}" class="product-link">
                         <div class="card product">
 
