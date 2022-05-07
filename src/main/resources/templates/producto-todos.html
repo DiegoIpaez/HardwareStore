@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <main layout:fragment="main">
+            <div class="container">
+                <br>
+                <div th:replace="producto-layout :: producto-layout('Todos los productos', ${productos})"></div>
+
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <nav aria-label="Pagination">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" th:classappend="${anterior < 0} ? 'disabled' : ''">
+                                    <a class="page-link" th:href="@{|?page=${anterior}|}">Anterior</a>
+                                </li>
+                                <li class="page-item" th:each="pagina : ${paginas}" th:classappend="${actual == pagina-1 ? 'active' : ''}">
+                                    <a class="page-link" th:href="@{|?page=${pagina-1}|}" th:text="${pagina}"></a>
+                                </li>
+                                <li class="page-item" th:classappend="${actual == ultima} ? 'disabled' : ''">
+                                    <a class="page-link" th:href="@{|?page=${siguiente}|}">Siguiente</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+
+            </div>
+        </main>
+    </body>
+</html>

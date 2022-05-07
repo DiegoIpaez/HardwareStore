@@ -214,4 +214,7 @@ public class ProductoServicio {
         return productoRepository.getProductosPorFecha(pageable);
     }
     
+    public List<Producto> productosLimitados() {
+        return productoRepository.productosLimitados();
+    }
 }

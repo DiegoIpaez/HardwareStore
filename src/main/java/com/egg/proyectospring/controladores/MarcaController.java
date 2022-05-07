@@ -24,7 +24,7 @@ public class MarcaController {
 
     @Autowired
     MarcaServicio marcaServicio;
-  
+
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/modificar")
     public String formulario(@RequestParam("marcaId") String id, Model modelo) throws Exception {

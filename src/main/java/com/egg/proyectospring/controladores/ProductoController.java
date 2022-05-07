@@ -220,5 +220,23 @@ public class ProductoController {
         
         return "buscador-productos";
     }
+    
+    @GetMapping("/productos")
+    public String mostrarTodosLosProductos(Model model, @PageableDefault(page = 0, size = 12) Pageable pageable) {
+        Integer page = pageable.getPageNumber();
+        Page<Producto> productos = productoServicio.getAll(pageable);
+        Integer totalDePaginas = productos.getTotalPages();
+        if (totalDePaginas > 0) {
+            List<Integer> paginas = IntStream.rangeClosed(1, totalDePaginas).boxed().collect(Collectors.toList());
+            model.addAttribute("paginas", paginas);
+        }
+        model.addAttribute("productos", productos);
+        model.addAttribute("actual", page);
+        model.addAttribute("siguiente", page+1);
+        model.addAttribute("anterior", page-1);
+        model.addAttribute("ultima", totalDePaginas-1);
+        
+        return "producto-todos";
+    }
 
 }
