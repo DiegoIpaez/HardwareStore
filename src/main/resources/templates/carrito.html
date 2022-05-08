@@ -21,9 +21,9 @@
                 <div th:if="${!carrito.isEmpty()}" class="row m-1">
                     <div class="col-sm-8">
                         <th:block th:each="c, index : ${carrito}">
-                            <div class="row border rounded" th:id="'row'+${index.count}">
+                            <div class="row border rounded bg-light" th:id="'row'+${index.count}">
                                 <div class="col-1">
-                                    <div th:text="${index.count}" class="mt-1"></div>
+                                    <div th:text="${index.count}" class="mt-1 ps-1"></div>
                                     <div>
                                         <a class="link-remove" th:rowNumber="${index.count}" th:href="@{'/carrito/eliminar/'+ ${c.producto.id} }">
                                             <i class="fas fa-trash" style="color: red"></i>
@@ -31,7 +31,8 @@
                                     </div>
                                 </div>
                                 <div class="col-3">
-                                    <img src="http://d3ugyf2ht6aenh.cloudfront.net/stores/001/127/623/products/cd121k_11-aaff0495a0a8b57e1c15941669028233-640-0.jpg" alt="foto-prod" class="img-fluid"/>
+                                    <img th:if="${c.producto.foto != null}" th:src="@{/foto/producto(idProd=${c.producto.id})}" alt="img-prod" class="img-fluid">
+                                    <img th:if="${c.producto.foto == null}" src="https://thumbs.dreamstime.com/b/%C3%B0%C2%BF%C3%B0%C2%B5%C3%B1%E2%80%A1%C3%B0%C2%B0%C3%B1%E2%80%9A%C3%B1%C5%93-134036857.jpg" alt="img-prod" class="img-fluid">
                                 </div>
                                 <div class="col-6 mt-2">
                                     <div>
@@ -53,7 +54,7 @@
                     </div>
                     <div class="col-sm-4">
                         <div>
-                            <span class="h3">Total</span>
+                            <span class="h3">Total:</span>
                         </div>
                         <div class="mt-2">
                             <span class="h2" id="cantidadTotal"></span>
@@ -66,7 +67,7 @@
                     </div>
 
                 </div>
-                
+
                 <p hidden id="success-pay" th:if="${success != null}" th:text="${success}"></p>
                 <p hidden id="error-pay" th:if="${error != null}" th:text="${error}"></p>
             </div>
