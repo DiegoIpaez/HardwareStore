@@ -5,78 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-
         <main layout:fragment="main">
-      <!-- prueba carousel-->
-            <!-- primera vista-->
-            <div class="container">
-                <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            
-                            <div class="container-fluid">
-                                <div class="row">
-                
-                                    <div class="d-flex flex-column justify-content-center align-items-center">
-                                        <div class="row">
-                                         <div th:replace="producto-layout :: producto-layout('Últimos ingresos', ${productosRecientes})"></div>
-                                        </div>
-                                        <br>
-                                    </div>                
-                                </div>
-                                <br>
-                            </div>
-                        </div>
 
-                        <!-- segunda vista-->
-          <div class="carousel-item">
-           
-            <div class="container-fluid">
-              <div class="row">
-                
-                <div class="d-flex flex-column justify-content-center align-items-center">
-                  <div class="row">
-                    <div th:replace="producto-layout :: producto-layout('Más vendidos', ${productosMasVendidos})"></div>
-                  </div>
-                  <br>
-                </div>                
-              </div>
-<br>
-            </div>
-        </div>
-
-                        <!-- tercera vista-->
-          <div class="carousel-item">
-           
-            <div class="container-fluid">
-              <div class="row">
-                
-                <div class="d-flex flex-column justify-content-center align-items-center">
-                  <div class="row">
-                    <div th:replace="producto-layout :: producto-layout('Últimas unidades', ${ultimasUnidades})"></div>
-                  </div>
-                  <br>
-                </div>                
-              </div>
-<br>
-            </div>
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-                     
             <div class="container mt-5">
-                <div th:replace="carrusel-productos-layout :: carrusel-productos-layout('Ultimos Agregados', ${productos})"></div>
-
+                <div th:replace="carrusel-productos-layout :: carrusel-productos-layout('Los mas vendidos', ${productosMasVendidos})"></div>
+                <div th:replace="carrusel-productos-layout :: carrusel-productos-layout('Ultimos Agregados', ${productosRecientes})"></div>
+                <div th:replace="carrusel-productos-layout :: carrusel-productos-layout('Ultimas unidades', ${ultimasUnidades})"></div>
             </div>
-
         </main>
         <div layout:fragment="scripts">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
