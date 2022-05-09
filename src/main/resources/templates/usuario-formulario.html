@@ -17,7 +17,7 @@
             <div class="container formulario mt-5 mb-5">
                 <div class="card form-body pt-4">
                     <form th:action="@{/usuario/registro}" method="POST" enctype="multipart/form-data" th:object="${usuario}">
-                        <h1 th:text="${titulo}"></h1>
+                        <h2 th:text="${titulo}"></h2>
                         <hr>
                          <div class="mt-1">
                             <p
@@ -38,21 +38,21 @@
                                 ></p>
                         </div>
                         <input hidden th:field="*{id}">
-                        <div class="input-group">
+                        <div class="input-group mb-2">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="bi bi-person"></i></span>
                             </div>
                             <input type="text" th:field="${usuario.username}" class="form-control"  placeholder="Nombre de usuario">
                         </div>
 
-                        <div class="input-group" th:if="${usuario.id == null || usuario.id.isEmpty()}">
+                        <div class="input-group mb-2" th:if="${usuario.id == null || usuario.id.isEmpty()}">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                             </div>
                             <input type="email" th:if="${usuario.id == null || usuario.id.isEmpty()}" class="form-control" th:field="${usuario.email}" placeholder="Correo electrónico">
                         </div>
 
-                        <div class="input-group" th:if="${usuario.id == null || usuario.id.isEmpty()}">
+                        <div class="input-group mb-2" th:if="${usuario.id == null || usuario.id.isEmpty()}">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="bi bi-lock"></i></span>
                             </div>
@@ -71,7 +71,7 @@
 
                         <br>
                         <div>
-                            <button type="submit" class="btn btn-form w-100" th:text="${usuario.id == null || usuario.id.isEmpty() ? 'Registrarse' : 'Editar'}"></button>
+                            <button type="submit" class="btn btn-login w-100" th:text="${usuario.id == null || usuario.id.isEmpty() ? 'Enviar' : 'Editar'}"></button>
                         </div>
                        
                     </form>
