@@ -1,9 +1,11 @@
 package com.egg.proyectospring.servicios;
 
 import com.egg.proyectospring.entidades.Categoria;
+import com.egg.proyectospring.entidades.Foto;
 import com.egg.proyectospring.entidades.Marca;
 import com.egg.proyectospring.entidades.Producto;
 import com.egg.proyectospring.repositorios.ProductoRepository;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +60,11 @@ public class ProductoServicio {
                     throw new Exception(" ya existe un producto con ese nombre");
                 }
             }
-
+            producto.setFecha(p.getFecha());
+            producto.setStockVendido(p.getStockVendido());
             producto.setNombre(producto.getNombre());
             producto.setDescripcion(producto.getDescripcion());
+            producto.setStock(producto.getStock());
             producto.setPrecio(producto.getPrecio());
             Marca marca = marcaServicio.buscarMarcaPorNombre(producto.getMarca().getNombre());
             if (marca != null) {
@@ -79,9 +83,11 @@ public class ProductoServicio {
             producto.setDisponible(p1.getDisponible());
 
             if (file != null && !file.isEmpty()) {
-                producto.setFoto(fotoServicio.guardarFoto(file));
+                Foto foto = fotoServicio.guardarFoto(file);
+                producto.setFoto(foto);
             } else {
-                producto.setFoto(producto.getFoto());
+                Producto pdb = productoRepository.getById(producto.getId());
+                producto.setFoto(pdb.getFoto());
             }
 
         } else {
@@ -108,6 +114,8 @@ public class ProductoServicio {
                 producto.setAlta(true);
                 producto.setDisponible(true);
                 producto.setFoto(fotoServicio.guardarFoto(file));
+                producto.setFecha(new Date());
+                producto.setStockVendido(0);
 
             }
 
@@ -185,11 +193,28 @@ public class ProductoServicio {
         }
     }
 
-    public List<Producto> buscarProducto(String nombre) {
-        return productoRepository.buscarProducto(nombre);
+    public List<Producto> buscarProducto(String nombre) throws Exception {
+        List<Producto> productos = productoRepository.buscarProducto(nombre);
+        if (productos == null || productos.isEmpty()) {
+            throw new Exception("No se encontró ese producto");
+        }
+        return productos;
+        
     }
 
     public Page<Producto> getAll(Pageable pageable) {
         return productoRepository.getAll(pageable);
+    }
+    
+    public Page<Producto> getProductosConAlta(Pageable pageable) {
+        return productoRepository.getProductosConAlta(pageable);
+    }
+    
+    public Page<Producto> getProductosPorFecha(Pageable pageable) {
+        return productoRepository.getProductosPorFecha(pageable);
+    }
+    
+    public List<Producto> productosLimitados() {
+        return productoRepository.productosLimitados();
     }
 }

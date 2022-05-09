@@ -23,17 +23,25 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
 
     @Query("select p from Producto p where p.nombre != :nombre")
     public List<Producto> productoMenosUno(@Param("nombre") String nombre);
-
-    @Query("select p from Producto p where p.nombre like %:nombre%")
+  
+    @Query("select p from Producto p where p.nombre like %:nombre% AND p.alta = true")
     public List<Producto> buscarProducto(@Param("nombre") String nombre);
     
-    @Query("select p from Producto p where p.categoria.id = :categoriaId")
+    @Query("select p from Producto p where p.categoria.id = :categoriaId and p.alta = true")
     public List<Producto> obtenerProductosPorCategoria(@Param("categoriaId") String categoriaId);
     
-    @Query("select p from Producto p where p.marca.id = :marcaId")
+    @Query("select p from Producto p where p.marca.id = :marcaId and p.alta = true")
     public List<Producto> obtenerProductosPorMarca(@Param("marcaId") String marcaId);
 
     @Query("select p from Producto p")
     public Page<Producto> getAll(Pageable pageable);
 
+    @Query("SELECT p FROM Producto p WHERE p.alta = true and p.disponible = true")
+    public Page<Producto> getProductosConAlta(Pageable pageable);
+    
+    @Query("SELECT p FROM Producto p WHERE p.alta = true and p.disponible = true order by fecha desc")
+    public Page<Producto> getProductosPorFecha(Pageable pageable);
+
+    @Query(value = "SELECT * FROM producto p WHERE p.alta = true and p.disponible = true order by fecha desc limit 6", nativeQuery = true)
+    public List<Producto> productosLimitados();      
 }

@@ -1,29 +1,33 @@
 <!doctype html>
-<html lang="en" layout:decorate="~{layout}">
-    
-    <body style="background-color: #F4E72D">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+    <head>
+
+        <title>Login</title>
+    </head>
+    <body>
         <main layout:fragment="main">
-            <div class="container">
+            <div class="container text-white">
+
                 <div class="row mt-5">
-                    <div class="col">
+                    <div class="col-xl-6 mb-4">
                         <img th:src="@{/imagenes/clientes.png}" class="img-fluid">
                     </div>
-                    <div class="col">
+                    <div class="col-xl-6">
                         <h1>¡Bienvenido!</h1>
                         <br>
                         <form th:action="@{/logincheck}" method="POST">
                             <div class="mb-4">
-                                <label for="email" class="form-label">Correo electrónico:</label>
+                                <label for="email" class="form-label">Correo electrónico*</label>
                                 <input type="email" class="form-control" name="email">
                             </div>
                             <div class="mb-4">
-                                <label for="password" class="form-label">Contraseña:</label>
+                                <label for="password" class="form-label">Contraseña*</label>
                                 <input type="password" class="form-control" name="password">
                                 <br>
                                 <div class="d-grid">
                                     <button type="submit" class="btn btn-dark">Iniciar sesión</button>
                                 </div>
-                                <div class="my-3">
+                                <div class="my-3 text-primary">
                                     <span>No tienes cuenta? <a th:href="@{/usuario/form}">Regístrese aquí</a></span>  
                                     <br>
                                     <span> <a th:href="@{/forgot_password}">Olvidó su contraseña?<a/></span>
@@ -36,6 +40,5 @@
                 </div>
             </div>
         </main>
-       
     </body>
 </html>

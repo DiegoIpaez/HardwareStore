@@ -1,0 +1,30 @@
+.table-shadow {
+    border-top-left-radius: 0.4rem;
+    border-top-right-radius: 0.4rem;
+    box-shadow: 0 0.1rem 0.1rem rgba(161, 161, 161, 0.3);
+}
+
+.table-bottom {
+    border-bottom-left-radius: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
+    background-color: rgb(180, 180, 180);
+    box-shadow: 0 0.1rem 0.1rem rgba(161, 161, 161, 0.3);
+}
+
+.title-table{
+    display: inline;
+}
+
+.btn-new{
+    transition: all 0.7s ease;
+    border-radius: 1.5rem;
+    background-color: rgb(255, 183, 0);
+    margin-bottom: 0.6rem;
+    outline: 0px !important;
+    -webkit-appearance: none;
+    box-shadow: none !important;
+}
+.btn-new:hover {
+    background-color: black; 
+    color: rgb(255, 183, 0);
+}

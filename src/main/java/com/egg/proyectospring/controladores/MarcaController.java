@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +25,7 @@ public class MarcaController {
     @Autowired
     MarcaServicio marcaServicio;
 
-    @GetMapping("/list")
-    public String listaDeMarcas(Model model) {
-        List<Marca> marcas = marcaServicio.listarMarcas();
-        model.addAttribute("marcas", marcas);
-        return "marca-list";
-    }
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/modificar")
     public String formulario(@RequestParam("marcaId") String id, Model modelo) throws Exception {
         Marca marca = marcaServicio.buscarMarcaPorId(id);
@@ -38,12 +33,14 @@ public class MarcaController {
         return "formulario-marca";
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/form")
     public String registro(Model model) {
         model.addAttribute("marca", new Marca());
         return "formulario-marca";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @PostMapping("/save")
     public String marcaFormulario(@ModelAttribute("marca") Marca marca,
             Model model) {
@@ -61,6 +58,7 @@ public class MarcaController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/alta")
     public String alta(@RequestParam("id") String id) {
         try {
@@ -72,6 +70,7 @@ public class MarcaController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/baja")
     public String baja(@RequestParam("id") String id) {
         try {
@@ -83,7 +82,7 @@ public class MarcaController {
         }
     }
 
-    
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list")
     public String listaMarcas(Model modelo, @PageableDefault(page = 0, size = 2) Pageable pageable) {
         Integer page = pageable.getPageNumber();

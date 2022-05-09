@@ -22,19 +22,30 @@ public class DetalleServicio {
         return detalleRepositorio.carritoPorUsuario(u.getId());
     }
 
-    public Integer añadirProducto(String prodId, Integer cantidad, Usuario u) throws Exception {
+    public String añadirProducto(String prodId, Integer cantidad, Usuario u) throws Exception {
 
         Integer cantidadAñadida = cantidad;
         Detalle carritoItem = detalleRepositorio.carritoPorUsuarioYproducto(u.getId(), prodId);
 
         if (carritoItem != null) {
-            cantidadAñadida = carritoItem.getCantidad() + cantidad;
-            carritoItem.setCantidad(cantidadAñadida);
+            if (carritoItem.getCantidad() + cantidad - 1 < carritoItem.getProducto().getStock()) {
+                cantidadAñadida = carritoItem.getCantidad() + cantidad;
+                carritoItem.setCantidad(cantidadAñadida);
+            } else {
+                return carritoItem.getProducto().getNombre() + " ya no tiene stock disponible, puedes seguir comprando otros productos!";
+            }
+
         } else {
-            carritoItem = new Detalle();
-            carritoItem.setCantidad(cantidad);
-            carritoItem.setProducto(productoServicio.buscarProductoPorId(prodId));
-            carritoItem.setUsuario(u);
+            Producto p = productoServicio.buscarProductoPorId(prodId);
+
+            if (cantidad <= p.getStock()) {
+                carritoItem = new Detalle();
+                carritoItem.setCantidad(cantidad);
+                carritoItem.setProducto(p);
+                carritoItem.setUsuario(u);
+            } else {
+                return p.getNombre() + "no tiene stock disponible de momento!";
+            }
         }
 
         Double subtotal = carritoItem.getProducto().getPrecio() * carritoItem.getCantidad();
@@ -42,7 +53,7 @@ public class DetalleServicio {
 
         detalleRepositorio.save(carritoItem);
 
-        return cantidadAñadida;
+        return cantidadAñadida.toString() + " artículo(s) de este producto se agregaron a su carrito de compras.";
     }
 
     public Double actualizarCantidad(Integer cantidad, String prodId, Usuario u) throws Exception {
@@ -59,14 +70,13 @@ public class DetalleServicio {
     public void eliminarProducto(String prodId, Usuario u) {
         detalleRepositorio.eliminarProducto(prodId, u.getId());
     }
-    
-    public void eliminarProductos(List<Detalle> c){
-    
+
+    public void eliminarProductos(List<Detalle> c) {
+
         for (Detalle carrito : c) {
             detalleRepositorio.eliminarProducto(carrito.getProducto().getId(), carrito.getUsuario().getId());
         }
-        
-    }
 
+    }
 
 }

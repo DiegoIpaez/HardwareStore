@@ -5,16 +5,41 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <main layout:fragment="main">
-            <div class="container mt-5 mb-5">
-                <h1>Bienvenido!</h1>
-                <!--Si me autentico/login muesta el nombre del usuario-->
-                <p sec:authorize="isAuthenticated()">Logged user: <span sec:authentication="name"></span></p>
-                <!--Compruebo la informacion guardada en Sesion-->
-                <p th:if="${session.usuario != null}">Bienvenid@ <span th:text="${session.usuario.username}"></span>. Tu rol es <span th:text="${session.usuario.rol}"></span> Tu id es <span th:text="${session.usuario.id}"></span></p>
-                <a th:if="${session.usuario != null}">Mi cuenta<a/>
+        <main layout:fragment="main">                       
+            <div class="container mt-5">
+                <div th:replace="carrusel-productos-layout :: carrusel-productos-layout('Ultimos Agregados', ${productos})"></div>
             </div>
         </main>
+        <div layout:fragment="scripts">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+                    integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+            crossorigin="anonymous"></script>
+            <script>
+                $('.owl-carousel').owlCarousel({
+                loop: true,
+                margin: 15,
+                nav: true,
+                responsive: {
+                0: {
+                items: 1
+                },
+                250: {
+                items: 2
+                },
+                500: {
+                items: 3
+                },
+                750: {
+                items: 4
+                },
+                1000: {
+                items: 5
+                }
+                }
+                })
+            </script>
+        </div>
     </body>
 </html>
 

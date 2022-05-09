@@ -49,22 +49,24 @@
                             <br>
                             <span th:if="${usuario.id == null || usuario.id.isEmpty()}"></span>
 
-                            <div class="input-group">
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                </div>
-                                <input type="password" th:if="${usuario.id == null || usuario.id.isEmpty()}" name="password2" class="form-control" placeholder="Confirmar contraseña">
-                            </div>
 
-                            <br>
-                            <input type="file"  id="fileUpload" name="file">  
-                            <br>
-                            <br>
-                            <input type="submit" class="btn btn-dark" th:value="${usuario.id == null || usuario.id.isEmpty() ? 'Registrarse' : 'Editar'}">
-                        </form>
-                    </div>
+                        <div class="input-group" th:if="${usuario.id == null || usuario.id.isEmpty()}">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                            </div>
+                            <input type="password"  name="password2" class="form-control" placeholder="Confirmar contraseña">
+                        </div>
+                        <br>
+                        <input type="file" class="form-control"  id="fileUpload" name="file">  
+
+                        <br>
+                        <div>
+                            <button type="submit" class="btn btn-login w-100" th:text="${usuario.id == null || usuario.id.isEmpty() ? 'Enviar' : 'Editar'}"></button>
+                        </div>
+                       
+                    </form>
                 </div>
-            </div> 
+            </div>
         </main>
 
     </body>
