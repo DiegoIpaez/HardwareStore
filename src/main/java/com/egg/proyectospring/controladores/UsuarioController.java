@@ -73,7 +73,7 @@ public class UsuarioController {
                     model.addAttribute("titulo", titulo);
                 }
             } else {
-                titulo = "Registrar Usuario";
+                titulo = "Registrarse";
             }
 
             model.addAttribute("titulo", titulo);

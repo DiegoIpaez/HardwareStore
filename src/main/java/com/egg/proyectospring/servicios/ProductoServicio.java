@@ -193,8 +193,13 @@ public class ProductoServicio {
         }
     }
 
-    public List<Producto> buscarProducto(String nombre) {
-        return productoRepository.buscarProducto(nombre);
+    public List<Producto> buscarProducto(String nombre) throws Exception {
+        List<Producto> productos = productoRepository.buscarProducto(nombre);
+        if (productos == null || productos.isEmpty()) {
+            throw new Exception("No se encontró ese producto");
+        }
+        return productos;
+        
     }
 
     public Page<Producto> getAll(Pageable pageable) {

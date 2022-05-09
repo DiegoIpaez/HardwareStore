@@ -7,6 +7,7 @@ import com.egg.proyectospring.entidades.Producto;
 import com.egg.proyectospring.servicios.CategoriaServicio;
 import com.egg.proyectospring.servicios.MarcaServicio;
 import com.egg.proyectospring.servicios.ProductoServicio;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -194,20 +195,21 @@ public class ProductoController {
         return "formulario-producto";
     }
 
-    @GetMapping("/buscar")
-    public String buscarProducto(Model model) {
-        Producto producto = new Producto();
-        model.addAttribute("producto", producto);
-
-        return "buscador-productos";
-    }
-
     @GetMapping("/buscarProducto")
     public String listarProductos(Model modelo, @RequestParam("nombrep") String nombre) {
-        List<Producto> productosBuscados = productoServicio.buscarProducto(nombre);
-
-        modelo.addAttribute("productosBuscados", productosBuscados);
-        return "buscador-productos";
+        List<Producto> productos;
+        List<Producto> l = new ArrayList<>();
+        try {
+            productos = productoServicio.buscarProducto(nombre);
+            modelo.addAttribute("productosBuscados", productos);
+            modelo.addAttribute("productos", l);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            modelo.addAttribute("productosBuscados",l);
+            modelo.addAttribute("productos", l);
+            modelo.addAttribute("error", ex.getMessage());
+        }      
+        return "producto-todos";
     }
     
     @GetMapping("/productos")
@@ -219,6 +221,8 @@ public class ProductoController {
             List<Integer> paginas = IntStream.rangeClosed(1, totalDePaginas).boxed().collect(Collectors.toList());
             model.addAttribute("paginas", paginas);
         }
+        List<Producto> p = new ArrayList<>();
+        model.addAttribute("productosBuscados", p);
         model.addAttribute("productos", productos);
         model.addAttribute("actual", page);
         model.addAttribute("siguiente", page+1);
