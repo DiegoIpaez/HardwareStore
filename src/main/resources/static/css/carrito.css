@@ -1,4 +1,15 @@
-.img-login{
-    width: 100%;
-    height: 28rem;
+.img-not-carrito{
+    width: 450px;
+    height: 450px;
+}
+
+.btn-carrito{
+    transition: all 0.8s ease;
+    background-color: rgb(255, 183, 0);
+    color: black;
+}
+
+.btn-carrito:hover{
+    background-color: #222;
+    color: rgb(255, 183, 0);
 }

@@ -8,14 +8,21 @@
     <body>
         <main layout:fragment="main">
             <div class="container">
-                <div class="row">
+                <div th:if="${!carrito.isEmpty()}" class="row">
                     <h2 class="mt-5">Carrito</h2>
                     <hr/>
                 </div>
-                <div th:if="${carrito.isEmpty()}" class="row">
-                    <div  class="col-auto">
-                        <img src="https://www.pngkey.com/png/detail/411-4119504_el-carrito-de-la-compra-est-vaco-shopping.png" width="200" height="200" alt="fotos-perfil"/>
-                        <h4 style="color: red">Su carrito esta vacio</h4>
+                <div th:if="${carrito == null || carrito.isEmpty()}" class="row">
+                    <div  class="col text-center">
+                        <img
+                            src="https://www.editorialparalelo28.com/images/cartEmpty.png"
+                            class="img-not-carrito"
+                            alt="carrito vacío"
+                            />
+                        <h1 class="mt-3">Tu carrito esta vacio</h1>
+                        <button class="btn btn-dark">
+                            <a th:href="@{/producto/productos}"><h4 class="pt-1 text-white">Seguir comprando</h4></a>
+                        </button>
                     </div>
                 </div>
                 <div th:if="${!carrito.isEmpty()}" class="row m-1">
@@ -57,11 +64,11 @@
                             <span class="h3">Total:</span>
                         </div>
                         <div class="mt-2">
-                            <span class="h2" id="cantidadTotal"></span>
+                            <span class="h2 text-success" id="cantidadTotal"></span>
                         </div>
                         <div class="mt-2">
                             <form th:action="@{/pedido/save}" method="POST">
-                                <button type="sumbit" class="btn btn-success p-3 mt-2">pagar</button>
+                                <button type="sumbit" class="btn btn-carrito pt-3 mt-2"><h5>Pagar <i class="fa fa-shopping-cart"></i></h5></button>
                             </form>
                         </div>
                     </div>
