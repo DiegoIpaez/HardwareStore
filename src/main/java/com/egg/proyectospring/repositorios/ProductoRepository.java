@@ -41,7 +41,16 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
     
     @Query("SELECT p FROM Producto p WHERE p.alta = true and p.disponible = true order by fecha desc")
     public Page<Producto> getProductosPorFecha(Pageable pageable);
+    
+    @Query(value = "select * from producto p where p.alta = true and p.disponible = true order by stock_vendido desc limit 6", nativeQuery = true)
+    public List<Producto> productosMasVendidos();
 
     @Query(value = "SELECT * FROM producto p WHERE p.alta = true and p.disponible = true order by fecha desc limit 6", nativeQuery = true)
-    public List<Producto> productosLimitados();      
+    public List<Producto> productosRecientes();  
+
+    @Query(value = "SELECT * FROM producto p WHERE p.alta = true and p.disponible = true group by categoria_id limit 6", nativeQuery = true)
+    public List<Producto> productosPorCategoria();
+    
+    @Query(value = "SELECT * FROM producto p WHERE p.alta = true and p.disponible = true order by stock asc limit 6", nativeQuery = true)
+    public List<Producto> ultimasUnidades();
 }
