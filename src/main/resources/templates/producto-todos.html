@@ -33,7 +33,7 @@ and open the template in the editor.
             </div>
              <!--Barra de busqueda-->
               <!--Productos-->
-            <div th:if='${productosBuscados.isEmpty()}' class="container">
+            <div class="container">
                 <br>
                 <div th:replace="producto-layout :: producto-layout('Todos los productos', ${productos})"></div>
 

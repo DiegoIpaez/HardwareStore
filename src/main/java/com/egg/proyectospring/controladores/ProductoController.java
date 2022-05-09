@@ -198,11 +198,15 @@ public class ProductoController {
     @GetMapping("/buscarProducto")
     public String listarProductos(Model modelo, @RequestParam("nombrep") String nombre) {
         List<Producto> productos;
+        List<Producto> l = new ArrayList<>();
         try {
             productos = productoServicio.buscarProducto(nombre);
             modelo.addAttribute("productosBuscados", productos);
+            modelo.addAttribute("productos", l);
         } catch (Exception ex) {
             ex.printStackTrace();
+            modelo.addAttribute("productosBuscados",l);
+            modelo.addAttribute("productos", l);
             modelo.addAttribute("error", ex.getMessage());
         }      
         return "producto-todos";
