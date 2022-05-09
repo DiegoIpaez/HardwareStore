@@ -33,11 +33,15 @@ public class MainController {
     public String index(Model model){
         List<Categoria> categorias = categoriaServicio.categoriasConAlta();
         List<Marca> marcas = marcaServicio.listarMarcas();
-        List<Producto> productos = productoServicio.productosLimitados();
+        List<Producto> productosRecientes = productoServicio.productosRecientes();
+        List<Producto> productosMasVendidos = productoServicio.productosMasVendidos();
+        List<Producto> ultimasUnidades = productoServicio.ultimasUnidades();
        
         model.addAttribute("categorias", categorias);
         model.addAttribute("marcas", marcas);
-        model.addAttribute("productos", productos);
+        model.addAttribute("productosRecientes", productosRecientes);
+        model.addAttribute("productosMasVendidos", productosMasVendidos);
+        model.addAttribute("ultimasUnidades", ultimasUnidades);
         
         
     return "index";
