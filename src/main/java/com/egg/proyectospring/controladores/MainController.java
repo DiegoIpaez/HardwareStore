@@ -16,12 +16,16 @@ public class MainController {
     @Autowired
     private ProductoServicio productoServicio;
 
-    @GetMapping("")
-    public String index(Model model) {
-        List<Producto> productos = productoServicio.productosLimitados();
-
-        model.addAttribute("productos", productos);
-        return "index";
+     @GetMapping("")
+    public String index(Model model){
+        List<Producto> productosRecientes = productoServicio.productosRecientes();
+        List<Producto> productosMasVendidos = productoServicio.productosMasVendidos();
+        List<Producto> ultimasUnidades = productoServicio.ultimasUnidades();
+       
+        model.addAttribute("productosRecientes", productosRecientes);
+        model.addAttribute("productosMasVendidos", productosMasVendidos);
+        model.addAttribute("ultimasUnidades", ultimasUnidades); 
+    return "index";
     }
 
 }

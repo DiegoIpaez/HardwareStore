@@ -5,9 +5,78 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <main layout:fragment="main">                       
+        <main layout:fragment="main">
+            <div
+                id="carouselExampleDark"
+                class="carousel carousel-dark slide"
+                data-bs-ride="carousel"
+                >
+                <div class="carousel-indicators">
+                    <button
+                        type="button"
+                        data-bs-target="#carouselExampleDark"
+                        data-bs-slide-to="0"
+                        class="active"
+                        aria-current="true"
+                        aria-label="Slide 1"
+                        ></button>
+                    <button
+                        type="button"
+                        data-bs-target="#carouselExampleDark"
+                        data-bs-slide-to="1"
+                        aria-label="Slide 2"
+                        ></button>
+                    <button
+                        type="button"
+                        data-bs-target="#carouselExampleDark"
+                        data-bs-slide-to="2"
+                        aria-label="Slide 3"
+                        ></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="10000">
+                        <img
+                            src="https://www.hogarmania.com/archivos/201904/herramientas-de-bricolaje-848x477x80xX.jpg"
+                            class="d-block w-100" alt="...">
+                        <div class="carousel-caption">
+
+                        </div>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="https://img.freepik.com/foto-gratis/composicion-plana-fondo-herramientas-carpinteria-vintage_94095-78.jpg?w=2000" class="d-block w-100" alt="..." />
+                        <div class="carousel-caption">
+
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://i.pinimg.com/originals/c4/df/1f/c4df1feaa330ba88cbf67be19607715a.png" class="d-block w-100" alt="..." />
+                        <div class="carousel-caption">
+                        </div>
+                    </div>
+                </div>
+                <button
+                    class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#carouselExampleDark"
+                    data-bs-slide="prev"
+                    >
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                    class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#carouselExampleDark"
+                    data-bs-slide="next"
+                    >
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
             <div class="container mt-5">
-                <div th:replace="carrusel-productos-layout :: carrusel-productos-layout('Ultimos Agregados', ${productos})"></div>
+                <div th:replace="carrusel-productos-layout :: carrusel-productos-layout('Los mas vendidos', ${productosMasVendidos})"></div>
+                <div th:replace="carrusel-productos-layout :: carrusel-productos-layout('Ultimos Agregados', ${productosRecientes})"></div>
+                <div th:replace="carrusel-productos-layout :: carrusel-productos-layout('Ultimas unidades', ${ultimasUnidades})"></div>
             </div>
         </main>
         <div layout:fragment="scripts">
