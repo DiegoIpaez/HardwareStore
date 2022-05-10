@@ -1,0 +1,21 @@
+.contenedor1{
+    background-image: url(/imagenes/herramientas-viejas.jpg);
+    padding: 20;
+    margin: 30px;
+    
+}
+
+.contenedor2{
+    background-image: url(/imagenes/personal3.jpg);
+    padding: 20;
+    margin: 30px;
+    
+}
+
+.contenedor3{
+    background-image: url(/imagenes/socios.jpg);
+    padding: 20;
+    margin: 30px;
+    
+}
+
