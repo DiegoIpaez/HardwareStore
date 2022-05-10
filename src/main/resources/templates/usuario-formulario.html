@@ -1,17 +1,28 @@
 <!doctype html>
 <html lang="en" layout:decorate="~{layout}">
 
-    <body style="background-color: #F4E72D">
+    <body class="bg-warning">
         <main layout:fragment="main">
-            <div class="container col-md-5 wrapper pt-5">
+            <div class="container col-md-5 wrapper pt-3">
                 <div class="row mt-5">
-                    <div class="col">
-                        <h1 th:text="${titulo}">Registrar Usuario</h1>
-                        <hr>
-                        <!--Verifico si tengo errores-->
-                        <span th:if="${error != null }" th:text="${error}" style="color:red"></span>
-                        <!--Verifico si me registre de forma exitosa-->
-                        <span th:if="${success != null }" th:text="${success}" style="color:green"></span>
+                    <div class="col bg-white pt-3 pb-4 rounded">
+                        <h1 th:text="${titulo}" class="text-warning mb-3">Registrar Usuario</h1>                      
+                        <div class="mt-1">
+                            <p
+                                th:if="${error != null}"                               
+                                class="msg-error pt-2 pb-2"
+                                >
+                                <span class="ms-2" th:text="${error}"></span>
+                            </p>
+                        </div>                                           
+                        <div class="mt-1">
+                            <p
+                                hidden
+                                id="success-user"
+                                th:if="${success != null}"                              
+                                th:text="${success}"
+                                ></p>
+                        </div>
                         <!--Peticion HTTP POST-->
                         <form th:action="@{/usuario/registro}" method="POST" enctype="multipart/form-data" th:object="${usuario}">
                             <input hidden th:field="*{id}">
@@ -22,51 +33,39 @@
                                 </div>
                                 <input type="text" th:field="${usuario.username}" class="form-control"  placeholder="Nombre de usuario">
                             </div>
-
-                            <span th:if="${usuario.id == null || usuario.id.isEmpty()}"></span>
-                            <br>
-                            <span th:if="${usuario.id == null || usuario.id.isEmpty()}"></span>
-
-                            <div class="input-group">
+                         
+                            <div th:if="${usuario.id == null || usuario.id.isEmpty()}" class="input-group mt-3 mb-3">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                                 </div>
-                                <input type="email" th:if="${usuario.id == null || usuario.id.isEmpty()}" class="form-control" th:field="${usuario.email}" placeholder="Correo electrónico">
+                                <input type="email"  class="form-control" th:field="${usuario.email}" placeholder="Correo electrónico">
                             </div>
 
-                            <span th:if="${usuario.id == null || usuario.id.isEmpty()}"></span>
-                            <br>
-                            <span th:if="${usuario.id == null || usuario.id.isEmpty()}"></span>
 
-                            <div class="input-group">
+                            <div th:if="${usuario.id == null || usuario.id.isEmpty()}" class="input-group mb-3">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
                                 </div>
-                                <input type="password" th:if="${usuario.id == null || usuario.id.isEmpty()}" th:field="${usuario.password}" class="form-control" placeholder="Contraseña">
+                                <input type="password" th:field="${usuario.password}" class="form-control" placeholder="Contraseña">
                             </div>
 
-                            <span th:if="${usuario.id == null || usuario.id.isEmpty()}"></span>
+                            <div class="input-group" th:if="${usuario.id == null || usuario.id.isEmpty()}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                </div>
+                                <input type="password"  name="password2" class="form-control" placeholder="Confirmar contraseña">
+                            </div>
                             <br>
-                            <span th:if="${usuario.id == null || usuario.id.isEmpty()}"></span>
+                            <input type="file" class="form-control"  id="fileUpload" name="file">  
 
-
-                        <div class="input-group" th:if="${usuario.id == null || usuario.id.isEmpty()}">
-                            <div class="input-group-append">
-                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                            <br>
+                            <div>
+                                <button type="submit" class="btn btn-login w-100" th:text="${usuario.id == null || usuario.id.isEmpty() ? 'Enviar' : 'Editar'}"></button>
                             </div>
-                            <input type="password"  name="password2" class="form-control" placeholder="Confirmar contraseña">
-                        </div>
-                        <br>
-                        <input type="file" class="form-control"  id="fileUpload" name="file">  
 
-                        <br>
-                        <div>
-                            <button type="submit" class="btn btn-login w-100" th:text="${usuario.id == null || usuario.id.isEmpty() ? 'Enviar' : 'Editar'}"></button>
-                        </div>
-                       
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
         </main>
 
     </body>

@@ -95,7 +95,7 @@ public class UsuarioController {
 
         try {
             usuarioServicio.registrarUsuario(u, password2, file);
-            model.addAttribute("titulo", u.getId() == null || u.getId().isEmpty() ? "Registrar Usuario" : "Editar Usuario");
+            model.addAttribute("titulo", u.getId() == null || u.getId().isEmpty() ? "Registrarse" : "Editar Usuario");
             model.addAttribute("success", u.getId() == null || u.getId().isEmpty() ? "Se ha registrado correctamente" : "Los cambios se han guardado correctamente");
 
             String direccion = "usuario-formulario";
@@ -104,7 +104,7 @@ public class UsuarioController {
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("error", e.getMessage());
-            model.addAttribute("titulo", u.getId() == null || u.getId().isEmpty() ? "Registrar Usuario" : "Editar Usuario");
+            model.addAttribute("titulo", u.getId() == null || u.getId().isEmpty() ? "Registrarse" : "Editar Usuario");
             return "usuario-formulario";
         }
 

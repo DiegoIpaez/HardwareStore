@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/pedido")
@@ -36,7 +37,7 @@ public class PedidoController {
 
     @PreAuthorize("hasAnyRole('ROLE_USUARIO')")
     @PostMapping("/save")
-    public String realizarPedido(Authentication auth, Model model){
+    public String realizarPedido(Authentication auth, Model model, RedirectAttributes redirect){
         try {
             Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
             List<Detalle> carrito = carritoServicio.carrito(u);
@@ -44,7 +45,7 @@ public class PedidoController {
             pedidoServicio.realizarPedido(u, carrito);
             carritoServicio.eliminarProductos(carrito);
             
-            model.addAttribute("success", "Se ha completado su compra!");
+            redirect.addFlashAttribute("success", "Se ha completado su compra!");
             return "redirect:/carrito";
         } catch (Exception e) {
             e.printStackTrace();
