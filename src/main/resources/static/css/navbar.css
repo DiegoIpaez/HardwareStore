@@ -4,10 +4,6 @@ header {
     z-index: 2;
 }
 
-a{
-    text-decoration: none;
-}
-
 .navbar {
     background-color: #111;
 }
@@ -20,12 +16,32 @@ a{
 .nav-link {
     transition: all 0.8s ease !important;
     font-size: 1.1rem;
-    color: #E98416 !important;   
-}
-.nav-link:hover {
-    color: #fabe56 !important;
+    color: #ffa23f !important;
 }
 
-.navbar-toggler-icon {
-    color: #FF7800;
+.nav-link:hover {
+    color: #faddab !important;
+}
+
+.navbar-toggler {
+    background-color: #222;
+}
+
+#navbar-toggler-icon {
+    color: #ffc107;
+}
+
+#navbarDarkDropdownMenuLink {
+    color: #000000 !important;
+}
+
+#navbarDarkDropdownMenuLink:hover {
+    color: #ffffff !important;
+}
+
+.icon-navbar{
+    color: #000000 !important;
+}
+.icon-navbar:hover{
+    color: #ffffff  !important;
 }
