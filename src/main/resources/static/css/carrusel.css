@@ -1,24 +1,31 @@
-.carousel-inner img {
-  max-height: 55vh;
-  object-fit: cover;
-}
-
-#carousel {
+.carousel-item{
+  height: 25rem;
+  background: #000;
+  color: white;
   position: relative;
 }
-
-.carousel-caption {
-  z-index: 1;
+.carousel-text{
   position: absolute;
-  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: 50px;
+}
+
+.overlay-image{
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(39, 39, 39, 0.5);
-  color: rgb(251, 251, 251);
+  top: 0;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.5;
 }
-
-
-#carousel h1 {
-  font-size: 80px;
+.carousel-item {
+  transition: transform 0.4s ease-in-out;
+}
+.carousel-fade .active.carousel-item-start,
+.carousel-fade .active.carousel-item-end {
+  transition: opacity 0s 1s;
 }
