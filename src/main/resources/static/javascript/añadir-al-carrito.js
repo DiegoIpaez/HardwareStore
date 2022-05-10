@@ -10,10 +10,7 @@ $(document).ready(function() {
 
     $.ajax({
        type: "POST",
-       url: url,
-       beforeSend: function(xhr){
-          xhr.setRequestHeader(crsfHeaderName, crsfValue);
-       }
+       url: url
     })
     .done(function(res){
 

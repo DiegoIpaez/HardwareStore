@@ -4,6 +4,10 @@ header {
     z-index: 2;
 }
 
+a{
+    text-decoration: none;
+}
+
 .navbar {
     background-color: #111;
 }

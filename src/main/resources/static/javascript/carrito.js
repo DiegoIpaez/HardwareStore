@@ -23,10 +23,7 @@ function eliminarDelCarrito(link){
 
     $.ajax({
        type: "POST",
-       url: url,
-       beforeSend: function(xhr){
-          xhr.setRequestHeader(crsfHeaderName, crsfValue);
-       }
+       url: url
     })
     .done(function(res){
         Swal.fire({
@@ -86,10 +83,7 @@ function actualizarCantidad(productoId,cantidad){
 
     $.ajax({
        type: "POST",
-       url: url,
-       beforeSend: function(xhr){
-          xhr.setRequestHeader(crsfHeaderName, crsfValue);
-       }
+       url: url
     })
     .done(function(res){
         actualizarSubtotal(res,productoId)
@@ -109,7 +103,11 @@ function actualizarTotal(){
 
    $("#cantidadTotal").text("$" + total);
 
-   if($("#cantidadTotal").text() == "$0"){ window.location.href = "http://localhost:8080/carrito"}
+   if($("#cantidadTotal").text() == "$0"){  
+    setTimeout(() => {
+    window.location.href = "http://localhost:8080/carrito"
+    }, 1000);
+   }
 }
 
 function actualizarSubtotal(newSubtotal, productoId){
