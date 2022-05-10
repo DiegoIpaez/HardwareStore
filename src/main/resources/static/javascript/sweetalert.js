@@ -84,3 +84,52 @@ if (errorPay != null) {
 
   sweetAlet();
 }
+
+const successForgotPassword = document.querySelector("#success-forgot-password");
+if (successForgotPassword != null) {
+  const text = document.getElementById("success-forgot-password").textContent;
+  Swal.fire({
+      title,
+      text,
+      icon,
+      confirmButtonColor,
+      showCloseButton,
+    })
+}
+
+const successCambiarEmail = document.querySelector("#success-cambiar-email");
+if (successCambiarEmail != null) {
+  const text = document.getElementById("success-cambiar-email").textContent;
+  Swal.fire({
+      title,
+      text,
+      icon,
+      confirmButtonColor,
+      showCloseButton,
+    })
+}
+
+const successEmailActualizado = document.querySelector("#success-actualizar-email");
+if (successEmailActualizado != null) {
+  const text = document.getElementById("success-actualizar-email").textContent;
+  Swal.fire({
+      title,
+      text,
+      icon,
+      confirmButtonColor,
+      showCloseButton,
+    })
+}
+
+
+const successResetPassword = document.querySelector("#success-reset-password");
+if (successResetPassword != null) {
+  const text = document.getElementById("success-reset-password").textContent;
+  Swal.fire({
+      title,
+      text,
+      icon,
+      confirmButtonColor,
+      showCloseButton,
+    })
+}

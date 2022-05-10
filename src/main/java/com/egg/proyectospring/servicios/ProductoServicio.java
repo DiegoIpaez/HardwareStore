@@ -214,4 +214,20 @@ public class ProductoServicio {
         return productoRepository.getProductosPorFecha(pageable);
     }
     
+    public List<Producto> productosRecientes() {
+        return productoRepository.productosRecientes();
+    }
+    
+    public List<Producto> productosMasVendidos() {
+        return productoRepository.productosMasVendidos();
+    }
+    
+    public List<Producto> productosPorCategoria() {
+        return productoRepository.productosPorCategoria();
+    }
+     
+    public List<Producto> ultimasUnidades() {
+        return productoRepository.ultimasUnidades();
+    }
+    
 }
