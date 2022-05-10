@@ -1,0 +1,24 @@
+.carousel-inner img {
+  max-height: 55vh;
+  object-fit: cover;
+}
+
+#carousel {
+  position: relative;
+}
+
+.carousel-caption {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(39, 39, 39, 0.5);
+  color: rgb(251, 251, 251);
+}
+
+
+#carousel h1 {
+  font-size: 80px;
+}

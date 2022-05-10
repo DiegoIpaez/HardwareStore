@@ -8,8 +8,12 @@
                 <h2 th:text="${titulo}"></h2>
             </div>
             <div class="row">
+                <div th:if="${productos.isEmpty()}">
+                    <h6 class="mb-5 pb-1">No hay productos disponibles</h6>
+                    <p class="mt-5 pb-5"></p>
+                </div>
 
-                <div class="col-xl-2 col-lg-3 col-md-4 col-6 mb-3" th:each="prod : ${productos}">
+                <div th:if="${!productos.isEmpty()}" class="col-xl-2 col-lg-3 col-md-4 col-6 mb-3" th:each="prod : ${productos}">
                     <a th:href="@{/producto(prodId=${prod.id})}" class="product-link">
                         <div class="card product">
 
@@ -17,8 +21,9 @@
                             <img th:if="${prod.foto == null}" src="https://thumbs.dreamstime.com/b/%C3%B0%C2%BF%C3%B0%C2%B5%C3%B1%E2%80%A1%C3%B0%C2%B0%C3%B1%E2%80%9A%C3%B1%C5%93-134036857.jpg" alt="img-prod" class="img-product">
                             <div class="card-body">
                                 <h5 class="card-title product-precio" th:text="${prod.precio} + '$'"></h5>
-                                <p class="product-disponible" th:if="${prod.disponible}" th:text="Disponible"></p>
-                                <p class="product-disponible" th:if="${!prod.disponible}" th:text="No disponible"></p>
+
+                                <p class="product-disponible" th:if="${prod.disponible}" th:text="'Disponible'"></p>
+                                <p class="product-disponible" th:if="${!prod.disponible}" th:text="'No disponible'"></p>
                                 <p class="card-text text-product" th:text="${prod.nombre}"></p>
                             </div>      
                         </div>

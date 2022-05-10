@@ -28,12 +28,11 @@ public class DetalleRestController {
             if (u == null) {
                 return "Debe iniciar sesión para agregar este producto a su carrito de compras";
             }
-            Integer cantidadAñadida = detalleServicio.añadirProducto(productoId, cantidad, u);
 
-            return cantidadAñadida + " artículo(s) de este producto se agregaron a su carrito de compras.";
+            return detalleServicio.añadirProducto(productoId, cantidad, u);
         } catch (Exception e) {
             e.printStackTrace();
-            return "el artículo(s) no existe";
+            return "Este producto(s) no existe!";
         }
     }
 

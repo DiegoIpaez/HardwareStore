@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:fragment="carrusel-productos-layout(titulo, productos)">
+            <h2 th:text="${titulo}"></h2>
+            <div class="row">
+                <div class="col-12 m-auto">
+                    <div class="owl-carousel owl-theme">
+                        <!--Item-->
+                        <div th:each="prod : ${productos}" class="item mb-4">
+                            <a th:href="@{/producto(prodId=${prod.id})}" class="product-link">
+                                <div class="card product">
+                                    <img th:if="${prod.foto != null}" th:src="@{/foto/producto(idProd=${prod.id})}" alt="img-prod" class="card-img-top">
+                                    <img th:if="${prod.foto == null}" src="https://thumbs.dreamstime.com/b/%C3%B0%C2%BF%C3%B0%C2%B5%C3%B1%E2%80%A1%C3%B0%C2%B0%C3%B1%E2%80%9A%C3%B1%C5%93-134036857.jpg" alt="img-prod" class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title product-precio" th:text="${prod.precio} + '$'"></h5>
+
+                                        <p class="product-disponible" th:if="${prod.disponible}" th:text="'Disponible'"></p>
+                                        <p class="product-disponible" th:if="${!prod.disponible}" th:text="'No disponible'"></p>
+                                        <p class="card-text text-product" th:text="${prod.nombre}"></p>
+                                    </div>      
+                                </div>
+                            </a>
+                        </div>
+                        <!--Item-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

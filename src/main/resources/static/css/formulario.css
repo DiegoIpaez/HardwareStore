@@ -54,3 +54,16 @@
     background-color: rgba(0, 163, 0, 0.738);
     border-radius: 0.3rem;
 }
+
+.btn-login {
+    transition: all 1s ease;
+    background-color: #111;
+    color: rgb(255, 183, 0);
+    outline: 0px !important;
+    -webkit-appearance: none;
+    box-shadow: none !important;
+}
+.btn-login:hover {
+    background-color: orange; 
+    color: #222;
+}

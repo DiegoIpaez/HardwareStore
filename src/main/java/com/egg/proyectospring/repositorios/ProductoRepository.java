@@ -27,10 +27,10 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
     @Query("select p from Producto p where p.nombre like %:nombre% AND p.alta = true")
     public List<Producto> buscarProducto(@Param("nombre") String nombre);
     
-    @Query("select p from Producto p where p.categoria.id = :categoriaId")
+    @Query("select p from Producto p where p.categoria.id = :categoriaId and p.alta = true")
     public List<Producto> obtenerProductosPorCategoria(@Param("categoriaId") String categoriaId);
     
-    @Query("select p from Producto p where p.marca.id = :marcaId")
+    @Query("select p from Producto p where p.marca.id = :marcaId and p.alta = true")
     public List<Producto> obtenerProductosPorMarca(@Param("marcaId") String marcaId);
 
     @Query("select p from Producto p")
@@ -41,4 +41,16 @@ public interface ProductoRepository extends JpaRepository<Producto, String> {
     
     @Query("SELECT p FROM Producto p WHERE p.alta = true and p.disponible = true order by fecha desc")
     public Page<Producto> getProductosPorFecha(Pageable pageable);
+    
+    @Query(value = "select * from producto p where p.alta = true and p.disponible = true order by stock_vendido desc limit 6", nativeQuery = true)
+    public List<Producto> productosMasVendidos();
+
+    @Query(value = "SELECT * FROM producto p WHERE p.alta = true and p.disponible = true order by fecha desc limit 6", nativeQuery = true)
+    public List<Producto> productosRecientes();  
+
+    @Query(value = "SELECT * FROM producto p WHERE p.alta = true and p.disponible = true group by categoria_id limit 6", nativeQuery = true)
+    public List<Producto> productosPorCategoria();
+    
+    @Query(value = "SELECT * FROM producto p WHERE p.alta = true and p.disponible = true order by stock asc limit 6", nativeQuery = true)
+    public List<Producto> ultimasUnidades();
 }

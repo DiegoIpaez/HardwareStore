@@ -60,9 +60,11 @@ public class ProductoServicio {
                     throw new Exception(" ya existe un producto con ese nombre");
                 }
             }
-
+            producto.setFecha(p.getFecha());
+            producto.setStockVendido(p.getStockVendido());
             producto.setNombre(producto.getNombre());
             producto.setDescripcion(producto.getDescripcion());
+            producto.setStock(producto.getStock());
             producto.setPrecio(producto.getPrecio());
             Marca marca = marcaServicio.buscarMarcaPorNombre(producto.getMarca().getNombre());
             if (marca != null) {
@@ -113,6 +115,7 @@ public class ProductoServicio {
                 producto.setDisponible(true);
                 producto.setFoto(fotoServicio.guardarFoto(file));
                 producto.setFecha(new Date());
+                producto.setStockVendido(0);
 
             }
 
@@ -190,8 +193,13 @@ public class ProductoServicio {
         }
     }
 
-    public List<Producto> buscarProducto(String nombre) {
-        return productoRepository.buscarProducto(nombre);
+    public List<Producto> buscarProducto(String nombre) throws Exception {
+        List<Producto> productos = productoRepository.buscarProducto(nombre);
+        if (productos == null || productos.isEmpty()) {
+            throw new Exception("No se encontró ese producto");
+        }
+        return productos;
+        
     }
 
     public Page<Producto> getAll(Pageable pageable) {
@@ -204,6 +212,22 @@ public class ProductoServicio {
     
     public Page<Producto> getProductosPorFecha(Pageable pageable) {
         return productoRepository.getProductosPorFecha(pageable);
+    }
+    
+    public List<Producto> productosRecientes() {
+        return productoRepository.productosRecientes();
+    }
+    
+    public List<Producto> productosMasVendidos() {
+        return productoRepository.productosMasVendidos();
+    }
+    
+    public List<Producto> productosPorCategoria() {
+        return productoRepository.productosPorCategoria();
+    }
+     
+    public List<Producto> ultimasUnidades() {
+        return productoRepository.ultimasUnidades();
     }
     
 }

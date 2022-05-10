@@ -1,10 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
-    <head>
-        <title>Crear Producto</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
     <body>
         <main layout:fragment="main">
             <div class="container formulario mt-5 mb-5">
@@ -63,6 +58,10 @@
                                         th:selected='${pepe.nombre}'>
                                 </option>
                             </select>
+                        </div>
+                        <div>
+                            <label for="inputStock" class="form-label">Stock</label>
+                            <input type="number" class="form-control" th:field="*{stock}">
                         </div>
                         <div>
                             <label for="inputPrecio" class="form-label">Precio</label>

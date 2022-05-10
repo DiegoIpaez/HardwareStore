@@ -37,7 +37,7 @@
             <span><b th:if="${producto.disponible}" th:text="'Stock: disponible'"></b></span>
             <span><b th:if="${!producto.disponible}" th:text="'Stock: no disponible'"></b></span>
             <div class="mt-3 mb-3">
-              <div th:replace="control-de-cantidad :: control-de-cantidad(1,${producto.id})">
+              <div th:replace="control-de-cantidad :: control-de-cantidad(1,${producto.id},${producto.stock})">
                 Cantidad
             </div>
             <button class="btn btn-secondary" id="buttonAddToCart">añadir al carrito</button>   
@@ -48,7 +48,6 @@
           </div>
         </div>
       </div>
-
         </main>
         <div layout:fragment="scripts">
             <script src="https://code.jquery.com/jquery-3.3.1.js"></script>

@@ -1,23 +1,7 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-            body{
-                background-color: #F4E72D;
-            }
-            input{
-                border: 2px solid #F18518;
-                padding: .2em .4em;
-                border-radius: .2em;
-                background-color: #F18518;
-                transition: 1s;
-            }
-        </style>
-    </head>
-    <body>
 
+<html lang="en" layout:decorate="~{layout}">
+    <body style="background-color: #F4E72D">
         <main layout:fragment="main">
 
             <div class="container col-md-5 wrapper pt-5">
@@ -46,13 +30,11 @@
 
                         <!--Me desconecto de mi cuenta logeada-->
                         <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
-                            <input type="submit" value="Log out">
+                            <input type="submit" value="Log out" style="border: 2px solid #F18518;padding: .2em .4em; border-radius: .2em; background-color: #F18518;">
                         </form>
                     </div>
                 </div>
             </div>
-
-
         </main>
     </body>
 </html>

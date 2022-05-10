@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <body>
-    <div th:fragment="control-de-cantidad(cantidad, prodId)">
+    <div th:fragment="control-de-cantidad(cantidad, prodId,stock)">
       <nav>
         <ul class="pagination">
           <li class="page-item">
@@ -16,7 +16,7 @@
                      th:id="'cantidad' + ${prodId} "/>
           </li>
           <li>
-            <a href="" class="page-link plusButton" th:pid="${prodId}"
+            <a href="" class="page-link plusButton" th:pid="${prodId}" th:stock="${stock}"
               ><b>+</b></a
             >
           </li>

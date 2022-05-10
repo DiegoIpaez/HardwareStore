@@ -29,14 +29,26 @@ function eliminarDelCarrito(link){
        }
     })
     .done(function(res){
-        alert(res);
+        Swal.fire({
+         text: res,
+         icon: "info",
+         timer: 1600,
+         confirmButtonColor: "gray",
+         showCloseButton: true,
+        });
 
         rowNumber = link.attr("rowNumber");
         eliminarProducto(rowNumber);
         actualizarTotal();  
     }) 
     .fail(function(){
-        alert("Error al agregar su producto a su carrito");
+        Swal.fire({
+         text: "Error al eliminar su producto a su carrito",
+         icon: "error",
+         timer: 1600,
+         confirmButtonColor: "red",
+         showCloseButton: true,
+        });
     }) 
 }
 
@@ -58,12 +70,14 @@ function reducirCantidad(link){
 
 function incrementarCantidad(link){
     productoId = link.attr("pid");
+    stock = link.attr("stock");
     qtyInput = $("#cantidad"+ productoId);
 
     newQty = parseInt(qtyInput.val()) + 1;
     if (newQty > 0){ 
+       if(newQty < parseInt(stock)+1){
        qtyInput.val(newQty);
-       actualizarCantidad(productoId,newQty);
+       actualizarCantidad(productoId,newQty);}
     }
 }
 
@@ -94,6 +108,8 @@ function actualizarTotal(){
    });
 
    $("#cantidadTotal").text("$" + total);
+
+   if($("#cantidadTotal").text() == "$0"){ window.location.href = "http://localhost:8080/carrito"}
 }
 
 function actualizarSubtotal(newSubtotal, productoId){
