@@ -108,6 +108,8 @@ function actualizarTotal(){
    });
 
    $("#cantidadTotal").text("$" + total);
+
+   if($("#cantidadTotal").text() == "$0"){ window.location.href = "http://localhost:8080/carrito"}
 }
 
 function actualizarSubtotal(newSubtotal, productoId){
