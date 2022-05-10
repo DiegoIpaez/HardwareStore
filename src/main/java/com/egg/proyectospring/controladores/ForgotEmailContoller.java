@@ -58,12 +58,12 @@ public class ForgotEmailContoller {
 
         Usuario u = forgotPasswordServicio.usuarioResetPasswordToken(token);
         if (u == null) {
-            model.addAttribute("titulo", "Actualizar tu contraseña");
+            model.addAttribute("titulo", "Actualizar tu email");
             model.addAttribute("error", "Token invalido");
-            return "reset-password-form";
+            return "reset-email-form";
         }
 
-        model.addAttribute("titulo", "Actualizar tu contraseña");
+        model.addAttribute("titulo", "Actualizar tu email");
         model.addAttribute("token", token);
         return "reset-email-form";
     }
