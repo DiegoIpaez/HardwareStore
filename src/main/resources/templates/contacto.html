@@ -1,28 +1,68 @@
 <!doctype html>
-<html lang="en">
- 
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" >
+
     <body>
-        <main>
+        <main layout:fragment="main">
             <div class="container">
                 <div class="row mt-5">
-                    <div class="col">
+                    <div class="col-xl-4 col-md-4 bg-dark pt-3 pb-2 rounded mb-4">
+                        <h3 class="text-warning">HardwareStore</h3>
+                        <p style="font-size: 19px" class="text-white">
+                            Envíanos tu solicitud si estas interesado trabajar con nosotros.
+                            Si tienes alguna duda, quejas o reclamos, llenando el siguiente
+                            formulario te lo resolveremos a la brevedad. Deja tus datos asi
+                            nos pondremos en contacto contigo. También, nos puedes contactar
+                            através del télefono +54(381) 458 7458 , al correo electrónico:
+                            harwareStoreT2@gmail.com o visitandonos en Ayachuco 12, Tucuman.
+                        </p>
+                    </div>
+                    <div class="col-xl-2 col-md-2"></div>
+                    <div class="col-xl-6 col-md-6 pt-2 pb-4">
                         <h1>Envianos un mensaje</h1>
-                        <p th:text="${success}" style="color: green"></p>
-                        <p th:text="${error}" style="color: red"></p>
+                        <div class="mt-1">
+                            <p
+                                th:if="${error != null}"                               
+                                class="msg-error pt-2 pb-2"
+                                >
+                                <span class="ms-2" th:text="${error}"></span>
+                            </p>
+                        </div>
+                        <div class="mt-1">
+                            <p     
+                                th:if="${success != null}"                              
+                                class="bg-success rounded pt-2 pb-2"
+                                >
+                                <span class="ms-2 text-white" th:text="${success}"></span>
+                            </p>
+                        </div>
                         <form th:action="@{/contacto/enviar}" method="POST">
-                            <input type="text" name="nombre" placeholder="nombre y apellido">                   
-                            <br>
-                            <br>
-                            <input type="email" name="email" placeholder="email@gmail.com">                   
-                            <br>
-                            <br>
-                            <input type="text" name="asunto" placeholder="asunto">                   
-                            <br>
-                            <br>
-                            <input type="text" name="contenido" placeholder="contenido">                   
-                            <br>
-                            <br>
-                            <input type="submit">
+                            <input
+                                class="form-control form-control-list mt-3"
+                                type="text"
+                                name="nombre"
+                                placeholder="Nombre y apellido*"
+                                />
+                            <input
+                                class="form-control form-control-list mt-3"
+                                type="email"
+                                name="email"
+                                placeholder="Email*"
+                                />
+                            <input
+                                class="form-control form-control-list mt-3"
+                                type="text"
+                                name="asunto"
+                                placeholder="Asunto*"
+                                />
+                            <input
+                                class="form-control form-control-list mt-3"
+                                type="text"
+                                name="contenido"
+                                placeholder="Consulta*"
+                                />
+                            <button class="mt-3 btn btn-warning w-100" type="submit">
+                                Enviar
+                            </button>
                         </form>
                     </div>
                 </div>

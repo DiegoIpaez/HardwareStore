@@ -27,5 +27,10 @@ public class MainController {
         model.addAttribute("ultimasUnidades", ultimasUnidades); 
     return "index";
     }
+    
+    @GetMapping("/about")
+    public String about(){
+    return "about";
+    }
 
 }
