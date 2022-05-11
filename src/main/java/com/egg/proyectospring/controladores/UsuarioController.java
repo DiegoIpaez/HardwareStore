@@ -43,7 +43,7 @@ public class UsuarioController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list")
-    public String listUsers(Model model, @PageableDefault(page = 0, size = 2) Pageable pageable) {
+    public String listUsers(Model model, @PageableDefault(page = 0, size = 4) Pageable pageable) {
         Integer page = pageable.getPageNumber();
         Page<Usuario> usuarios = usuarioServicio.getAll(pageable);
         Integer totalDePaginas = usuarios.getTotalPages();

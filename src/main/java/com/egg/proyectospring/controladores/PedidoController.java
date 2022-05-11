@@ -55,7 +55,7 @@ public class PedidoController {
     }
 
     @GetMapping("/usuario")
-    public String pedidoUsuario(Model model, Authentication auth, @PageableDefault(page = 0, size = 2) Pageable pageable) {
+    public String pedidoUsuario(Model model, Authentication auth, @PageableDefault(page = 0, size = 4) Pageable pageable) {
         Usuario u = usuarioServicio.mostrarUsuarioLogeado(auth);
         Integer page = pageable.getPageNumber();
         Page<Pedido> pedidos = pedidoServicio.mostrarPedidosPorUsuario(u.getId(), pageable);
@@ -97,7 +97,7 @@ public class PedidoController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list")
-    public String listaDePedidos(Model modelo, @PageableDefault(page = 0, size = 2) Pageable pageable) {
+    public String listaDePedidos(Model modelo, @PageableDefault(page = 0, size = 4) Pageable pageable) {
         Integer page = pageable.getPageNumber();
         Page<Pedido> pedidos = pedidoServicio.getAll(pageable);
         Integer totalDePaginas = pedidos.getTotalPages();

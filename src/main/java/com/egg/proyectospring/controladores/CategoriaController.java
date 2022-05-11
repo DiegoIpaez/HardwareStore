@@ -74,7 +74,7 @@ public class CategoriaController {
     
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list")
-    public String lista(Model modelo, @PageableDefault(page = 0, size = 3) Pageable pageable) {
+    public String lista(Model modelo, @PageableDefault(page = 0, size = 5) Pageable pageable) {
         
         Integer page = pageable.getPageNumber();
         Page<Categoria> categorias = categoriaServicio.getAll(pageable);

@@ -83,7 +83,7 @@ public class ProductoController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list")
-    public String mostrarProductos(Model model, @PageableDefault(page = 0, size = 2) Pageable pageable) {
+    public String mostrarProductos(Model model, @PageableDefault(page = 0, size = 4) Pageable pageable) {
         Integer page = pageable.getPageNumber();
         Page<Producto> productos = productoServicio.getAll(pageable);
         Integer totalDePaginas = productos.getTotalPages();

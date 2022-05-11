@@ -84,7 +84,7 @@ public class MarcaController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR')")
     @GetMapping("/list")
-    public String listaMarcas(Model modelo, @PageableDefault(page = 0, size = 2) Pageable pageable) {
+    public String listaMarcas(Model modelo, @PageableDefault(page = 0, size = 5) Pageable pageable) {
         Integer page = pageable.getPageNumber();
         Page<Marca> marcas = marcaServicio.getAll(pageable);
         Integer totalDePaginas = marcas.getTotalPages();
