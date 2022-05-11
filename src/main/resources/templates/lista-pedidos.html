@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    </head>
+    <body>
+        <main layout:fragment="main">
+            <div class="container-fluid mt-4 mb-5">
+                <div class="p-2">
+                    <h2>Pedidos</h2>
+                    <div class="row table-shadow bg-dark pt-3 pb-3 text-white">
+                        <div class="col-xl-2 col-lg-2">Id</div>
+                        <div class="col-xl-2 col-lg-2">Usuario</div>
+                        <div class="col-xl-2 col-lg-2">Fecha</div>
+                        <div class="col-xl-1 col-lg-2">Precio Final</div>
+                        <div class="col-xl-2 col-lg-1">Estado</div>
+                        <div class="col-xl-1 col-lg-1">Detalle</div>
+                        <div class="col-xl-2 col-lg-2">Editar</div>
+                    </div>
+                    <div th:if="${!pedidos.isEmpty()}" class="row table-shadow" th:each="pedido, contador : ${pedidos}">
+                        <div class="col-xl-2 col-lg-2 pt-4 pb-1" th:text="${pedido.id}"></div>
+                        <div class="col-xl-2 col-lg-2 pt-4 pb-1" th:text="${pedido.usuario.email}"></div>
+                        <div class="col-xl-2 col-lg-2 pt-4 pb-1" th:text="${pedido.fecha}"></div>
+                        <div class="col-xl-1 col-lg-2 pt-4 pb-1 text-success" th:text="${pedido.total}+'$'"></div>
+                        <div class="col-xl-2 col-lg-1 pt-4 pb-1" th:text="${pedido.estado}"></div>
+                        <div class="col-xl-1 col-lg-1 pt-4 pb-1">
+                            <a th:href="@{/pedido/detalle(detalle=${pedido.detalle},total=${pedido.total})}">
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-info"></i>
+                                </button>
+                            </a>
+                        </div>
+                        <div class="col-xl-2 col-lg-2 pt-3 pb-2">
+                            <form th:action="@{/pedido/actualizar}" method="POST">
+                                <input hidden name="id" th:value="${pedido.id}"/>
+                                <select  class="form-select" aria-label="Default select example" name="estado" onchange="this.form.submit()">
+                                    <option th:each="i : ${estados}"
+                                            th:value="${i}"                                       
+                                            th:text="${i}"
+                                            th:selected="${pedido.estado == i}">
+                                    </option>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row table-bottom pt-3 pb-4"></div>
+                    <!--paginatio-->
+                    <div th:if="${!pedidos.isEmpty()}">
+                    <div th:replace="paginacion-layout :: paginacion-layout('pedido/list',${actual},${siguiente},${anterior},${ultima})"></div></div>
+                </div>
+            </div>
+        </main>
+
+    </body>
+</html>

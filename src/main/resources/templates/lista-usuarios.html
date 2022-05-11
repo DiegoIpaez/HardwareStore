@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+    <body>
+        <main layout:fragment="main">
+            <div class="container-fluid mt-4 mb-5">
+                <h2>Usuarios</h2>
+                <div class="p-2">
+                    <div class="row table-shadow bg-dark pt-3 pb-3 text-white">
+                        <div class="col-xl-3 col-lg-3 ">Id</div>
+                        <div class="col-xl-3 col-lg-3 ">Nombre</div>
+                        <div class="col-xl-3 col-lg-3 ">Email</div>
+                        <div class="col-xl-2 col-lg-2 ">Rol</div>                   
+                        <div class="col-xl-1 col-lg-1 ">Alta</div>
+                    </div>
+                    <div th:if="${!usuarios.isEmpty()}" class="row table-shadow" th:each="u : ${usuarios}">
+                        <div class="col-xl-3 col-lg-3 pt-3 pb-1" th:text="${u.id}"></div>
+                        <div class="col-xl-3 col-lg-3 pt-3 pb-1" th:text="${u.username}"></div>
+                        <div class="col-xl-3 col-lg-3 pt-3 pb-1" th:text="${u.email}"></div>
+                        <div class="col-xl-2 col-lg-2 pt-3 pb-1" th:text="${u.rol}"></div>
+                        <div class="col-xl-1 col-lg-1 pt-2 pb-2">
+                            <a th:if="${!u.alta}" th:href="@{/usuario/alta(usuarioId=${u.id})}">
+                                <button class="btn btn-success">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </a>
+                            <a th:if="${u.alta}" th:href="@{/usuario/baja(usuarioId=${u.id})}">
+                                <button class="btn btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row table-bottom pt-3 pb-4"></div>
+                    <!--pagination-->
+                    <div th:if="${!usuarios.isEmpty()}">
+                        <div th:replace="paginacion-layout :: paginacion-layout('usuario/list',${actual},${siguiente},${anterior},${ultima})"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

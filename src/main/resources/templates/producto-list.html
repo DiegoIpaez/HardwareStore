@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <main layout:fragment="main">
+            <div class="container-fluid mt-4 mb-5">
+                <div class="p-2">
+                    <h2 class="title-table pe-2">Productos</h2>
+                    <a th:href="@{/producto/form}">
+                        <button class="btn btn-new"><i class="fas fa-plus"></i></button> 
+                    </a>                    
+                    <div class="row table-shadow bg-dark pt-3 pb-3 text-white">
+                        <div class="col-xl-2 col-lg-2">Id</div>
+                        <div class="col-xl-2 col-lg-2">Nombre</div>
+                        <div class="col-xl-2 col-lg-2">Categoria</div>
+                        <div class="col-xl-1 col-lg-2">Marca</div>
+                        <div class="col-xl-1 col-lg-1">Precio</div>
+                        <div class="col-xl-1 col-lg-1">Stock</div>
+                        <div class="col-xl-1 col-lg-1">Disponible</div>
+                        <div class="col-xl-1 col-lg-1">Editar</div>
+                        <div class="col-xl-1 col-lg-1">Alta</div>
+                    </div>
+                    <div th:if="${!productos.isEmpty()}" class="row table-shadow" th:each="pepe : ${productos}">
+                        <div class="col-xl-2 col-lg-2 pt-4 pb-1" th:text="${pepe.id}"></div>
+                        <div class="col-xl-2 col-lg-2 pt-4 pb-1" th:text="${pepe.nombre}"></div>
+                        <div class="col-xl-2 col-lg-2 pt-4 pb-1" th:text="${pepe.categoria.nombre}"></div>
+                        <div class="col-xl-1 col-lg-1 pt-4 pb-1" th:text="${pepe.marca.nombre}"></div>
+                        <div class="col-xl-1 col-lg-1 pt-4 pb-1 text-success" th:text="${pepe.precio}+'$'"></div>
+                        <div class="col-xl-1 col-lg-1 pt-4 pb-1 text-warning" th:text="${pepe.stock}+'x'"></div>
+                        <div class="col-xl-1 col-lg-1 pt-3 pb-2">
+                            <a th:href="@{/producto/noDisponible(id = ${pepe.id})}" th:if="${pepe.disponible}">
+                                <button class="btn btn-danger">
+                                    <b class="ps-1 pe-1"><b>X</b></b> 
+                                </button>
+                            </a>
+                            <a th:href="@{/producto/disponible(id = ${pepe.id})}" th:if="${!pepe.disponible}">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </a>      
+                        </div>
+                        <div class="col-xl-1 col-lg-1 pt-3 pb-2">
+                            <a th:href="@{/producto/modificar(id=${pepe.id})}">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </a>
+                        </div>
+                        <div class="col-xl-1 col-lg-1 pt-3 pb-2">
+                            <a th:href="@{/producto/baja(id = ${pepe.id})}" th:if="${pepe.alta}">
+                                <button class="btn btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </a>
+                            <a th:href="@{/producto/alta(id = ${pepe.id})}" th:if="${!pepe.alta}">
+                                <button class="btn btn-success">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row table-bottom pt-3 pb-4"></div>
+                    <!--pagination-->
+                    <div th:if="${!productos.isEmpty()}">
+                        <div th:replace="paginacion-layout :: paginacion-layout('producto/list',${actual},${siguiente},${anterior},${ultima})"></div>                       
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </body>
+
+</html>

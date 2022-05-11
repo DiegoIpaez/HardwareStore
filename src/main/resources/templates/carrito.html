@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+    <body>
+        <main layout:fragment="main">
+            <div class="container">
+                <div id="success-pay" th:if="${success != null}" >
+                     <h5 class="bg-success mt-5 text-center text-white rounded pt-3 pb-3" th:text="${success}"></h5>
+                </div>  
+                
+                <div th:if="${!carrito.isEmpty()}" class="row">
+                    <h2 class="mt-5">Carrito</h2>
+                    <hr/>
+                </div>
+                <div th:if="${carrito == null || carrito.isEmpty()}" class="row">
+                    <div  class="col text-center">
+                        <img
+                            src="https://www.editorialparalelo28.com/images/cartEmpty.png"
+                            class="img-not-carrito"
+                            alt="carrito vacío"
+                            />
+                        <h1 class="mt-3">Tu carrito esta vacio</h1>
+                        <button class="btn btn-dark">
+                            <a th:href="@{/producto/productos}"><h4 class="pt-1 text-white">Seguir comprando</h4></a>
+                        </button>                        
+                    </div>    
+                </div>
+                <div th:if="${!carrito.isEmpty()}" class="row m-1">
+                    <div class="col-sm-8">
+                        <th:block th:each="c, index : ${carrito}">
+                            <div class="row border rounded bg-light" th:id="'row'+${index.count}">
+                                <div class="col-1">
+                                    <div th:text="${index.count}" class="mt-1 ps-1"></div>
+                                    <div>
+                                        <a class="link-remove" th:rowNumber="${index.count}" th:href="@{'/carrito/eliminar/'+ ${c.producto.id} }">
+                                            <i class="fas fa-trash" style="color: red"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <img th:if="${c.producto.foto != null}" th:src="@{/foto/producto(idProd=${c.producto.id})}" alt="img-prod" class="img-fluid">
+                                    <img th:if="${c.producto.foto == null}" src="https://thumbs.dreamstime.com/b/%C3%B0%C2%BF%C3%B0%C2%B5%C3%B1%E2%80%A1%C3%B0%C2%B0%C3%B1%E2%80%9A%C3%B1%C5%93-134036857.jpg" alt="img-prod" class="img-fluid">
+                                </div>
+                                <div class="col-6 mt-2">
+                                    <div>
+                                        <b th:text="${c.producto.nombre}"></b>
+                                    </div>
+                                    <div th:replace="control-de-cantidad :: control-de-cantidad(${c.cantidad},${c.producto.id},${c.producto.stock})">
+                                        Cantidad
+                                    </div>
+                                    <div>
+                                        <span>X</span>
+                                        <span th:text="${c.producto.precio} + ' = '"></span>
+                                        <span th:id="'subtotal'+${c.producto.id}  " class="subtotalProd" th:text="${c.subtotal}"></span>
+                                    </div>
+                                    <p hidden id="carritoItem-stock" th:text="${c.producto.stock}"></p>
+                                </div>
+                            </div>
+                            <div class="row mt-1"></div>
+                        </th:block>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>
+                            <span class="h3">Total:</span>
+                        </div>
+                        <div class="mt-2">
+                            <span class="h2 text-success" id="cantidadTotal"></span>
+                        </div>
+                        <div class="mt-2">
+                            <form th:action="@{/pedido/save}" method="POST">
+                                <button type="sumbit" class="btn btn-carrito pt-3 mt-2"><h5>Pagar <i class="fa fa-shopping-cart"></i></h5></button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="error-pay" th:if="${error != null}">
+                    <h5 class="bg-danger mt-5 text-center text-white rounded pt-3 pb-3" th:text="${error}"></h5>
+                </div>              
+            </div>
+        </main>
+        <div layout:fragment="scripts">
+            <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+            <script src="/javascript/carrito.js"></script>
+        </div>
+    </body>
+</html>
+

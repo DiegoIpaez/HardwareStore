@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <main layout:fragment="main">
+            <div class="container mt-4 mb-5">
+                <h2 class="title-table pe-2">Marcas</h2>
+                <a th:href="@{/marca/form}">
+                    <button class="btn btn-new"><i class="fas fa-plus"></i>
+                </button></a>
+                    
+                <div class="row table-shadow bg-dark pt-3 pb-3 text-white">
+                    <div class="col-xl-4 col-lg-5 col-md-4">Id</div>
+                    <div class="col-xl-6 col-lg-5 col-md-4">Nombre</div>
+                    <div class="col-xl-1 col-lg-1 col-md-2">Editar</div>
+                    <div class="col-xl-1 col-lg-1 col-md-2">Alta</div>
+                </div>
+                <div th:if="${!marcas.isEmpty()}" class="row table-shadow" th:each="pepe : ${marcas}">
+                    <div class="col-xl-4 col-lg-5 col-md-4 pt-3 pb-1" th:text="${pepe.id}"></div>
+                    <div class="col-xl-6 col-lg-5 col-md-4 pt-3 pb-1" th:text="${pepe.nombre}"></div>
+                    <div class="col-xl-1 col-lg-1 col-md-2 pt-2 pb-2">
+                        <a th:href="@{/marca/modificar(marcaId=${pepe.id})}">
+                        <button class="btn btn-primary"><i class="fas fa-edit"></i></button>
+                        </a>
+                    </div>
+                    <div class="col-xl-1 col-lg-1 col-md-2 pt-2 pb-2">
+                        <a th:href="@{/marca/baja(id = ${pepe.id})}" th:if="${pepe.alta}">
+                         <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                        </a>
+                         <a th:href="@{/marca/alta(id = ${pepe.id})}" th:if="${!pepe.alta}">
+                          <button class="btn btn-success"><i class="fas fa-check"></i></button>
+                         </a>       
+                    </div>
+                </div>
+                <div class="row table-bottom pt-3 pb-4"></div>
+                <!--Paginacion-->
+                <div th:if="${!marcas.isEmpty()}">
+                <div th:replace="paginacion-layout :: paginacion-layout('marca/list',${actual},${siguiente},${anterior},${ultima})"></div></div>
+            </div>
+        </main>
+
+
+    </body>
+
+</html>

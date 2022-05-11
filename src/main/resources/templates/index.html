@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <main layout:fragment="main">
+            <div
+                id="myCarousel"
+                class="carousel slide carousel-fade"
+                data-bs-ride="carousel"
+                >
+                <div class="carousel-indicators">
+                    <button
+                        type="button"
+                        data-bs-target="#myCarousel"
+                        data-bs-slide-to="0"
+                        class="active"
+                        aria-current="true"
+                        aria-label="Slide 1"
+                        ></button>
+                    <button
+                        type="button"
+                        data-bs-target="#myCarousel"
+                        data-bs-slide-to="1"
+                        aria-label="Slide 2"
+                        ></button>
+                    <button
+                        type="button"
+                        data-bs-target="#myCarousel"
+                        data-bs-slide-to="2"
+                        aria-label="Slide 3"
+                        ></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div
+                            class="overlay-image"
+                            style="
+                            background-image: url('https://img.freepik.com/foto-gratis/composicion-plana-fondo-herramientas-carpinteria-vintage_94095-78.jpg?w=2000');
+                            "
+                            ></div>
+                        <div class="container carousel-text">
+                            <div class="carousel-caption text-start">
+                                <h1>Todo lo que necesitas</h1>
+                                <p>
+                                    Mira todos nuestro catalogo de productos o mejor aun,
+                                    buscalos!.
+                                </p>
+                                <p>
+                                    <a class="btn btn-lg btn-warning" th:href="@{/producto/productos}">Ir a productos</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div
+                            class="overlay-image"
+                            style="
+                            background-image: url('https://www.hogarmania.com/archivos/201904/herramientas-de-bricolaje-848x477x80xX.jpg');
+                            "
+                            ></div>
+
+                        <div class="container carousel-text">
+                            <div class="carousel-caption">
+                                <h1>Lo que falta en tu hogar en un lugar</h1>
+                                <p>
+                                    Tenemos justo lo que necesitas para poder arreglar tu hogar.
+                                </p>
+                                <p>
+                                    <a class="btn btn-lg btn-warning" th:href="@{/producto/categoria?categoriaId=f40a89d5-e974-40c4-8d1e-9efbf648fa22}"
+                                       >Ir a herramientas</a
+                                    >
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div
+                            class="overlay-image"
+                            style="
+                            background-image: url('https://i.pinimg.com/originals/c4/df/1f/c4df1feaa330ba88cbf67be19607715a.png');
+                            "
+                            ></div>
+
+                        <div class="container carousel-text">
+                            <div class="carousel-caption text-end">
+                                <h1>Lo mejor de la mecanica</h1>
+                                <p>lo conseguis con nostros, mira todo nuestro catalogo.</p>
+                                <p>
+                                    <a class="btn btn-lg btn-warning" th:href="@{producto/categoria?categoriaId=27544310-5d28-4416-907c-0431d4b15fcf}">Ir a Automotor</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button
+                    class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#myCarousel"
+                    data-bs-slide="prev"
+                    >
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                    class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#myCarousel"
+                    data-bs-slide="next"
+                    >
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div class="container mt-5">
+                <div th:replace="carrusel-productos-layout :: carrusel-productos-layout('Los mas vendidos', ${productosMasVendidos})"></div>
+                <div th:replace="carrusel-productos-layout :: carrusel-productos-layout('Ultimos Agregados', ${productosRecientes})"></div>
+                <div th:replace="carrusel-productos-layout :: carrusel-productos-layout('Ultimas unidades', ${ultimasUnidades})"></div>
+            </div>
+        </main>
+        <div layout:fragment="scripts">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+                    integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+            crossorigin="anonymous"></script>
+            <script>
+                $('.owl-carousel').owlCarousel({
+                loop: true,
+                margin: 15,
+                nav: true,
+                responsive: {
+                0: {
+                items: 1
+                },
+                250: {
+                items: 2
+                },
+                500: {
+                items: 3
+                },
+                750: {
+                items: 4
+                },
+                1000: {
+                items: 5
+                }
+                }
+                })
+            </script>
+        </div>
+    </body>
+</html>
+

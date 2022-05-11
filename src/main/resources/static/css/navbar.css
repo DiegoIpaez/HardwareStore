@@ -1,0 +1,51 @@
+header {
+    position: sticky;
+    top: 0%;
+    z-index: 2;
+}
+
+a{
+    text-decoration: none;
+}
+
+.navbar {
+    background-color: #111;
+}
+
+.navbar-brand {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.nav-link {
+    transition: all 0.8s ease !important;
+    font-size: 1.1rem;
+    color: #ffa23f !important;
+}
+
+.nav-link:hover {
+    color: #faddab !important;
+}
+
+.navbar-toggler {
+    background-color: #222;
+}
+
+#navbar-toggler-icon {
+    color: #ffc107;
+}
+
+#navbarDarkDropdownMenuLink {
+    color: #000000 !important;
+}
+
+#navbarDarkDropdownMenuLink:hover {
+    color: #ffffff !important;
+}
+
+.icon-navbar{
+    color: #000000 !important;
+}
+.icon-navbar:hover{
+    color: #ffffff  !important;
+}

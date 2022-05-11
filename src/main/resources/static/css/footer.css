@@ -1,0 +1,42 @@
+/* Redes */
+.redes {
+    padding-top: 20px;
+    background-color: #ffc107;
+}
+
+.redes-items a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+.redes-items {
+    transition-property: filter;
+    transition-duration: 0.3s;
+}
+
+.redes-items:hover {
+    transform: scale(1.25);
+    opacity: 0.8;
+}
+
+/* Footer */
+.footer-wrap {
+    margin-top: 6%;
+    background-color: rgb(26, 26, 26);
+}
+
+.footer-items {
+    transition: all 0.7s ease;
+    text-decoration: none;
+    color: rgb(255, 179, 0);
+}
+
+.footer-items:hover {
+    color: #ffdfa3;
+    z-index: 2;
+}
+
+#copyright{
+    background-color: #111;
+    color: #efefef;
+}

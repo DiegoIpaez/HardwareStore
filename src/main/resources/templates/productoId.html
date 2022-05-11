@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+
+        <main layout:fragment="main">
+             <div class="container mt-3 mb-5">
+        <!-- Barra de navegacion -->
+        <div class="row indice">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a class="indice-item" th:href="@{/}">Inicio</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a class="indice-item" th:href="@{/producto/categoria(categoriaId=${producto.categoria.id})}"
+                th:text="${producto.categoria.nombre}"></a
+              >
+            </li>
+            <li class="breadcrumb-item" th:text="${producto.nombre}"></li>
+          </ol>
+        </div>
+        <!-- ProductDetail -->
+        <div class="row">
+          <div class="col-md-5 mb-4">
+            <img th:if="${producto.foto != null}" th:src="@{/foto/producto(idProd=${producto.id})}" alt="img-prod" class="img-producto-detalle">
+            <img th:if="${producto.foto == null}" src="https://thumbs.dreamstime.com/b/%C3%B0%C2%BF%C3%B0%C2%B5%C3%B1%E2%80%A1%C3%B0%C2%B0%C3%B1%E2%80%9A%C3%B1%C5%93-134036857.jpg" alt="img-prod" class="img-producto-detalle">
+          </div>
+          <div class="col-md-7">
+            <h2 th:text="${producto.nombre}"></h2>
+            <a th:href="@{/producto/marca(marcaId=${producto.marca.id})}">
+                <h5 class="categoria" th:text="${producto.marca.nombre} + '*'"></h5>
+            </a>
+            <h2 class="mt-4 text-success"><b th:text="'$ ' + ${producto.precio}"></b></h2>
+            <span><b th:if="${producto.disponible}" th:text="'Stock: disponible'"></b></span>
+            <span><b th:if="${!producto.disponible}" th:text="'Stock: no disponible'"></b></span>
+            <div class="mt-3 mb-3">
+              <div th:replace="control-de-cantidad :: control-de-cantidad(1,${producto.id},${producto.stock})">
+                Cantidad
+            </div>
+            <button class="btn btn-warning" id="buttonAddToCart">añadir al carrito</button>   
+            </div>
+
+            <b>Descripcion:</b>
+            <p th:text="${producto.descripcion}"></p>
+          </div>
+        </div>
+      </div>
+        </main>
+        <div layout:fragment="scripts">
+            <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+            <script type="text/javascript">
+                var productoId = "[[${producto.id}]]";
+            </script>
+            <script src="/javascript/control-de-cantidad.js"></script>
+            <script src="/javascript/añadir-al-carrito.js"></script>
+        </div>
+    </body>
+</html>

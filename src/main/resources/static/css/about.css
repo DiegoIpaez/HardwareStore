@@ -1,0 +1,27 @@
+about-p{
+    background: #000;
+    color: white;
+}
+
+.contenedor3{
+    background-image: url(/imagenes/socios.jpg) !important;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.9;
+        color: white;
+}
+
+.contenedor2{
+    background-image: url("https://st3.depositphotos.com/10654668/i/600/depositphotos_161226858-stock-photo-business-people-having-discussion.jpg");
+    background-position: center;
+    background-size: cover;
+    opacity: 0.9;
+}
+
+.contenedor1{
+    background-image: url(/imagenes/herramientas.jpg);
+    background-position: center;
+    background-size: cover;
+    opacity: 0.8;
+}
+

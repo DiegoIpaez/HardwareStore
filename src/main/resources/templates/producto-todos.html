@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+    <body>
+        <main layout:fragment="main">
+            <!--Barra de busqueda-->
+            <div class="container mt-5">
+                <form th:action="@{/producto/buscarProducto}" method="GET">
+                    <div class="row">
+                        <div class="col-xl-11 col-md-11">
+                            <input class="form-control col-md-4 " type="text" name="nombrep"/>                       
+                        </div>
+                        <div class="col-xl-1 col-md-1">
+                            <button type="submit" class="btn btn-dark">                                
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>                        
+                    </div>
+                </form>
+                <div th:if='${!productosBuscados.isEmpty()}' class="mt-4">
+                    <div th:replace="producto-layout :: producto-layout('Resultado', ${productosBuscados})"></div>
+                </div>
+                <div th:if='${error != null}'>
+                    <p class="mt-5 mb-5 pb-5" th:text="${error}+'.'"></p>
+                    <p class="mt-5 pb-1"></p>
+                    <br/>
+                </div>
+            </div>
+             <!--Barra de busqueda-->
+              <!--Productos-->
+            <div th:if='${!productos.isEmpty()}' class="container">
+                <br>
+                <div th:replace="producto-layout :: producto-layout('Todos los productos', ${productos})"></div>
+
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <nav aria-label="Pagination">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" th:classappend="${anterior < 0} ? 'disabled' : ''">
+                                    <a class="page-link" th:href="@{|?page=${anterior}|}">Anterior</a>
+                                </li>
+                                <li class="page-item" th:each="pagina : ${paginas}" th:classappend="${actual == pagina-1 ? 'active' : ''}">
+                                    <a class="page-link" th:href="@{|?page=${pagina-1}|}" th:text="${pagina}"></a>
+                                </li>
+                                <li class="page-item" th:classappend="${actual == ultima} ? 'disabled' : ''">
+                                    <a class="page-link" th:href="@{|?page=${siguiente}|}">Siguiente</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+
+            </div>
+        </main>
+    </body>
+</html>

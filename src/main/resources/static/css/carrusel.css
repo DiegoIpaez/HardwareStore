@@ -1,0 +1,31 @@
+.carousel-item{
+  height: 25rem;
+  background: #000;
+  color: white;
+  position: relative;
+}
+.carousel-text{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: 50px;
+}
+
+.overlay-image{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.5;
+}
+.carousel-item {
+  transition: transform 0.4s ease-in-out;
+}
+.carousel-fade .active.carousel-item-start,
+.carousel-fade .active.carousel-item-end {
+  transition: opacity 0s 1s;
+}

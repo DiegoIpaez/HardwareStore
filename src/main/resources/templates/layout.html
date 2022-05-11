@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head>
+        <title>HardwareStore</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css}" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css}"
+              integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+              crossorigin="anonymous" />
+        <link rel="stylesheet"
+              th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css}"
+              integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+              crossorigin="anonymous" />
+        <!-- Fonts -->
+        <link rel="preconnect" th:href="@{https://fonts.googleapis.com}" />
+        <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin />
+        <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat&display=swap}" rel="stylesheet"/>
+        <!-- Fonts -->
+        <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css}">
+        <link rel="stylesheet" th:href="@{/css/index.css}" >
+        <link rel="stylesheet" th:href="@{/css/navbar.css}" >
+        <link rel="stylesheet" th:href="@{/css/footer.css}" >
+        <link rel="stylesheet" th:href="@{/css/login.css}" >
+        <link rel="stylesheet" th:href="@{/css/tablas.css}" >
+        <link rel="stylesheet" th:href="@{/css/producto.css}" >
+        <link rel="stylesheet" th:href="@{/css/producto-detalle.css}" >
+        <link rel="stylesheet" th:href="@{/css/formulario.css}" >
+        <link rel="stylesheet" th:href="@{/css/carrito.css}" >
+        <link rel="stylesheet" th:href="@{/css/carrusel.css}" >
+        <link rel="stylesheet" th:href="@{/css/about.css}" >
+
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <a class="navbar-brand text-white" href="/">HardwareStore</a>
+                    <button
+                        class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav"
+                        aria-controls="#navbarNav"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                        >
+                        <i class="fas fa-bars" id="navbar-toggler-icon"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/"
+                                   >Inicio</a
+                                >
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/producto/productos}">Productos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/contacto}">Contacto</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/about}">Sobre Nosotros</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#"></a>
+
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <button
+                                        class="btn btn-warning ps-0 dropdown-toggle me-3"
+                                        type="button"
+                                        id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                        >
+                                        Categorías
+                                    </button>
+                                    <ul
+                                        class="dropdown-menu dropdown-menu-dark"
+                                        aria-labelledby="dropdownMenuButton1"
+                                        id="categorias"
+                                        ></ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <button
+                                        class="btn btn-warning dropdown-toggle ps-0"
+                                        type="button"
+                                        id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                        >
+                                        Marcas
+                                    </button>
+                                    <ul
+                                        class="dropdown-menu dropdown-menu-dark"
+                                        aria-labelledby="dropdownMenuButton1"
+                                        id="marcas"
+                                        ></ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div
+                        class="collapse navbar-collapse justify-content-end"
+                        id="navbarNav"
+                        >
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a
+                                    class="nav-link me-3 icon-navbar"                                   
+                                    th:href="@{/carrito}"
+                                    ><i class="fa fa-shopping-cart"></i
+                                    ></a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a
+                                    class="nav-link dropdown-toggle"
+                                    href="#"
+                                    id="navbarDarkDropdownMenuLink"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    >
+                                    <i class="fa fa-user"></i>
+                                </a>
+                                <ul
+                                    class="dropdown-menu dropdown-menu-dark text-center"
+                                    aria-labelledby="navbarDarkDropdownMenuLink"
+                                    >
+                                    <li>
+                                        <a
+                                            class="dropdown-item"
+                                            th:if="${session.usuario == null}"
+                                            th:href="@{/login}"
+                                            >Iniciar session</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            class="dropdown-item"
+                                            th:if="${session.usuario != null}"
+                                            th:href="@{/usuario}"
+                                            >Mi cuenta</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" th:if="${session.usuario != null}">
+                                            <form
+                                                sec:authorize="isAuthenticated()"
+                                                th:action="@{/logout}"
+                                                method="POST"
+                                                >
+                                                <button type="submit" class="btn text-danger">
+                                                    Salir <i class="fa fa-arrow-right"></i>
+                                                </button></form
+                                            ></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a
+                                    class="nav-link dropdown-toggle me-5"
+                                    id="navbarDarkDropdownMenuLink"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    >
+                                    <i class="fa fa-toolbox"></i>
+                                </a>
+                                <ul
+                                    sec:authorize="hasRole('ADMINISTRADOR')"
+                                    class="dropdown-menu dropdown-menu-dark"
+                                    aria-labelledby="navbarDarkDropdownMenuLink"
+                                    >
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/usuario/list}">Usuarios</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/pedido/list}">Pedidos</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/producto/list}">Productos</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/categoria/list}"
+                                           >Categorias</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" th:href="@{/marca/list}">Marcas</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item ms-5"></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main layout:fragment="main">
+            <p>Contenido por defecto</p>
+        </main>
+        <footer class="footer-wrap">
+            <section class="redes">
+                <div class="container-fluid mb-2">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-md-4 text-center redes-items mb-4">
+                            <a href="#"
+                               ><i class="fa fa-facebook fa-3x" aria-hidden="true"></i
+                                ></a>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-4 text-center redes-items mb-4">
+                            <a href="#"
+                               ><i class="fa fa-instagram fa-3x" aria-hidden="true"></i
+                                ></a>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 text-center redes-items mb-4">
+                            <a
+                                href="https://api.whatsapp.com/send?phone=+54945392738"
+                                target="_blank"
+                                ><i class="fa fa-whatsapp fa-3x" aria-hidden="true"></i
+                                ></a>
+                        </div>
+                        <div class="col-xl-1 col-lg-0"></div>
+                    </div>
+                </div>
+            </section>
+            <div class="container mt-5 mb-4">
+                <div class="row">
+                    <div class="col-12 col-md-3 mb-2 text-center">
+                        <a class="footer-items" href="/error404.html">
+                            Desarrollado por "8Codes", puedes visitanos en nuestra web
+                            www.8Codes.com.ar</a>            
+                    </div>
+
+                    <div class="col-12 col-md-3 mb-2 text-center">
+                        <span>
+                            <a class="footer-items" th:href="@{/about}"> NOSOTROS </a></span
+                        >
+                    </div>
+
+                    <div class="col-12 col-md-3 mb-2 text-center">
+                        <span
+                            ><a class="footer-items" href="/error404.html"
+                            >FRANQUICIAS</a
+                            ></span
+                        >
+                    </div>
+
+                    <div class="col-12 col-md-3 mb-2">
+                        <p class="footer-items"><i class="fas fa-home me-3"></i> Ayachuco 12, SMT, Tucumán.</p>
+                        <p class="footer-items">
+                            <i class="fas fa-envelope me-3"></i>
+                            harwareStoreT2@gmail.com
+                        </p>
+                        <p class="footer-items"><i class="fas fa-phone me-3"></i> + 54 381 458 7458</p>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid pt-3" id="copyright">
+                <div class="row text-center">
+                    <p>©HarwareStore 2022</p>
+                </div>
+            </div>
+        </footer>
+
+        <div layout:fragment="scripts">
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/c3a49e1200.js" crossorigin="anonymous"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="/javascript/sweetalert.js"></script>
+        <script src="/javascript/boton-de-catalogo.js"></script>
+    </body>
+
+</html>

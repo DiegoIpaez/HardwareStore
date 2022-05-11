@@ -1,0 +1,53 @@
+<!doctype html>
+<html <html lang="en" layout:decorate="~{layout}">
+    
+    <body>
+        <main layout:fragment="main">
+            <div class="banner">
+                <div class="container col-md-5 wrapper pt-5">
+
+                    <div class="card mx-3 mt-n5 shadow-lg" style="border-radius:0px; border:none">
+                        <div class="card-body pt-5">
+                            <form th:action="@{/cambiar_email/save}" method="POST" class="form-floating mb-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <h1 th:text="${titulo}"></h1>
+                                        <p>Le enviaremos un correo electrónico con más instrucciones</p>                                      
+                                        <div >
+                                            <div class="mt-1">
+                                                <p
+                                                    th:if="${error != null}"                               
+                                                    class="msg-error pt-2 pb-2"
+                                                    >
+                                                    <span class="ms-2" th:text="${error}"></span>
+                                                </p>
+                                            </div>                                           
+                                            <div class="mt-1">
+                                                <p
+                                                    hidden
+                                                    id="success-cambiar-email"
+                                                    th:if="${success != null}"                              
+                                                    th:text="${success}"
+                                                    ></p>
+                                            </div>
+                                            <input type="email" name="email" class="form-control mb-3" id="floatingEmailInput" placeholder="name@example.com">
+                                           
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-dark">Enviar correo</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </main>
+        
+    </body>
+</html>
+
