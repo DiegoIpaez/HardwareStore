@@ -221,10 +221,6 @@ public class ProductoServicio {
     public List<Producto> productosMasVendidos() {
         return productoRepository.productosMasVendidos();
     }
-    
-    public List<Producto> productosPorCategoria() {
-        return productoRepository.productosPorCategoria();
-    }
      
     public List<Producto> ultimasUnidades() {
         return productoRepository.ultimasUnidades();
